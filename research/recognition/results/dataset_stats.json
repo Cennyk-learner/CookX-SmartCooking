@@ -1,0 +1,110 @@
+{
+ "source": "Open Images V7: validation and test splits, plus the first part of the train split for training",
+ "classes": [
+  {
+   "id": 0,
+   "name": "tomato",
+   "zh": "番茄"
+  },
+  {
+   "id": 1,
+   "name": "cucumber",
+   "zh": "黄瓜"
+  },
+  {
+   "id": 2,
+   "name": "potato",
+   "zh": "土豆"
+  },
+  {
+   "id": 3,
+   "name": "carrot",
+   "zh": "胡萝卜"
+  },
+  {
+   "id": 4,
+   "name": "bell_pepper",
+   "zh": "青椒"
+  },
+  {
+   "id": 5,
+   "name": "broccoli",
+   "zh": "西兰花"
+  },
+  {
+   "id": 6,
+   "name": "mushroom",
+   "zh": "蘑菇"
+  },
+  {
+   "id": 7,
+   "name": "egg",
+   "zh": "鸡蛋"
+  },
+  {
+   "id": 8,
+   "name": "cabbage",
+   "zh": "卷心菜"
+  },
+  {
+   "id": 9,
+   "name": "pumpkin",
+   "zh": "南瓜"
+  }
+ ],
+ "failed_downloads": 6,
+ "splits": {
+  "train": {
+   "images": 4401,
+   "boxes": {
+    "mushroom": 1932,
+    "tomato": 4004,
+    "egg": 1317,
+    "pumpkin": 2572,
+    "cucumber": 818,
+    "broccoli": 625,
+    "carrot": 747,
+    "cabbage": 207,
+    "bell_pepper": 591,
+    "potato": 386
+   },
+   "total_boxes": 13199
+  },
+  "val": {
+   "images": 109,
+   "boxes": {
+    "tomato": 220,
+    "bell_pepper": 12,
+    "cabbage": 4,
+    "broccoli": 20,
+    "egg": 53,
+    "mushroom": 30,
+    "carrot": 8,
+    "cucumber": 50,
+    "pumpkin": 11,
+    "potato": 12
+   },
+   "total_boxes": 420
+  },
+  "test": {
+   "images": 123,
+   "boxes": {
+    "tomato": 229,
+    "cucumber": 28,
+    "egg": 126,
+    "carrot": 47,
+    "bell_pepper": 28,
+    "mushroom": 28,
+    "pumpkin": 19,
+    "broccoli": 5,
+    "potato": 10,
+    "cabbage": 9
+   },
+   "total_boxes": 529
+  }
+ },
+ "added_from_train_split": {
+  "images": 3474,
+  "annotation_rows_read": 6104630
+ }
+}

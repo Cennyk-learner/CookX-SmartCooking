@@ -31,6 +31,7 @@ from datetime import datetime, timedelta
 from app.services.deepseek_service import get_recipe_suggestion
 from app.services.tts_service import generate_voice
 from app.services.qwen_service import get_ingredients_from_qwen
+from app.services.recognition_fusion import merge_recognition
 from app.services.recommendation_service import (
     algorithm_version_for_recommendations,
     filter_eligible_recipes, load_recipes, recommend_recipes,
@@ -349,7 +350,14 @@ NAME_MAP = {
     'kimchi': '泡菜',
     'leek': '大葱',
     'onion': '洋葱',
-    'potato': '土豆'
+    'potato': '土豆',
+    'tomato': '番茄',
+    'cucumber': '黄瓜',
+    'bell_pepper': '青椒',
+    'broccoli': '西兰花',
+    'mushroom': '蘑菇',
+    'cabbage': '卷心菜',
+    'pumpkin': '南瓜'
 }
 BROADCAST_PATH = "app/data/system_broadcast.json"
 
@@ -859,8 +867,11 @@ async def analyze_fridge(file: UploadFile = File(...)):
                 for class_id, confidence in zip(result.boxes.cls, result.boxes.conf)
             ]
             box_count = sum(len(r.boxes) for r in results)
+            best_confidence = {}
+            for detection in raw_detections:
+                best_confidence[detection["name"]] = max(best_confidence.get(detection["name"], 0.0), detection["confidence"])
             yolo_items = [
-                {"name": NAME_MAP.get(name, name), "quantity": quantity}
+                {"name": NAME_MAP.get(name, name), "quantity": quantity, "confidence": best_confidence.get(name, 0.0)}
                 for name, quantity in Counter(yolo_names).items()
             ]
             print(f"[YOLO] boxes={box_count}")
@@ -880,23 +891,9 @@ async def analyze_fridge(file: UploadFile = File(...)):
         else:
             print(f"[QWEN] detected foods={qwen_items}")
 
-        merged_by_name = {}
-        for item in [*yolo_items, *qwen_items]:
-            raw_name = str(item.get("name", "")).strip()
-            if not raw_name:
-                continue
-            name = NAME_MAP.get(raw_name.lower(), raw_name)
-            quantity = item.get("quantity", 1)
-            try:
-                quantity = max(1, int(quantity))
-            except (TypeError, ValueError):
-                quantity = 1
-            existing = merged_by_name.get(name)
-            if existing is None:
-                merged_by_name[name] = {"name": name, "quantity": quantity}
-            else:
-                existing["quantity"] = max(existing["quantity"], quantity)
-        detected_items = list(merged_by_name.values())
+        # Qwen 成功时以它的类别和数量为准；Qwen 不可用或没有结果时由本地 YOLO 接管。
+        detected_items, fusion_source = merge_recognition(yolo_items, qwen_items, NAME_MAP, qwen_failed=bool(qwen_error))
+        print(f"[FUSION] source={fusion_source}")
         print(f"[FUSION] merged foods={detected_items}")
 
         if not detected_items and qwen_error:

@@ -1,0 +1,1957 @@
+{
+ "images": 32,
+ "pairs": 83,
+ "pairs_outside_detector_classes": 7,
+ "qwen_model": "qwen3-vl-plus",
+ "methods": {
+  "yolo": {
+   "tp": 66,
+   "fp": 5,
+   "fn": 17,
+   "precision": 0.9295774647887324,
+   "recall": 0.7951807228915663,
+   "exact_images": 15,
+   "images": 32,
+   "count_correct": 62
+  },
+  "qwen": {
+   "tp": 83,
+   "fp": 0,
+   "fn": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "exact_images": 32,
+   "images": 32,
+   "count_correct": 83
+  },
+  "union": {
+   "tp": 83,
+   "fp": 5,
+   "fn": 0,
+   "precision": 0.9431818181818182,
+   "recall": 1.0,
+   "exact_images": 27,
+   "images": 32,
+   "count_correct": 83
+  },
+  "fused": {
+   "tp": 83,
+   "fp": 0,
+   "fn": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "exact_images": 32,
+   "images": 32,
+   "count_correct": 83
+  },
+  "fused_qwen_down": {
+   "tp": 66,
+   "fp": 5,
+   "fn": 17,
+   "precision": 0.9295774647887324,
+   "recall": 0.7951807228915663,
+   "exact_images": 15,
+   "images": 32,
+   "count_correct": 62
+  }
+ },
+ "yolo_on_trained_classes": {
+  "tp": 66,
+  "fp": 5,
+  "fn": 10,
+  "precision": 0.9295774647887324,
+  "recall": 0.868421052631579,
+  "exact_images": 20,
+  "images": 32,
+  "count_correct": 62
+ },
+ "latency_seconds": {
+  "yolo": {
+   "mean": 0.026801103111210978,
+   "p50": 0.030313749972265214,
+   "p95": 0.034443499986082315
+  },
+  "qwen": {
+   "mean": 3.474707890614809,
+   "p50": 3.4005038499599323,
+   "p95": 4.190628599957563
+  },
+  "both": {
+   "mean": 3.50150899372602,
+   "p50": 3.4141623500036076,
+   "p95": 4.223610399872996
+  }
+ },
+ "records": [
+  {
+   "file": "food_001.jpg",
+   "scene": "竹木砧板，分开摆放",
+   "truth": {
+    "番茄": 1,
+    "黄瓜": 1
+   },
+   "yolo_items": [
+    {
+     "name": "tomato",
+     "quantity": 1,
+     "confidence": 0.9401
+    },
+    {
+     "name": "cucumber",
+     "quantity": 1,
+     "confidence": 0.9094
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "番茄",
+     "quantity": 1
+    },
+    {
+     "name": "黄瓜",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.01485160004813224,
+   "qwen_seconds": 3.4086079999106005,
+   "yolo": {
+    "番茄": 1,
+    "黄瓜": 1
+   },
+   "qwen": {
+    "番茄": 1,
+    "黄瓜": 1
+   },
+   "union": {
+    "番茄": 1,
+    "黄瓜": 1
+   },
+   "fused": {
+    "番茄": 1,
+    "黄瓜": 1
+   },
+   "fused_qwen_down": {
+    "番茄": 1,
+    "黄瓜": 1
+   }
+  },
+  {
+   "file": "food_002.jpg",
+   "scene": "竹木砧板，分开摆放",
+   "truth": {
+    "青椒": 1,
+    "西兰花": 1
+   },
+   "yolo_items": [
+    {
+     "name": "broccoli",
+     "quantity": 1,
+     "confidence": 0.9318
+    },
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.9118
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "青椒",
+     "quantity": 1
+    },
+    {
+     "name": "西兰花",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.010275200009346008,
+   "qwen_seconds": 3.107657700078562,
+   "yolo": {
+    "西兰花": 1,
+    "青椒": 1
+   },
+   "qwen": {
+    "青椒": 1,
+    "西兰花": 1
+   },
+   "union": {
+    "西兰花": 1,
+    "青椒": 1
+   },
+   "fused": {
+    "青椒": 1,
+    "西兰花": 1
+   },
+   "fused_qwen_down": {
+    "西兰花": 1,
+    "青椒": 1
+   }
+  },
+  {
+   "file": "food_003.jpg",
+   "scene": "石材台面，分开摆放",
+   "truth": {
+    "胡萝卜": 1,
+    "青椒": 1
+   },
+   "yolo_items": [
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.9243
+    },
+    {
+     "name": "carrot",
+     "quantity": 1,
+     "confidence": 0.8892
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "胡萝卜",
+     "quantity": 1
+    },
+    {
+     "name": "青椒",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.010548299993388355,
+   "qwen_seconds": 2.792637199978344,
+   "yolo": {
+    "青椒": 1,
+    "胡萝卜": 1
+   },
+   "qwen": {
+    "胡萝卜": 1,
+    "青椒": 1
+   },
+   "union": {
+    "青椒": 1,
+    "胡萝卜": 1
+   },
+   "fused": {
+    "胡萝卜": 1,
+    "青椒": 1
+   },
+   "fused_qwen_down": {
+    "青椒": 1,
+    "胡萝卜": 1
+   }
+  },
+  {
+   "file": "food_004.jpg",
+   "scene": "石材台面，分开摆放",
+   "truth": {
+    "鸡蛋": 1,
+    "番茄": 1
+   },
+   "yolo_items": [
+    {
+     "name": "tomato",
+     "quantity": 1,
+     "confidence": 0.9588
+    },
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.8514
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "鸡蛋",
+     "quantity": 1
+    },
+    {
+     "name": "番茄",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.010749400011263788,
+   "qwen_seconds": 2.707792199915275,
+   "yolo": {
+    "番茄": 1,
+    "鸡蛋": 1
+   },
+   "qwen": {
+    "鸡蛋": 1,
+    "番茄": 1
+   },
+   "union": {
+    "番茄": 1,
+    "鸡蛋": 1
+   },
+   "fused": {
+    "鸡蛋": 1,
+    "番茄": 1
+   },
+   "fused_qwen_down": {
+    "番茄": 1,
+    "鸡蛋": 1
+   }
+  },
+  {
+   "file": "food_005.jpg",
+   "scene": "深色木桌，分开摆放",
+   "truth": {
+    "土豆": 1,
+    "茄子": 1,
+    "鸡蛋": 1
+   },
+   "yolo_items": [
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.9356
+    },
+    {
+     "name": "potato",
+     "quantity": 1,
+     "confidence": 0.879
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "土豆",
+     "quantity": 1
+    },
+    {
+     "name": "茄子",
+     "quantity": 1
+    },
+    {
+     "name": "鸡蛋",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.011672699940390885,
+   "qwen_seconds": 3.242882000049576,
+   "yolo": {
+    "鸡蛋": 1,
+    "土豆": 1
+   },
+   "qwen": {
+    "土豆": 1,
+    "茄子": 1,
+    "鸡蛋": 1
+   },
+   "union": {
+    "鸡蛋": 1,
+    "土豆": 1,
+    "茄子": 1
+   },
+   "fused": {
+    "土豆": 1,
+    "茄子": 1,
+    "鸡蛋": 1
+   },
+   "fused_qwen_down": {
+    "鸡蛋": 1,
+    "土豆": 1
+   }
+  },
+  {
+   "file": "food_006.jpg",
+   "scene": "深色木桌，分开摆放",
+   "truth": {
+    "洋葱": 1,
+    "蘑菇": 1,
+    "胡萝卜": 1
+   },
+   "yolo_items": [
+    {
+     "name": "pumpkin",
+     "quantity": 1,
+     "confidence": 0.9202
+    },
+    {
+     "name": "mushroom",
+     "quantity": 1,
+     "confidence": 0.9114
+    },
+    {
+     "name": "carrot",
+     "quantity": 1,
+     "confidence": 0.8566
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "洋葱",
+     "quantity": 1
+    },
+    {
+     "name": "蘑菇",
+     "quantity": 1
+    },
+    {
+     "name": "胡萝卜",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.01047049998305738,
+   "qwen_seconds": 3.7560947000747547,
+   "yolo": {
+    "南瓜": 1,
+    "蘑菇": 1,
+    "胡萝卜": 1
+   },
+   "qwen": {
+    "洋葱": 1,
+    "蘑菇": 1,
+    "胡萝卜": 1
+   },
+   "union": {
+    "南瓜": 1,
+    "蘑菇": 1,
+    "胡萝卜": 1,
+    "洋葱": 1
+   },
+   "fused": {
+    "洋葱": 1,
+    "蘑菇": 1,
+    "胡萝卜": 1
+   },
+   "fused_qwen_down": {
+    "南瓜": 1,
+    "蘑菇": 1,
+    "胡萝卜": 1
+   }
+  },
+  {
+   "file": "food_007.jpg",
+   "scene": "白色托盘，分开摆放",
+   "truth": {
+    "黄瓜": 1,
+    "洋葱": 1,
+    "蘑菇": 1
+   },
+   "yolo_items": [
+    {
+     "name": "cucumber",
+     "quantity": 1,
+     "confidence": 0.9685
+    },
+    {
+     "name": "mushroom",
+     "quantity": 1,
+     "confidence": 0.586
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "黄瓜",
+     "quantity": 1
+    },
+    {
+     "name": "洋葱",
+     "quantity": 1
+    },
+    {
+     "name": "蘑菇",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.010588499950245023,
+   "qwen_seconds": 3.392399700009264,
+   "yolo": {
+    "黄瓜": 1,
+    "蘑菇": 1
+   },
+   "qwen": {
+    "黄瓜": 1,
+    "洋葱": 1,
+    "蘑菇": 1
+   },
+   "union": {
+    "黄瓜": 1,
+    "蘑菇": 1,
+    "洋葱": 1
+   },
+   "fused": {
+    "黄瓜": 1,
+    "洋葱": 1,
+    "蘑菇": 1
+   },
+   "fused_qwen_down": {
+    "黄瓜": 1,
+    "蘑菇": 1
+   }
+  },
+  {
+   "file": "food_008.jpg",
+   "scene": "白色托盘，分开摆放",
+   "truth": {
+    "蘑菇": 1,
+    "胡萝卜": 1,
+    "青椒": 1
+   },
+   "yolo_items": [
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.9232
+    },
+    {
+     "name": "carrot",
+     "quantity": 1,
+     "confidence": 0.6836
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "蘑菇",
+     "quantity": 1
+    },
+    {
+     "name": "胡萝卜",
+     "quantity": 1
+    },
+    {
+     "name": "青椒",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.014198699966073036,
+   "qwen_seconds": 3.3728511999361217,
+   "yolo": {
+    "青椒": 1,
+    "胡萝卜": 1
+   },
+   "qwen": {
+    "蘑菇": 1,
+    "胡萝卜": 1,
+    "青椒": 1
+   },
+   "union": {
+    "青椒": 1,
+    "胡萝卜": 1,
+    "蘑菇": 1
+   },
+   "fused": {
+    "蘑菇": 1,
+    "胡萝卜": 1,
+    "青椒": 1
+   },
+   "fused_qwen_down": {
+    "青椒": 1,
+    "胡萝卜": 1
+   }
+  },
+  {
+   "file": "food_009.jpg",
+   "scene": "竹木砧板，分开摆放",
+   "truth": {
+    "番茄": 1,
+    "鸡蛋": 1
+   },
+   "yolo_items": [
+    {
+     "name": "tomato",
+     "quantity": 1,
+     "confidence": 0.9406
+    },
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.8996
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "番茄",
+     "quantity": 1
+    },
+    {
+     "name": "鸡蛋",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.03198029997292906,
+   "qwen_seconds": 3.2019444999750704,
+   "yolo": {
+    "番茄": 1,
+    "鸡蛋": 1
+   },
+   "qwen": {
+    "番茄": 1,
+    "鸡蛋": 1
+   },
+   "union": {
+    "番茄": 1,
+    "鸡蛋": 1
+   },
+   "fused": {
+    "番茄": 1,
+    "鸡蛋": 1
+   },
+   "fused_qwen_down": {
+    "番茄": 1,
+    "鸡蛋": 1
+   }
+  },
+  {
+   "file": "food_010.jpg",
+   "scene": "石材台面，分开摆放",
+   "truth": {
+    "黄瓜": 1,
+    "胡萝卜": 1
+   },
+   "yolo_items": [
+    {
+     "name": "cucumber",
+     "quantity": 1,
+     "confidence": 0.902
+    },
+    {
+     "name": "carrot",
+     "quantity": 1,
+     "confidence": 0.8667
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "黄瓜",
+     "quantity": 1
+    },
+    {
+     "name": "胡萝卜",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.03381890000309795,
+   "qwen_seconds": 3.1882770999800414,
+   "yolo": {
+    "黄瓜": 1,
+    "胡萝卜": 1
+   },
+   "qwen": {
+    "黄瓜": 1,
+    "胡萝卜": 1
+   },
+   "union": {
+    "黄瓜": 1,
+    "胡萝卜": 1
+   },
+   "fused": {
+    "黄瓜": 1,
+    "胡萝卜": 1
+   },
+   "fused_qwen_down": {
+    "黄瓜": 1,
+    "胡萝卜": 1
+   }
+  },
+  {
+   "file": "food_011.jpg",
+   "scene": "深色木桌，分开摆放",
+   "truth": {
+    "土豆": 1,
+    "青椒": 1
+   },
+   "yolo_items": [
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.9288
+    },
+    {
+     "name": "potato",
+     "quantity": 1,
+     "confidence": 0.8638
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "土豆",
+     "quantity": 1
+    },
+    {
+     "name": "青椒",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.0312231999123469,
+   "qwen_seconds": 3.58670380001422,
+   "yolo": {
+    "青椒": 1,
+    "土豆": 1
+   },
+   "qwen": {
+    "土豆": 1,
+    "青椒": 1
+   },
+   "union": {
+    "青椒": 1,
+    "土豆": 1
+   },
+   "fused": {
+    "土豆": 1,
+    "青椒": 1
+   },
+   "fused_qwen_down": {
+    "青椒": 1,
+    "土豆": 1
+   }
+  },
+  {
+   "file": "food_012.jpg",
+   "scene": "白色托盘，分开摆放",
+   "truth": {
+    "西兰花": 1,
+    "蘑菇": 1
+   },
+   "yolo_items": [
+    {
+     "name": "broccoli",
+     "quantity": 1,
+     "confidence": 0.9354
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "西兰花",
+     "quantity": 1
+    },
+    {
+     "name": "蘑菇",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.02865750005003065,
+   "qwen_seconds": 3.0428353000897914,
+   "yolo": {
+    "西兰花": 1
+   },
+   "qwen": {
+    "西兰花": 1,
+    "蘑菇": 1
+   },
+   "union": {
+    "西兰花": 1,
+    "蘑菇": 1
+   },
+   "fused": {
+    "西兰花": 1,
+    "蘑菇": 1
+   },
+   "fused_qwen_down": {
+    "西兰花": 1
+   }
+  },
+  {
+   "file": "food_013.jpg",
+   "scene": "石材台面，分开摆放",
+   "truth": {
+    "卷心菜": 1,
+    "番茄": 1
+   },
+   "yolo_items": [
+    {
+     "name": "cabbage",
+     "quantity": 1,
+     "confidence": 0.8518
+    },
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.5669
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "卷心菜",
+     "quantity": 1
+    },
+    {
+     "name": "番茄",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.0364619999891147,
+   "qwen_seconds": 3.13445289991796,
+   "yolo": {
+    "卷心菜": 1,
+    "鸡蛋": 1
+   },
+   "qwen": {
+    "卷心菜": 1,
+    "番茄": 1
+   },
+   "union": {
+    "卷心菜": 1,
+    "鸡蛋": 1,
+    "番茄": 1
+   },
+   "fused": {
+    "卷心菜": 1,
+    "番茄": 1
+   },
+   "fused_qwen_down": {
+    "卷心菜": 1,
+    "鸡蛋": 1
+   }
+  },
+  {
+   "file": "food_014.jpg",
+   "scene": "深色木桌，分开摆放",
+   "truth": {
+    "南瓜": 1,
+    "土豆": 1
+   },
+   "yolo_items": [
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.9148
+    },
+    {
+     "name": "pumpkin",
+     "quantity": 1,
+     "confidence": 0.9006
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "南瓜",
+     "quantity": 1
+    },
+    {
+     "name": "土豆",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.033961999928578734,
+   "qwen_seconds": 3.2676187000470236,
+   "yolo": {
+    "鸡蛋": 1,
+    "南瓜": 1
+   },
+   "qwen": {
+    "南瓜": 1,
+    "土豆": 1
+   },
+   "union": {
+    "鸡蛋": 1,
+    "南瓜": 1,
+    "土豆": 1
+   },
+   "fused": {
+    "南瓜": 1,
+    "土豆": 1
+   },
+   "fused_qwen_down": {
+    "鸡蛋": 1,
+    "南瓜": 1
+   }
+  },
+  {
+   "file": "food_015.jpg",
+   "scene": "竹木砧板，分开摆放",
+   "truth": {
+    "鸡蛋": 1,
+    "蘑菇": 1,
+    "青椒": 1
+   },
+   "yolo_items": [
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.9065
+    },
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.8524
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "鸡蛋",
+     "quantity": 1
+    },
+    {
+     "name": "青椒",
+     "quantity": 1
+    },
+    {
+     "name": "蘑菇",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.030085699982009828,
+   "qwen_seconds": 3.6901904999976978,
+   "yolo": {
+    "鸡蛋": 1,
+    "青椒": 1
+   },
+   "qwen": {
+    "鸡蛋": 1,
+    "青椒": 1,
+    "蘑菇": 1
+   },
+   "union": {
+    "鸡蛋": 1,
+    "青椒": 1,
+    "蘑菇": 1
+   },
+   "fused": {
+    "鸡蛋": 1,
+    "青椒": 1,
+    "蘑菇": 1
+   },
+   "fused_qwen_down": {
+    "鸡蛋": 1,
+    "青椒": 1
+   }
+  },
+  {
+   "file": "food_016.jpg",
+   "scene": "白色托盘，分开摆放",
+   "truth": {
+    "胡萝卜": 1,
+    "西兰花": 1,
+    "番茄": 1
+   },
+   "yolo_items": [
+    {
+     "name": "tomato",
+     "quantity": 1,
+     "confidence": 0.9028
+    },
+    {
+     "name": "broccoli",
+     "quantity": 1,
+     "confidence": 0.873
+    },
+    {
+     "name": "carrot",
+     "quantity": 1,
+     "confidence": 0.8513
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "西兰花",
+     "quantity": 1
+    },
+    {
+     "name": "胡萝卜",
+     "quantity": 1
+    },
+    {
+     "name": "番茄",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.028046200051903725,
+   "qwen_seconds": 3.6650565000018105,
+   "yolo": {
+    "番茄": 1,
+    "西兰花": 1,
+    "胡萝卜": 1
+   },
+   "qwen": {
+    "西兰花": 1,
+    "胡萝卜": 1,
+    "番茄": 1
+   },
+   "union": {
+    "番茄": 1,
+    "西兰花": 1,
+    "胡萝卜": 1
+   },
+   "fused": {
+    "西兰花": 1,
+    "胡萝卜": 1,
+    "番茄": 1
+   },
+   "fused_qwen_down": {
+    "番茄": 1,
+    "西兰花": 1,
+    "胡萝卜": 1
+   }
+  },
+  {
+   "file": "food_017.jpg",
+   "scene": "石材台面，分开摆放",
+   "truth": {
+    "黄瓜": 1,
+    "卷心菜": 1,
+    "鸡蛋": 1
+   },
+   "yolo_items": [
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.9396
+    },
+    {
+     "name": "cabbage",
+     "quantity": 1,
+     "confidence": 0.9263
+    },
+    {
+     "name": "cucumber",
+     "quantity": 1,
+     "confidence": 0.922
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "卷心菜",
+     "quantity": 1
+    },
+    {
+     "name": "黄瓜",
+     "quantity": 1
+    },
+    {
+     "name": "鸡蛋",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.03149630001280457,
+   "qwen_seconds": 3.6654909999342635,
+   "yolo": {
+    "鸡蛋": 1,
+    "卷心菜": 1,
+    "黄瓜": 1
+   },
+   "qwen": {
+    "卷心菜": 1,
+    "黄瓜": 1,
+    "鸡蛋": 1
+   },
+   "union": {
+    "鸡蛋": 1,
+    "卷心菜": 1,
+    "黄瓜": 1
+   },
+   "fused": {
+    "卷心菜": 1,
+    "黄瓜": 1,
+    "鸡蛋": 1
+   },
+   "fused_qwen_down": {
+    "鸡蛋": 1,
+    "卷心菜": 1,
+    "黄瓜": 1
+   }
+  },
+  {
+   "file": "food_018.jpg",
+   "scene": "竹木砧板，分开摆放",
+   "truth": {
+    "南瓜": 1,
+    "胡萝卜": 1,
+    "蘑菇": 1
+   },
+   "yolo_items": [
+    {
+     "name": "carrot",
+     "quantity": 1,
+     "confidence": 0.8476
+    },
+    {
+     "name": "pumpkin",
+     "quantity": 1,
+     "confidence": 0.7403
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "南瓜",
+     "quantity": 1
+    },
+    {
+     "name": "胡萝卜",
+     "quantity": 1
+    },
+    {
+     "name": "蘑菇",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.03206189989577979,
+   "qwen_seconds": 3.8195951000088826,
+   "yolo": {
+    "胡萝卜": 1,
+    "南瓜": 1
+   },
+   "qwen": {
+    "南瓜": 1,
+    "胡萝卜": 1,
+    "蘑菇": 1
+   },
+   "union": {
+    "胡萝卜": 1,
+    "南瓜": 1,
+    "蘑菇": 1
+   },
+   "fused": {
+    "南瓜": 1,
+    "胡萝卜": 1,
+    "蘑菇": 1
+   },
+   "fused_qwen_down": {
+    "胡萝卜": 1,
+    "南瓜": 1
+   }
+  },
+  {
+   "file": "food_019.jpg",
+   "scene": "不锈钢水槽边的沥水篮，互相靠在一起",
+   "truth": {
+    "番茄": 1,
+    "黄瓜": 1,
+    "青椒": 1
+   },
+   "yolo_items": [
+    {
+     "name": "tomato",
+     "quantity": 1,
+     "confidence": 0.9346
+    },
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.8363
+    },
+    {
+     "name": "cucumber",
+     "quantity": 1,
+     "confidence": 0.8081
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "黄瓜",
+     "quantity": 1
+    },
+    {
+     "name": "番茄",
+     "quantity": 1
+    },
+    {
+     "name": "青椒",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.045176499988883734,
+   "qwen_seconds": 4.190628599957563,
+   "yolo": {
+    "番茄": 1,
+    "青椒": 1,
+    "黄瓜": 1
+   },
+   "qwen": {
+    "黄瓜": 1,
+    "番茄": 1,
+    "青椒": 1
+   },
+   "union": {
+    "番茄": 1,
+    "青椒": 1,
+    "黄瓜": 1
+   },
+   "fused": {
+    "黄瓜": 1,
+    "番茄": 1,
+    "青椒": 1
+   },
+   "fused_qwen_down": {
+    "番茄": 1,
+    "青椒": 1,
+    "黄瓜": 1
+   }
+  },
+  {
+   "file": "food_020.jpg",
+   "scene": "冰箱保鲜层，互相靠在一起",
+   "truth": {
+    "土豆": 1,
+    "胡萝卜": 1,
+    "卷心菜": 1
+   },
+   "yolo_items": [
+    {
+     "name": "carrot",
+     "quantity": 1,
+     "confidence": 0.8726
+    },
+    {
+     "name": "potato",
+     "quantity": 1,
+     "confidence": 0.7811
+    },
+    {
+     "name": "cabbage",
+     "quantity": 1,
+     "confidence": 0.6606
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "卷心菜",
+     "quantity": 1
+    },
+    {
+     "name": "胡萝卜",
+     "quantity": 1
+    },
+    {
+     "name": "土豆",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.034443499986082315,
+   "qwen_seconds": 3.8611659000162035,
+   "yolo": {
+    "胡萝卜": 1,
+    "土豆": 1,
+    "卷心菜": 1
+   },
+   "qwen": {
+    "卷心菜": 1,
+    "胡萝卜": 1,
+    "土豆": 1
+   },
+   "union": {
+    "胡萝卜": 1,
+    "土豆": 1,
+    "卷心菜": 1
+   },
+   "fused": {
+    "卷心菜": 1,
+    "胡萝卜": 1,
+    "土豆": 1
+   },
+   "fused_qwen_down": {
+    "胡萝卜": 1,
+    "土豆": 1,
+    "卷心菜": 1
+   }
+  },
+  {
+   "file": "food_021.jpg",
+   "scene": "冰箱保鲜层，部分遮挡",
+   "truth": {
+    "鸡蛋": 1,
+    "番茄": 1,
+    "西兰花": 1
+   },
+   "yolo_items": [
+    {
+     "name": "tomato",
+     "quantity": 1,
+     "confidence": 0.9398
+    },
+    {
+     "name": "broccoli",
+     "quantity": 1,
+     "confidence": 0.8782
+    },
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.7648
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "西兰花",
+     "quantity": 1
+    },
+    {
+     "name": "番茄",
+     "quantity": 1
+    },
+    {
+     "name": "鸡蛋",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.030194199993275106,
+   "qwen_seconds": 3.653507399954833,
+   "yolo": {
+    "番茄": 1,
+    "西兰花": 1,
+    "鸡蛋": 1
+   },
+   "qwen": {
+    "西兰花": 1,
+    "番茄": 1,
+    "鸡蛋": 1
+   },
+   "union": {
+    "番茄": 1,
+    "西兰花": 1,
+    "鸡蛋": 1
+   },
+   "fused": {
+    "西兰花": 1,
+    "番茄": 1,
+    "鸡蛋": 1
+   },
+   "fused_qwen_down": {
+    "番茄": 1,
+    "西兰花": 1,
+    "鸡蛋": 1
+   }
+  },
+  {
+   "file": "food_022.jpg",
+   "scene": "深色木桌，部分遮挡",
+   "truth": {
+    "蘑菇": 1,
+    "青椒": 1,
+    "黄瓜": 1
+   },
+   "yolo_items": [
+    {
+     "name": "cucumber",
+     "quantity": 1,
+     "confidence": 0.5557
+    },
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.5283
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "青椒",
+     "quantity": 1
+    },
+    {
+     "name": "黄瓜",
+     "quantity": 1
+    },
+    {
+     "name": "蘑菇",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.027553799911402166,
+   "qwen_seconds": 3.631520099937916,
+   "yolo": {
+    "黄瓜": 1,
+    "青椒": 1
+   },
+   "qwen": {
+    "青椒": 1,
+    "黄瓜": 1,
+    "蘑菇": 1
+   },
+   "union": {
+    "黄瓜": 1,
+    "青椒": 1,
+    "蘑菇": 1
+   },
+   "fused": {
+    "青椒": 1,
+    "黄瓜": 1,
+    "蘑菇": 1
+   },
+   "fused_qwen_down": {
+    "黄瓜": 1,
+    "青椒": 1
+   }
+  },
+  {
+   "file": "food_023.jpg",
+   "scene": "竹木砧板，分开摆放",
+   "truth": {
+    "茄子": 1,
+    "番茄": 1
+   },
+   "yolo_items": [
+    {
+     "name": "tomato",
+     "quantity": 1,
+     "confidence": 0.8312
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "茄子",
+     "quantity": 1
+    },
+    {
+     "name": "番茄",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.030812400043942034,
+   "qwen_seconds": 3.298525199992582,
+   "yolo": {
+    "番茄": 1
+   },
+   "qwen": {
+    "茄子": 1,
+    "番茄": 1
+   },
+   "union": {
+    "番茄": 1,
+    "茄子": 1
+   },
+   "fused": {
+    "茄子": 1,
+    "番茄": 1
+   },
+   "fused_qwen_down": {
+    "番茄": 1
+   }
+  },
+  {
+   "file": "food_024.jpg",
+   "scene": "石材台面，分开摆放",
+   "truth": {
+    "洋葱": 1,
+    "土豆": 1
+   },
+   "yolo_items": [
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.6618
+    },
+    {
+     "name": "potato",
+     "quantity": 1,
+     "confidence": 0.5858
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "洋葱",
+     "quantity": 1
+    },
+    {
+     "name": "土豆",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.031246800092048943,
+   "qwen_seconds": 2.8581012999638915,
+   "yolo": {
+    "鸡蛋": 1,
+    "土豆": 1
+   },
+   "qwen": {
+    "洋葱": 1,
+    "土豆": 1
+   },
+   "union": {
+    "鸡蛋": 1,
+    "土豆": 1,
+    "洋葱": 1
+   },
+   "fused": {
+    "洋葱": 1,
+    "土豆": 1
+   },
+   "fused_qwen_down": {
+    "鸡蛋": 1,
+    "土豆": 1
+   }
+  },
+  {
+   "file": "food_025.jpg",
+   "scene": "白色托盘，分开摆放",
+   "truth": {
+    "茄子": 1,
+    "青椒": 1,
+    "鸡蛋": 1
+   },
+   "yolo_items": [
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.8949
+    },
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.7959
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "茄子",
+     "quantity": 1
+    },
+    {
+     "name": "青椒",
+     "quantity": 1
+    },
+    {
+     "name": "鸡蛋",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.03060229995753616,
+   "qwen_seconds": 3.525421699974686,
+   "yolo": {
+    "青椒": 1,
+    "鸡蛋": 1
+   },
+   "qwen": {
+    "茄子": 1,
+    "青椒": 1,
+    "鸡蛋": 1
+   },
+   "union": {
+    "青椒": 1,
+    "鸡蛋": 1,
+    "茄子": 1
+   },
+   "fused": {
+    "茄子": 1,
+    "青椒": 1,
+    "鸡蛋": 1
+   },
+   "fused_qwen_down": {
+    "青椒": 1,
+    "鸡蛋": 1
+   }
+  },
+  {
+   "file": "food_026.jpg",
+   "scene": "深色木桌，互相靠在一起",
+   "truth": {
+    "洋葱": 1,
+    "胡萝卜": 1,
+    "西兰花": 1
+   },
+   "yolo_items": [
+    {
+     "name": "carrot",
+     "quantity": 1,
+     "confidence": 0.8852
+    },
+    {
+     "name": "broccoli",
+     "quantity": 1,
+     "confidence": 0.8447
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "西兰花",
+     "quantity": 1
+    },
+    {
+     "name": "胡萝卜",
+     "quantity": 1
+    },
+    {
+     "name": "洋葱",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.03021620004437864,
+   "qwen_seconds": 3.8172803999623284,
+   "yolo": {
+    "胡萝卜": 1,
+    "西兰花": 1
+   },
+   "qwen": {
+    "西兰花": 1,
+    "胡萝卜": 1,
+    "洋葱": 1
+   },
+   "union": {
+    "胡萝卜": 1,
+    "西兰花": 1,
+    "洋葱": 1
+   },
+   "fused": {
+    "西兰花": 1,
+    "胡萝卜": 1,
+    "洋葱": 1
+   },
+   "fused_qwen_down": {
+    "胡萝卜": 1,
+    "西兰花": 1
+   }
+  },
+  {
+   "file": "food_027.jpg",
+   "scene": "竹木砧板，分开摆放",
+   "truth": {
+    "番茄": 2,
+    "鸡蛋": 3
+   },
+   "yolo_items": [
+    {
+     "name": "tomato",
+     "quantity": 2,
+     "confidence": 0.9279
+    },
+    {
+     "name": "egg",
+     "quantity": 3,
+     "confidence": 0.8845
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "番茄",
+     "quantity": 2
+    },
+    {
+     "name": "鸡蛋",
+     "quantity": 3
+    }
+   ],
+   "yolo_seconds": 0.030179900000803173,
+   "qwen_seconds": 3.2195832999423146,
+   "yolo": {
+    "番茄": 2,
+    "鸡蛋": 3
+   },
+   "qwen": {
+    "番茄": 2,
+    "鸡蛋": 3
+   },
+   "union": {
+    "番茄": 2,
+    "鸡蛋": 3
+   },
+   "fused": {
+    "番茄": 2,
+    "鸡蛋": 3
+   },
+   "fused_qwen_down": {
+    "番茄": 2,
+    "鸡蛋": 3
+   }
+  },
+  {
+   "file": "food_028.jpg",
+   "scene": "石材台面，堆叠",
+   "truth": {
+    "土豆": 2,
+    "胡萝卜": 2
+   },
+   "yolo_items": [
+    {
+     "name": "carrot",
+     "quantity": 1,
+     "confidence": 0.9219
+    },
+    {
+     "name": "potato",
+     "quantity": 1,
+     "confidence": 0.7934
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "土豆",
+     "quantity": 2
+    },
+    {
+     "name": "胡萝卜",
+     "quantity": 2
+    }
+   ],
+   "yolo_seconds": 0.03212470002472401,
+   "qwen_seconds": 3.3727404000237584,
+   "yolo": {
+    "胡萝卜": 1,
+    "土豆": 1
+   },
+   "qwen": {
+    "土豆": 2,
+    "胡萝卜": 2
+   },
+   "union": {
+    "胡萝卜": 2,
+    "土豆": 2
+   },
+   "fused": {
+    "土豆": 2,
+    "胡萝卜": 2
+   },
+   "fused_qwen_down": {
+    "胡萝卜": 1,
+    "土豆": 1
+   }
+  },
+  {
+   "file": "food_029.jpg",
+   "scene": "白色托盘，堆叠",
+   "truth": {
+    "青椒": 2,
+    "蘑菇": 3
+   },
+   "yolo_items": [
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.8817
+    },
+    {
+     "name": "cabbage",
+     "quantity": 1,
+     "confidence": 0.6263
+    },
+    {
+     "name": "mushroom",
+     "quantity": 2,
+     "confidence": 0.6254
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "青椒",
+     "quantity": 2
+    },
+    {
+     "name": "蘑菇",
+     "quantity": 3
+    }
+   ],
+   "yolo_seconds": 0.03292559995315969,
+   "qwen_seconds": 3.2525261000264436,
+   "yolo": {
+    "青椒": 1,
+    "卷心菜": 1,
+    "蘑菇": 2
+   },
+   "qwen": {
+    "青椒": 2,
+    "蘑菇": 3
+   },
+   "union": {
+    "青椒": 2,
+    "卷心菜": 1,
+    "蘑菇": 3
+   },
+   "fused": {
+    "青椒": 2,
+    "蘑菇": 3
+   },
+   "fused_qwen_down": {
+    "青椒": 1,
+    "卷心菜": 1,
+    "蘑菇": 2
+   }
+  },
+  {
+   "file": "food_030.jpg",
+   "scene": "深色木桌，分开摆放",
+   "truth": {
+    "卷心菜": 1,
+    "南瓜": 1,
+    "黄瓜": 1
+   },
+   "yolo_items": [
+    {
+     "name": "cabbage",
+     "quantity": 1,
+     "confidence": 0.9429
+    },
+    {
+     "name": "pumpkin",
+     "quantity": 1,
+     "confidence": 0.9245
+    },
+    {
+     "name": "cucumber",
+     "quantity": 1,
+     "confidence": 0.8951
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "卷心菜",
+     "quantity": 1
+    },
+    {
+     "name": "南瓜",
+     "quantity": 1
+    },
+    {
+     "name": "黄瓜",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.03097149997483939,
+   "qwen_seconds": 3.9337349000852555,
+   "yolo": {
+    "卷心菜": 1,
+    "南瓜": 1,
+    "黄瓜": 1
+   },
+   "qwen": {
+    "卷心菜": 1,
+    "南瓜": 1,
+    "黄瓜": 1
+   },
+   "union": {
+    "卷心菜": 1,
+    "南瓜": 1,
+    "黄瓜": 1
+   },
+   "fused": {
+    "卷心菜": 1,
+    "南瓜": 1,
+    "黄瓜": 1
+   },
+   "fused_qwen_down": {
+    "卷心菜": 1,
+    "南瓜": 1,
+    "黄瓜": 1
+   }
+  },
+  {
+   "file": "food_031.jpg",
+   "scene": "塑料购物袋敞口内，部分遮挡",
+   "truth": {
+    "西兰花": 1,
+    "鸡蛋": 1,
+    "土豆": 1,
+    "番茄": 1
+   },
+   "yolo_items": [
+    {
+     "name": "egg",
+     "quantity": 1,
+     "confidence": 0.8982
+    },
+    {
+     "name": "tomato",
+     "quantity": 1,
+     "confidence": 0.863
+    },
+    {
+     "name": "broccoli",
+     "quantity": 1,
+     "confidence": 0.8353
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "西兰花",
+     "quantity": 1
+    },
+    {
+     "name": "番茄",
+     "quantity": 1
+    },
+    {
+     "name": "土豆",
+     "quantity": 1
+    },
+    {
+     "name": "鸡蛋",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.02962769998703152,
+   "qwen_seconds": 4.339629999944009,
+   "yolo": {
+    "鸡蛋": 1,
+    "番茄": 1,
+    "西兰花": 1
+   },
+   "qwen": {
+    "西兰花": 1,
+    "番茄": 1,
+    "土豆": 1,
+    "鸡蛋": 1
+   },
+   "union": {
+    "鸡蛋": 1,
+    "番茄": 1,
+    "西兰花": 1,
+    "土豆": 1
+   },
+   "fused": {
+    "西兰花": 1,
+    "番茄": 1,
+    "土豆": 1,
+    "鸡蛋": 1
+   },
+   "fused_qwen_down": {
+    "鸡蛋": 1,
+    "番茄": 1,
+    "西兰花": 1
+   }
+  },
+  {
+   "file": "food_032.jpg",
+   "scene": "不锈钢水槽边的沥水篮，互相靠在一起",
+   "truth": {
+    "黄瓜": 1,
+    "胡萝卜": 1,
+    "青椒": 1,
+    "蘑菇": 1
+   },
+   "yolo_items": [
+    {
+     "name": "bell_pepper",
+     "quantity": 1,
+     "confidence": 0.9203
+    },
+    {
+     "name": "cucumber",
+     "quantity": 1,
+     "confidence": 0.904
+    }
+   ],
+   "qwen_items": [
+    {
+     "name": "黄瓜",
+     "quantity": 1
+    },
+    {
+     "name": "胡萝卜",
+     "quantity": 1
+    },
+    {
+     "name": "青椒",
+     "quantity": 1
+    },
+    {
+     "name": "蘑菇",
+     "quantity": 1
+    }
+   ],
+   "yolo_seconds": 0.03041129990015179,
+   "qwen_seconds": 4.193199099972844,
+   "yolo": {
+    "青椒": 1,
+    "黄瓜": 1
+   },
+   "qwen": {
+    "黄瓜": 1,
+    "胡萝卜": 1,
+    "青椒": 1,
+    "蘑菇": 1
+   },
+   "union": {
+    "青椒": 1,
+    "黄瓜": 1,
+    "胡萝卜": 1,
+    "蘑菇": 1
+   },
+   "fused": {
+    "黄瓜": 1,
+    "胡萝卜": 1,
+    "青椒": 1,
+    "蘑菇": 1
+   },
+   "fused_qwen_down": {
+    "青椒": 1,
+    "黄瓜": 1
+   }
+  }
+ ]
+}
