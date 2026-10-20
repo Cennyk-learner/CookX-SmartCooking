@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The backend runs on a user-specified LAN address (http://<PC IPv4>:8000), so cleartext must be allowed. -->
+<!-- Local business requests are intercepted; online model and audio traffic use HTTPS only. -->
 <network-security-config>
-    <base-config cleartextTrafficPermitted="true">
+    <base-config cleartextTrafficPermitted="false">
         <trust-anchors><certificates src="system" /></trust-anchors>
     </base-config>
 </network-security-config>

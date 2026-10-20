@@ -187,7 +187,7 @@ fun HouseholdScreen(navigator: Navigator) {
 
 @Composable
 private fun FamilyBody(vm: HouseholdViewModel, d: JsonObject, invite: String?, personal: JsonObject?, busy: Boolean, confirm: Confirmer, onCopy: (String) -> Unit) {
-    val family = vm.selected.value
+    val family by vm.selected.collectAsStateWithLifecycle()
     val membership = d.obj("membership") ?: EmptyObject
     val admin = membership.str("role") == "admin"
     val members = d.objects("members")

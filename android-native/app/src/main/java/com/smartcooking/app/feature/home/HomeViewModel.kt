@@ -6,6 +6,7 @@ import com.smartcooking.app.core.AppContainer
 import com.smartcooking.app.core.asArray
 import com.smartcooking.app.core.asBool
 import com.smartcooking.app.core.asObject
+import com.smartcooking.app.core.num
 import com.smartcooking.app.data.FreshnessState
 import com.smartcooking.app.data.InventoryItem
 import com.smartcooking.app.data.Recipe
@@ -46,6 +47,7 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
     init {
         refresh()
         viewModelScope.launch { c.inventory.changed.collect { if (it == c.sessions.currentUserId) refresh() } }
+        viewModelScope.launch { c.api.changed.collect { refresh() } }
     }
 
     fun refresh() {
@@ -55,8 +57,10 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
             _state.update { it.copy(loading = true, error = false, freshness = FreshnessState.Idle) }
             try {
                 val rows = c.inventory.read(user)
+                if (c.sessions.currentUserId != user) return@launch
                 _state.update { it.copy(inventory = rows, loading = false, freshness = FreshnessState.Loading) }
                 val fresh = runCatching { c.inventory.freshness(user) }.getOrElse { e -> FreshnessState.Failed(e.message ?: "鲜度暂不可用") }
+                if (c.sessions.currentUserId != user) return@launch
                 _state.update { it.copy(freshness = fresh) }
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
@@ -66,11 +70,13 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
         viewModelScope.launch {
             runCatching {
                 val history = safeHistory(c.api.get("/chat-history", mapOf("user_id" to user)))
+                if (c.sessions.currentUserId != user) return@launch
                 _state.update { s -> s.copy(latestRecipe = history.lastOrNull { it.recipe != null }?.recipe) }
             }
             runCatching {
-                val rows = c.api.get("/notifications", mapOf("user_id" to user)).asArray().orEmpty().mapNotNull { it.asObject() }
-                _state.update { s -> s.copy(unread = rows.count { r -> r["isRead"].asBool() != true && r["is_read"].asBool() != true }) }
+                val summary = c.api.get("/notifications/summary", mapOf("user_id" to user)).asObject()
+                if (c.sessions.currentUserId != user) return@launch
+                _state.update { s -> s.copy(unread = summary?.num("unread")?.toInt() ?: 0) }
             }
         }
     }

@@ -1,0 +1,969 @@
+[
+  {
+    "item": {
+      "name": "番茄",
+      "storage_type": "冷藏",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-29T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 55.33,
+      "freshness_level": "consume_soon",
+      "freshness_label": "建议尽快食用",
+      "component_scores": {
+        "T": 0.5,
+        "V": null,
+        "S": 0.7,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 0.733333,
+        "S": 0.266667
+      },
+      "unavailable_components": [
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.7,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [],
+      "reasons": [
+        "时间鲜度T=0.50",
+        "命中tomato类别的refrigerated储存规则：可接受的储存方式",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "valid",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-29T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": 0.7,
+        "status": "acceptable",
+        "storage_type": "refrigerated",
+        "category": "tomato",
+        "match_type": "category_rule",
+        "reason": "命中tomato类别的refrigerated储存规则：可接受的储存方式"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "番茄",
+      "storage_type": "冷藏",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-26T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 18.67,
+      "freshness_level": "expired",
+      "freshness_label": "已过期",
+      "component_scores": {
+        "T": 0.0,
+        "V": null,
+        "S": 0.7,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 0.733333,
+        "S": 0.266667
+      },
+      "unavailable_components": [
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.7,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": true,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [
+        "expired"
+      ],
+      "reasons": [
+        "根据有效时间字段，该食材已超过到期时间",
+        "命中tomato类别的refrigerated储存规则：可接受的储存方式",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "expired",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-26T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": 0.7,
+        "status": "acceptable",
+        "storage_type": "refrigerated",
+        "category": "tomato",
+        "match_type": "category_rule",
+        "reason": "命中tomato类别的refrigerated储存规则：可接受的储存方式"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "番茄",
+      "storage_type": "冷藏",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": null
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 70.0,
+      "freshness_level": "good",
+      "freshness_label": "状态良好",
+      "component_scores": {
+        "T": null,
+        "V": null,
+        "S": 0.7,
+        "H": null
+      },
+      "effective_weights": {
+        "S": 1.0
+      },
+      "unavailable_components": [
+        "T",
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.2,
+      "confidence_level": "low",
+      "confidence_reasons": [
+        "时间字段不足，降低可信度",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [],
+      "reasons": [
+        "缺少可验证的购买/入库与到期信息，时间鲜度不可用",
+        "命中tomato类别的refrigerated储存规则：可接受的储存方式",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "缺少合法到期时间或保质期",
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "unknown",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": null
+      },
+      "storage_details": {
+        "score": 0.7,
+        "status": "acceptable",
+        "storage_type": "refrigerated",
+        "category": "tomato",
+        "match_type": "category_rule",
+        "reason": "命中tomato类别的refrigerated储存规则：可接受的储存方式"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "鸡蛋",
+      "storage_type": "常温",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-29T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 44.67,
+      "freshness_level": "consume_soon",
+      "freshness_label": "建议尽快食用",
+      "component_scores": {
+        "T": 0.5,
+        "V": null,
+        "S": 0.3,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 0.733333,
+        "S": 0.266667
+      },
+      "unavailable_components": [
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.7,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [],
+      "reasons": [
+        "时间鲜度T=0.50",
+        "命中egg类别的room_temperature储存规则：储存方式不够理想",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "valid",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-29T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": 0.3,
+        "status": "suboptimal",
+        "storage_type": "room_temperature",
+        "category": "egg",
+        "match_type": "category_rule",
+        "reason": "命中egg类别的room_temperature储存规则：储存方式不够理想"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "鸡蛋",
+      "storage_type": "常温",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-26T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 8.0,
+      "freshness_level": "expired",
+      "freshness_label": "已过期",
+      "component_scores": {
+        "T": 0.0,
+        "V": null,
+        "S": 0.3,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 0.733333,
+        "S": 0.266667
+      },
+      "unavailable_components": [
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.7,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": true,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [
+        "expired"
+      ],
+      "reasons": [
+        "根据有效时间字段，该食材已超过到期时间",
+        "命中egg类别的room_temperature储存规则：储存方式不够理想",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "expired",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-26T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": 0.3,
+        "status": "suboptimal",
+        "storage_type": "room_temperature",
+        "category": "egg",
+        "match_type": "category_rule",
+        "reason": "命中egg类别的room_temperature储存规则：储存方式不够理想"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "鸡蛋",
+      "storage_type": "常温",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": null
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 30.0,
+      "freshness_level": "high_risk",
+      "freshness_label": "鲜度风险较高",
+      "component_scores": {
+        "T": null,
+        "V": null,
+        "S": 0.3,
+        "H": null
+      },
+      "effective_weights": {
+        "S": 1.0
+      },
+      "unavailable_components": [
+        "T",
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.2,
+      "confidence_level": "low",
+      "confidence_reasons": [
+        "时间字段不足，降低可信度",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [],
+      "reasons": [
+        "缺少可验证的购买/入库与到期信息，时间鲜度不可用",
+        "命中egg类别的room_temperature储存规则：储存方式不够理想",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "缺少合法到期时间或保质期",
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "unknown",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": null
+      },
+      "storage_details": {
+        "score": 0.3,
+        "status": "suboptimal",
+        "storage_type": "room_temperature",
+        "category": "egg",
+        "match_type": "category_rule",
+        "reason": "命中egg类别的room_temperature储存规则：储存方式不够理想"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "豆腐",
+      "storage_type": "冷冻",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-29T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 55.33,
+      "freshness_level": "consume_soon",
+      "freshness_label": "建议尽快食用",
+      "component_scores": {
+        "T": 0.5,
+        "V": null,
+        "S": 0.7,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 0.733333,
+        "S": 0.266667
+      },
+      "unavailable_components": [
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.7,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [],
+      "reasons": [
+        "时间鲜度T=0.50",
+        "命中tofu类别的frozen储存规则：可接受的储存方式",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "valid",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-29T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": 0.7,
+        "status": "acceptable",
+        "storage_type": "frozen",
+        "category": "tofu",
+        "match_type": "category_rule",
+        "reason": "命中tofu类别的frozen储存规则：可接受的储存方式"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "豆腐",
+      "storage_type": "冷冻",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-26T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 18.67,
+      "freshness_level": "expired",
+      "freshness_label": "已过期",
+      "component_scores": {
+        "T": 0.0,
+        "V": null,
+        "S": 0.7,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 0.733333,
+        "S": 0.266667
+      },
+      "unavailable_components": [
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.7,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": true,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [
+        "expired"
+      ],
+      "reasons": [
+        "根据有效时间字段，该食材已超过到期时间",
+        "命中tofu类别的frozen储存规则：可接受的储存方式",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "expired",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-26T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": 0.7,
+        "status": "acceptable",
+        "storage_type": "frozen",
+        "category": "tofu",
+        "match_type": "category_rule",
+        "reason": "命中tofu类别的frozen储存规则：可接受的储存方式"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "豆腐",
+      "storage_type": "冷冻",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": null
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 70.0,
+      "freshness_level": "good",
+      "freshness_label": "状态良好",
+      "component_scores": {
+        "T": null,
+        "V": null,
+        "S": 0.7,
+        "H": null
+      },
+      "effective_weights": {
+        "S": 1.0
+      },
+      "unavailable_components": [
+        "T",
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.2,
+      "confidence_level": "low",
+      "confidence_reasons": [
+        "时间字段不足，降低可信度",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [],
+      "reasons": [
+        "缺少可验证的购买/入库与到期信息，时间鲜度不可用",
+        "命中tofu类别的frozen储存规则：可接受的储存方式",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "缺少合法到期时间或保质期",
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "unknown",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": null
+      },
+      "storage_details": {
+        "score": 0.7,
+        "status": "acceptable",
+        "storage_type": "frozen",
+        "category": "tofu",
+        "match_type": "category_rule",
+        "reason": "命中tofu类别的frozen储存规则：可接受的储存方式"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "牛肉",
+      "storage_type": "常温",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-29T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 36.67,
+      "freshness_level": "high_risk",
+      "freshness_label": "鲜度风险较高",
+      "component_scores": {
+        "T": 0.5,
+        "V": null,
+        "S": 0.0,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 0.733333,
+        "S": 0.266667
+      },
+      "unavailable_components": [
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.7,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [
+        "storage_unsuitable"
+      ],
+      "reasons": [
+        "时间鲜度T=0.50",
+        "命中raw_meat类别的room_temperature储存规则：储存方式明显不适宜",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "valid",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-29T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": 0.0,
+        "status": "unsuitable",
+        "storage_type": "room_temperature",
+        "category": "raw_meat",
+        "match_type": "category_rule",
+        "reason": "命中raw_meat类别的room_temperature储存规则：储存方式明显不适宜"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "牛肉",
+      "storage_type": "常温",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-26T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 0.0,
+      "freshness_level": "expired",
+      "freshness_label": "已过期",
+      "component_scores": {
+        "T": 0.0,
+        "V": null,
+        "S": 0.0,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 0.733333,
+        "S": 0.266667
+      },
+      "unavailable_components": [
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.7,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": true,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [
+        "expired",
+        "storage_unsuitable"
+      ],
+      "reasons": [
+        "根据有效时间字段，该食材已超过到期时间",
+        "命中raw_meat类别的room_temperature储存规则：储存方式明显不适宜",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "expired",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-26T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": 0.0,
+        "status": "unsuitable",
+        "storage_type": "room_temperature",
+        "category": "raw_meat",
+        "match_type": "category_rule",
+        "reason": "命中raw_meat类别的room_temperature储存规则：储存方式明显不适宜"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "牛肉",
+      "storage_type": "常温",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": null
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 0.0,
+      "freshness_level": "high_risk",
+      "freshness_label": "鲜度风险较高",
+      "component_scores": {
+        "T": null,
+        "V": null,
+        "S": 0.0,
+        "H": null
+      },
+      "effective_weights": {
+        "S": 1.0
+      },
+      "unavailable_components": [
+        "T",
+        "V",
+        "H"
+      ],
+      "confidence_score": 0.2,
+      "confidence_level": "low",
+      "confidence_reasons": [
+        "时间字段不足，降低可信度",
+        "储存方式命中维护规则",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [
+        "storage_unsuitable"
+      ],
+      "reasons": [
+        "缺少可验证的购买/入库与到期信息，时间鲜度不可用",
+        "命中raw_meat类别的room_temperature储存规则：储存方式明显不适宜",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "缺少合法到期时间或保质期",
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "unknown",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": null
+      },
+      "storage_details": {
+        "score": 0.0,
+        "status": "unsuitable",
+        "storage_type": "room_temperature",
+        "category": "raw_meat",
+        "match_type": "category_rule",
+        "reason": "命中raw_meat类别的room_temperature储存规则：储存方式明显不适宜"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "牛奶",
+      "storage_type": "冷藏",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-29T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 50.0,
+      "freshness_level": "consume_soon",
+      "freshness_label": "建议尽快食用",
+      "component_scores": {
+        "T": 0.5,
+        "V": null,
+        "S": null,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 1.0
+      },
+      "unavailable_components": [
+        "V",
+        "S",
+        "H"
+      ],
+      "confidence_score": 0.5,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存适配度不可用",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [],
+      "reasons": [
+        "时间鲜度T=0.50",
+        "当前规则表未覆盖该食材",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "当前规则表未覆盖该食材",
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "valid",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-29T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": null,
+        "status": "unknown",
+        "storage_type": "refrigerated",
+        "category": null,
+        "match_type": null,
+        "reason": "当前规则表未覆盖该食材"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "牛奶",
+      "storage_type": "冷藏",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": "2026-09-26T00:00:00Z"
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": 0.0,
+      "freshness_level": "expired",
+      "freshness_label": "已过期",
+      "component_scores": {
+        "T": 0.0,
+        "V": null,
+        "S": null,
+        "H": null
+      },
+      "effective_weights": {
+        "T": 1.0
+      },
+      "unavailable_components": [
+        "V",
+        "S",
+        "H"
+      ],
+      "confidence_score": 0.5,
+      "confidence_level": "medium",
+      "confidence_reasons": [
+        "时间字段完整且可计算",
+        "储存适配度不可用",
+        "未包含可靠视觉输入"
+      ],
+      "expired": true,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [
+        "expired"
+      ],
+      "reasons": [
+        "根据有效时间字段，该食材已超过到期时间",
+        "当前规则表未覆盖该食材",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "当前规则表未覆盖该食材",
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "expired",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": "2026-09-26T00:00:00+00:00"
+      },
+      "storage_details": {
+        "score": null,
+        "status": "unknown",
+        "storage_type": "refrigerated",
+        "category": null,
+        "match_type": null,
+        "reason": "当前规则表未覆盖该食材"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  },
+  {
+    "item": {
+      "name": "牛奶",
+      "storage_type": "冷藏",
+      "purchase_time": "2026-09-25T00:00:00Z",
+      "expiry_date": null
+    },
+    "expected": {
+      "algorithm_version": "freshfusion_v1",
+      "fresh_score": null,
+      "freshness_level": "unknown",
+      "freshness_label": "数据不足",
+      "component_scores": {
+        "T": null,
+        "V": null,
+        "S": null,
+        "H": null
+      },
+      "effective_weights": {},
+      "unavailable_components": [
+        "T",
+        "V",
+        "S",
+        "H"
+      ],
+      "confidence_score": 0.0,
+      "confidence_level": "low",
+      "confidence_reasons": [
+        "时间字段不足，降低可信度",
+        "储存适配度不可用",
+        "未包含可靠视觉输入"
+      ],
+      "expired": false,
+      "critical": false,
+      "expiring_soon": false,
+      "risk_flags": [],
+      "reasons": [
+        "缺少可验证的购买/入库与到期信息，时间鲜度不可用",
+        "当前规则表未覆盖该食材",
+        "暂无可靠视觉鲜度输入"
+      ],
+      "data_quality_notes": [
+        "缺少合法到期时间或保质期",
+        "当前规则表未覆盖该食材",
+        "暂无可靠视觉鲜度输入",
+        "当前温度传感器用于烹饪锅温感知，不代表食材储存环境温度，因此未参与鲜度融合。"
+      ],
+      "time_details": {
+        "status": "unknown",
+        "start_time": "2026-09-25T00:00:00+00:00",
+        "expiry_time": null
+      },
+      "storage_details": {
+        "score": null,
+        "status": "unknown",
+        "storage_type": "refrigerated",
+        "category": null,
+        "match_type": null,
+        "reason": "当前规则表未覆盖该食材"
+      },
+      "visual_details": null,
+      "disclaimer": "结果为基于现有数据的辅助判断，不能替代专业食品安全检测。"
+    }
+  }
+]

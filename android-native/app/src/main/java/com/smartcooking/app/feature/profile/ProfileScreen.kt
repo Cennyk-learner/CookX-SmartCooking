@@ -120,17 +120,12 @@ fun ProfileScreen(navigator: Navigator) {
         if (openNotices) { container.events.openNotices.value = false; showNotices = true; vm.loadNotices() }
     }
 
-    ProfileContent(
+    ExperienceProfile(
         session = session,
         state = state,
-        connection = connection,
-        savedDevice = container.bluetooth.savedAddress != null,
         onNotices = { showNotices = true; scope.launch { vm.loadNotices() } },
-        onEdit = { editing = true },
         onOpen = navigator::open,
         onKitchen = { navigator.tab(Routes.KITCHEN) },
-        onLogout = { confirmLogout = true },
-        onAppearance = { appearance = true },
     )
     if (appearance) CookXSheet("外观", { appearance = false }, subtitle = "默认浅色；实时厨房与烹饪页面始终使用深色摄影风格。") {
         Appearance.options.forEach { (value, label) ->
@@ -149,7 +144,9 @@ fun ProfileScreen(navigator: Navigator) {
             }
         }
     }
-    if (showNotices) NotificationsSheet(state, { showNotices = false }) { id -> vm.markRead(id, messenger::show) }
+    if (showNotices) NotificationsSheet(state, { showNotices = false }, { id -> vm.markRead(id, messenger::show) },
+        onOpen = { n -> vm.markRead(n.id, {}); showNotices = false; if (n.entityType == "shopping") navigator.open(Routes.SHOPPING) else { container.events.focusInventory.value = n.entityId; navigator.tab(Routes.FRIDGE) } },
+        onArchive = vm::archive, onRefresh = { scope.launch { vm.loadNotices() } }, onMore = { vm.moreNotices() })
     if (editing) session?.let { EditProfileSheet(it, vm, state) { editing = false } }
     if (confirmLogout) ConfirmDialog("退出登录", "确定要退出登录吗？", { confirmLogout = false; vm.logout(messenger::show) }, { confirmLogout = false }, confirmText = "退出")
 }
@@ -260,11 +257,15 @@ fun ProfileContent(
 private fun Modifier.offsetUp() = this.overlapHero(26.dp)
 
 @Composable
-private fun NotificationsSheet(state: ProfileState, onDismiss: () -> Unit, onRead: (String) -> Unit) {
+private fun NotificationsSheet(state: ProfileState, onDismiss: () -> Unit, onRead: (String) -> Unit, onOpen: (Notice) -> Unit = {}, onArchive: (String) -> Unit = {}, onRefresh: () -> Unit = {}, onMore: () -> Unit = {}) {
     var tab by remember { mutableStateOf("all") }
     CookXSheet("消息中心", onDismiss, subtitle = "食材临期与系统通知") {
         SegmentedTabs(listOf(Choice("all", "全部"), Choice("expire", "食材临期"), Choice("system", "系统通知")), tab, { tab = it })
         Spacer(Modifier.height(12.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            TonalButton("全部已读", { onRead("") })
+            TonalButton("刷新", onRefresh)
+        }
         val list = state.notices.orEmpty().filter { tab == "all" || it.type == tab }
         if (list.isEmpty()) EmptyState(Icons.Outlined.NotificationsNone, "暂无消息", "有新的提醒时会出现在这里")
         list.forEach { n ->
@@ -281,8 +282,13 @@ private fun NotificationsSheet(state: ProfileState, onDismiss: () -> Unit, onRea
                     Text(n.time, fontSize = 11.sp, color = CookX.TextTertiary, modifier = Modifier.weight(1f))
                     if (!n.read) TonalButton("标记已读", { onRead(n.id) })
                 }
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    if (n.entityType != null) TonalButton(if(n.entityType == "shopping") "查看采购" else "查看食材并处理", { onOpen(n) })
+                    TonalButton("归档", { onArchive(n.id) })
+                }
             }
         }
+        if (state.hasMoreNotices) OutlineButton("加载更多消息", onMore, Modifier.fillMaxWidth())
     }
 }
 

@@ -106,14 +106,31 @@ class CommunityViewModel(c: AppContainer) : BusinessViewModel(c, "community") {
     val navigateCopy = MutableStateFlow<String?>(null)
     val isAdmin = c.sessions.session.value?.isAdmin == true
 
-    init { load() }
+    init { load(); viewModelScope.launch { c.api.changed.collect { runCatching { refreshPosts() } } } }
+    private suspend fun refreshPosts() {
+        val result = c.business.get(if (tab.value == "hot") "/community/hot" else "/community/posts?mine=${tab.value == "mine"}&bookmarked=${tab.value == "saved"}")
+        if (c.sessions.currentUserId == user) posts.value = result.objects("items")
+    }
+    fun bookmark(post: JsonObject) = viewModelScope.launch {
+        try { c.business.call("/community/posts/${post.str("id")}/bookmark", "POST", jsonOf("bookmarked" to !post.bool("bookmarked"))); refreshPosts() }
+        catch (e: CancellationException) { throw e } catch (e: Exception) { command.setError(e.userMessage()) }
+    }
+    fun removeImage(id: String) = viewModelScope.launch {
+        try { c.api.delete("/v3/community/media/$id"); draft.value = draft.value.copy(images = draft.value.images - id) }
+        catch (e: CancellationException) { throw e } catch (e: Exception) { command.setError(e.userMessage()) }
+    }
+    fun discard() = viewModelScope.launch {
+        if (uploading.value || command.busy.value || command.pending.value != null) return@launch
+        try { draft.value.images.forEach { c.api.delete("/v3/community/media/$it") }; draft.value = PostDraft() }
+        catch (e: CancellationException) { throw e } catch (e: Exception) { command.setError(e.userMessage()) }
+    }
 
     fun setTab(t: String) { tab.value = t; load() }
 
     fun load() = launchLoad {
         posts.value = null
         coroutineScope {
-            val list = async { c.business.get(if (tab.value == "hot") "/community/hot" else "/community/posts?mine=${tab.value == "mine"}") }
+            val list = async { c.business.get(if (tab.value == "hot") "/community/hot" else "/community/posts?mine=${tab.value == "mine"}&bookmarked=${tab.value == "saved"}") }
             val sources = async { c.business.get("/recipes/sources?kind=copy") }
             val result = list.await()
             rule.value = result.str("rule").orEmpty()
@@ -168,13 +185,13 @@ fun CommunityScreen(navigator: Navigator) {
     val confirm = rememberConfirmer()
     navigateCopy?.let { id -> vm.navigateCopy.value = null; navigator.open(Routes.recipes(copy = id)) }
 
-    SubpageScaffold("一起晒菜", navigator::back, subtitle = "仅已加入内测的账号可见。发帖由你主动确认，个人库存、家庭信息和温度日志不会自动公开。") {
+    SubpageScaffold("一起晒菜", navigator::back, subtitle = "作品、点赞与评论保存在这台手机内，方便交流展示。发布不会发送到线上社区。") {
         item {
             Column(Modifier.overlapHero(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 CommandStatus(vm, Modifier.padding(horizontal = 16.dp))
                 Composer(vm, busy, confirm)
                 Box(Modifier.padding(horizontal = 16.dp)) {
-                    SegmentedTabs(listOf(Choice("all", "大家的作品"), Choice("mine", "我的作品"), Choice("hot", "近七天热门")), tab, vm::setTab, enabled = !busy)
+                    SegmentedTabs(listOf(Choice("all", "大家的作品"), Choice("mine", "我的作品"), Choice("hot", "热门作品"), Choice("saved", "收藏作品")), tab, vm::setTab, enabled = !busy)
                 }
                 if (tab == "hot" && rule.isNotBlank()) Text(rule, fontSize = 12.sp, color = CookX.TextSecondary, modifier = Modifier.padding(horizontal = 16.dp))
             }
@@ -218,7 +235,7 @@ private fun Composer(vm: CommunityViewModel, busy: Boolean, confirm: Confirmer) 
             draft.images.forEach { id ->
                 Box(Modifier.weight(1f).aspectRatio(1f)) {
                     CommunityImage(id, Modifier.matchParentSize())
-                    Box(Modifier.align(Alignment.TopEnd).padding(4.dp).size(22.dp).clip(CircleShape).background(Color(0x99000000)).pressable({ vm.draft.value = draft.copy(images = draft.images - id) }), contentAlignment = Alignment.Center) {
+                    Box(Modifier.align(Alignment.TopEnd).padding(4.dp).size(22.dp).clip(CircleShape).background(Color(0x99000000)).pressable({ vm.removeImage(id) }), contentAlignment = Alignment.Center) {
                         Icon(Icons.Outlined.Close, "移除此图片", tint = Color.White, modifier = Modifier.size(14.dp))
                     }
                 }
@@ -240,10 +257,10 @@ private fun Composer(vm: CommunityViewModel, busy: Boolean, confirm: Confirmer) 
             supporting = "没有结构化菜谱的作品只作交流展示，不能作为可执行教程。")
         Spacer(Modifier.height(12.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            PrimaryButton(if (draft.editing != null) "确认更新作品" else "发布给内测成员", {
-                confirm.ask("确认分享", "发布后所有内测成员都能查看这些图片、文字及关联菜谱。确认发布？", vm::publish)
+            PrimaryButton(if (draft.editing != null) "确认更新作品" else "发布作品", {
+                confirm.ask("确认分享", "将这些图片、文字及关联菜谱加入本机社区。确认发布？", vm::publish)
             }, Modifier.weight(1f), enabled = !busy && !uploading && draft.text.isNotBlank())
-            if (draft.editing != null) OutlineButton("取消编辑", { vm.draft.value = PostDraft() }, color = CookX.TextSecondary)
+            if (draft.editing != null || draft.images.isNotEmpty() || draft.text.isNotBlank()) OutlineButton("放弃草稿", { vm.discard() }, enabled = !busy && !uploading, color = CookX.TextSecondary)
         }
     }
 }
@@ -286,7 +303,7 @@ private fun PostCard(vm: CommunityViewModel, post: JsonObject, busy: Boolean, co
                     enabled = !busy, icon = Icons.Outlined.ContentCopy, tone = Tone.Warm)
             }
         }
-        if (!hidden) Engagement(vm, id)
+        if (!hidden) { TonalButton(if (post.bool("bookmarked")) "已收藏作品" else "收藏作品", { vm.bookmark(post) }, enabled = !busy); Engagement(vm, id) }
         Row(Modifier.padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
             if (post.str("owner") == vm.user) {
                 LinkButton("编辑", { vm.edit(post) }, icon = Icons.Outlined.Edit, color = CookX.Primary, enabled = !busy)

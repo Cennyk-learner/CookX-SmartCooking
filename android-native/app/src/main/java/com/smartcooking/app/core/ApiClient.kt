@@ -41,7 +41,8 @@ class ApiException(
     val detail: JsonElement? get() = body.asObject()?.get("detail")
 }
 
-class ApiClient(private val sessions: SessionManager) {
+class ApiClient(private val sessions: SessionManager, local: Interceptor? = null) {
+    val changed = MutableSharedFlow<Unit>(extraBufferCapacity = 16)
     private val _unauthorized = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
     /** Emitted when the API rejects the current token; the app returns to login. */
     val unauthorized: SharedFlow<Unit> = _unauthorized
@@ -63,6 +64,7 @@ class ApiClient(private val sessions: SessionManager) {
         .readTimeout(60, TimeUnit.SECONDS)
         .callTimeout(30, TimeUnit.SECONDS)
         .addInterceptor(authInterceptor)
+        .apply { if (local != null) addInterceptor(local) }
         .build()
 
     fun url(path: String, query: Map<String, Any?> = emptyMap()): String {
@@ -121,6 +123,8 @@ class ApiClient(private val sessions: SessionManager) {
         val text = response.body.toString(Charsets.UTF_8)
         val json = if (text.isBlank()) JsonNull else runCatching { AppJson.parseToJsonElement(text) }.getOrElse { JsonPrimitive(text) }
         if (!response.successful) throw ApiException(errorMessage(json, response.code), response.code, json)
+        if (json.asObject()?.str("status") == "error") throw ApiException(errorMessage(json, response.code), response.code, json)
+        if (request.method != "GET" || request.url.encodedPath.endsWith("/recommend-recipe")) changed.tryEmit(Unit)
         return json
     }
 
@@ -154,7 +158,7 @@ class ApiClient(private val sessions: SessionManager) {
 
     private fun transportError(e: IOException): ApiException = when (e) {
         is SocketTimeoutException, is InterruptedIOException -> ApiException("请求超时，请检查网络后重试", isTimeout = true, cause = e)
-        is ConnectException, is UnknownHostException -> ApiException("无法连接后端（${sessions.backendOrigin}），请确认电脑与手机在同一局域网", cause = e)
+        is ConnectException, is UnknownHostException -> ApiException("联网服务连接失败，请检查手机网络或稍后重试", cause = e)
         else -> ApiException(e.message ?: "网络异常，请重试", cause = e)
     }
 

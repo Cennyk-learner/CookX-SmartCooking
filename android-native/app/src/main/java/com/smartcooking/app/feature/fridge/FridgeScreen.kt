@@ -129,8 +129,7 @@ private val categoryTints = mapOf(
 )
 
 private fun daysLeft(state: FridgeState, item: InventoryItem): Int? {
-    val expiry = Time.parseMillis(state.freshness.detail(item.id)?.timeDetails?.str("expiry_time")) ?: return null
-    return ceil((expiry - System.currentTimeMillis()) / 86_400_000.0).toInt()
+    return state.freshness.detail(item.id)?.daysRemaining
 }
 
 /** Maps the fridge state to the overview card numbers, urgent items and category tiles. */
@@ -183,6 +182,14 @@ fun FridgeScreen(navigator: Navigator) {
         runCatching { camera.launch(uri) }.onFailure { messenger.show("没有可用的相机应用，请从相册选择") }
     }
 
+    val focused by container.events.focusInventory.collectAsStateWithLifecycle()
+    LaunchedEffect(focused, state.loading, state.inventory) {
+        val id = focused ?: return@LaunchedEffect
+        if (!state.loading) {
+            container.events.focusInventory.value = null
+            state.inventory.firstOrNull { it.id == id }?.let(vm::openEdit) ?: messenger.show("该批次已处理，请查看当前库存")
+        }
+    }
     val startRecognition by container.events.startRecognition.collectAsStateWithLifecycle()
     LaunchedEffect(startRecognition) {
         if (startRecognition) { container.events.startRecognition.value = false; pickSource = true }
@@ -205,7 +212,7 @@ fun FridgeScreen(navigator: Navigator) {
 
     FridgeEditorSheet(vm, state)
 
-    if (recommend) CookXSheet("用这些食材能做什么", { recommend = false }, subtitle = "按新鲜度、营养、口味与难度综合排序；只使用冰箱里已确认的食材。") {
+    if (recommend) CookXSheet("用这些食材能做什么", { recommend = false }, subtitle = "根据已记录的可用食材匹配内置菜谱；缺少的食材需另行准备。") {
         LaunchedEffect(Unit) { vm.loadInspiration() }
         RecommendationsSection(state.revision, state.ready, { recommend = false; vm.openAdd() }, { recommend = false; navigator.open(Routes.LEARNING) }) { dish ->
             recommend = false
@@ -219,6 +226,10 @@ fun FridgeScreen(navigator: Navigator) {
         ListRow("从相册选择", subtitle = "选择一张已有的食材照片", icon = Icons.Outlined.PhotoLibrary, tone = Tone.Warm,
             onClick = { pickSource = false; gallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) })
         ListRow("手动添加", subtitle = "填写名称、数量与保质期", icon = Icons.Outlined.EditNote, tone = Tone.Neutral, onClick = { pickSource = false; vm.openAdd() })
+        ListRow("体验示例食材", subtitle = "预置案例，可体验确认与入库流程；不是照片识别结果", icon = Icons.Outlined.EditNote, tone = Tone.Neutral,
+            onClick = { pickSource = false; vm.sample { navigator.open(Routes.CAPTURE_CONFIRM) } })
+        val uid = container.sessions.currentUserId
+        if (uid != null && container.drafts.load(uid).isNotEmpty()) ListRow("继续上次草稿", subtitle = "恢复尚未入库的食材", onClick = { pickSource = false; navigator.open(Routes.CAPTURE_CONFIRM) })
         Spacer(Modifier.height(8.dp))
         Text("识别结果仅作为候选，确认后才会入库；图片在上传前会压缩。", style = MaterialTheme.typography.bodySmall, color = CookX.TextSecondary)
     }

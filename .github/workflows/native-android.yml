@@ -3,7 +3,7 @@ on:
   pull_request:
     paths: ['android-native/**', '.github/workflows/native-android.yml']
   push:
-    branches: [main, feat/native-ui-redesign, feat/p2-local-test-apk, feat/native-offline-showcase]
+    branches: [main, feat/native-ui-redesign, feat/p2-local-test-apk, feat/native-offline-showcase, feat/competition-demo]
     paths: ['android-native/**', '.github/workflows/native-android.yml']
 permissions:
   contents: read
@@ -25,7 +25,7 @@ jobs:
         run: |
           sdkmanager "platforms;android-36" "build-tools;35.0.0"
           chmod +x gradlew
-          ./gradlew :app:assembleDebug :app:testDebugUnitTest --no-daemon
+          ./gradlew :app:assembleDebug :app:testDebugUnitTest :app:lintRelease --no-daemon
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -33,4 +33,5 @@ jobs:
           path: |
             android-native/app/build/outputs/apk/debug/*.apk
             android-native/app/build/reports/tests/
-            android-native/screenshots/
+            android-native/app/screenshots/
+            android-native/app/build/reports/lint-results-release.*

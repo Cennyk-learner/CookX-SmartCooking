@@ -133,6 +133,10 @@ fun KitchenScreen(navigator: Navigator) {
     var showSense by remember { mutableStateOf(false) }
     var showTools by remember { mutableStateOf(false) }
     var showAlert by remember { mutableStateOf(false) }
+    val mainVoice by vm.voiceUi.collectAsStateWithLifecycle()
+    val mainMic = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { ok ->
+        if (ok) vm.listen() else vm.voiceUi.value = vm.voiceUi.value.copy(commandStatus = "麦克风权限未授予，可输入指令或点击步骤按钮")
+    }
 
     val btPermissions = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
         if (result.values.all { it }) { showDevice = true; vm.scan()?.let(messenger::show) } else messenger.show("请允许 CookX 使用附近设备权限")
@@ -177,6 +181,13 @@ fun KitchenScreen(navigator: Navigator) {
                 onBack = vm::exitCooking, onTools = { showTools = true }, onPrevious = vm::previous, onNext = vm::next,
                 onAdvice = { showTools = true }, onAlert = { showAlert = true }, onTrend = { showSense = true },
             ),
+            voiceContent = {
+                VoiceCommandCard(mainVoice,
+                    onListen = { mainMic.launch(android.Manifest.permission.RECORD_AUDIO) },
+                    onCancel = vm::cancelListening, onText = vm::setCommandText,
+                    onRun = { vm.interpret(mainVoice.commandText, 1f) }, onExecute = vm::execute,
+                    onDismiss = { vm.voiceUi.value = mainVoice.copy(pendingCommands = emptyList()) })
+            },
         )
     } else {
         LiveKitchenContent(

@@ -129,7 +129,7 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
     }
 
     fun send(text: String) {
-        if (text.isBlank() || user.isBlank()) return
+        if (text.isBlank() || user.isBlank() || c.sessions.currentUserId != user) return
         recipeJob?.cancel()
         recipeJob = viewModelScope.launch {
             _chat.update { it.copy(messages = it.messages + ChatMessage("user", text), loading = true, error = null, lastPrompt = text) }
@@ -138,7 +138,7 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
                 if (c.sessions.currentUserId != user) return@launch
                 if (res?.str("status") != "success") throw ApiException(res?.str("message") ?: "菜谱服务未返回成功结果")
                 val recipe = Recipe.normalize(res["recipe"])
-                _chat.update { it.copy(messages = it.messages + ChatMessage("assistant", "为你准备好了：${recipe.dishName}", recipe)) }
+                _chat.update { it.copy(messages = it.messages + ChatMessage("assistant", res.str("notice") ?: "为你准备好了：${recipe.dishName}", recipe)) }
             } catch (e: CancellationException) { throw e } catch (e: Exception) {
                 _chat.update { it.copy(error = if ((e as? ApiException)?.isTimeout == true) "菜谱请求超时，请重试" else e.userMessage()) }
             } finally { _chat.update { it.copy(loading = false) } }
@@ -248,11 +248,11 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
     fun runCloudStep() {
         viewModelScope.launch {
             try {
-                val res = c.api.get("/tts", mapOf("text" to stepText()), timeoutMs = 30_000).asObject()
-                val url = res?.str("audio_url") ?: throw ApiException("在线播报不可用")
-                voice.playCloud(c.api.bytes(url, 30_000))
+                val text = stepText()
+                val audio = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { c.local.gateway.tts(text) }
+                if (c.sessions.currentUserId == user && text == stepText()) voice.playCloud(audio)
             } catch (e: CancellationException) { throw e } catch (e: Exception) {
-                voiceUi.update { it.copy(message = "在线播报不可用，步骤与计时不受影响") }
+                voiceUi.update { it.copy(message = "在线播报不可用：${e.userMessage()}。可使用系统语音，步骤与计时不受影响。") }
             }
         }
     }
@@ -278,8 +278,10 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
                 val result = voice.listenOnce()
                 voiceUi.update { it.copy(commandText = result.text) }
                 interpret(result.text, result.confidence)
+            } catch (e: kotlinx.coroutines.TimeoutCancellationException) {
+                voiceUi.update { it.copy(commandStatus = "未收到识别结果，请再试一次") }
             } catch (e: CancellationException) { throw e } catch (e: Exception) {
-                voiceUi.update { it.copy(commandStatus = if (e is kotlinx.coroutines.TimeoutCancellationException) "未收到识别结果，请再试一次" else e.userMessage()) }
+                voiceUi.update { it.copy(commandStatus = e.userMessage()) }
             } finally { voiceUi.update { it.copy(listening = false) } }
         }
     }
@@ -297,8 +299,11 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
     }
 
     fun execute(command: String) {
+        if (!_cooking.value || !engine.ready || engine.state.value?.active != true || c.sessions.currentUserId != user) {
+            voiceUi.update { it.copy(pendingCommands = emptyList(), commandStatus = "当前没有正在进行的烹饪，请先开始指导") }
+            return
+        }
         voiceUi.update { it.copy(pendingCommands = emptyList(), commandStatus = "执行：${VoiceCommands.labels[command]}") }
-        if (!_cooking.value || c.sessions.currentUserId != user) return
         when (command) {
             "next" -> next()
             "previous" -> previous()
@@ -314,6 +319,9 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
                 val a = temperature.assessment.value
                 voiceUi.update { it.copy(message = if (t == null) "暂无有效实时温度，请检查设备与测量状态" else "${if (temperature.replaying.value) "回放数据" else "当前测量"}：${"%.1f".format(t)}℃；${a.phaseLabel}") }
             }
+        }
+        if (command in listOf("next", "previous", "repeat")) voiceUi.update {
+            it.copy(commandStatus = if (showCompletion.value) "已到最后一步，请核对烹饪完成情况" else "已${if (command == "repeat") "重播" else "切换到"}第 ${(engine.state.value?.stepIndex ?: 0) + 1} 步")
         }
     }
 

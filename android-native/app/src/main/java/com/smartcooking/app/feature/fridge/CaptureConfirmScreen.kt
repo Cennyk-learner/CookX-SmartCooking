@@ -21,6 +21,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -78,6 +81,11 @@ class CaptureConfirmViewModel(private val c: AppContainer) : ViewModel() {
     fun update(index: Int, form: InventoryForm) = persist(_state.value.items.mapIndexed { i, d -> if (i == index) d.copy(form = form) else d })
     fun remove(index: Int) = persist(_state.value.items.filterIndexed { i, _ -> i != index })
     fun release() { user?.let(c.inventory::dismissPendingWrite); _state.update { it.copy(pendingWrite = false, error = null) } }
+    fun discard(onDone: () -> Unit) {
+        if (_state.value.saving || _state.value.pendingWrite) return
+        if (user != null && !c.drafts.clear(user)) { _state.update { it.copy(error = "草稿清除失败，请重试") }; return }
+        _state.update { it.copy(items = emptyList()) }; onDone()
+    }
 
     fun save(onSaved: () -> Unit) {
         val user = user ?: return
@@ -103,17 +111,18 @@ fun CaptureConfirmScreen(navigator: Navigator) {
     val vm = cookxViewModel { CaptureConfirmViewModel(it) }
     val state by vm.state.collectAsStateWithLifecycle()
     val messenger = LocalMessenger.current
+    var confirmDiscard by remember { mutableStateOf(false) }
     val items = state.items
     val kinds = items.map { FoodCatalog.key(it.form.name) }.filter { it.isNotEmpty() }.toSet().size
     val total = items.sumOf { it.form.quantity.toFiniteOrNull() ?: 0.0 }.toLong()
     val minShelf = items.mapNotNull { it.form.shelfLife.toFiniteOrNull()?.takeIf { d -> d > 0 } }.minOrNull()
 
     SubpageScaffold(
-        "识别结果确认", navigator::back,
+        if (items.any { it.source == "sample" }) "示例食材确认" else "识别结果确认", navigator::back,
         subtitle = "请确认识别出的食材及数量，必要时修改后再加入冰箱",
         heroExtra = {
             Spacer(Modifier.height(12.dp))
-            StatusChip("AI 识别完成", Tone.Fresh, icon = Icons.Outlined.CheckCircle)
+            StatusChip(if (items.any { it.source == "sample" }) "预置示例 · 非照片识别结果" else "AI 识别完成", Tone.Fresh, icon = Icons.Outlined.CheckCircle)
         },
         bottomBar = if (items.isEmpty()) null else { {
             Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
@@ -124,6 +133,10 @@ fun CaptureConfirmScreen(navigator: Navigator) {
                     PrimaryButton("确认加入冰箱（${items.size}项）", {
                         vm.save { messenger.show("已重新读取库存并确认保存"); navigator.tab(Routes.FRIDGE) }
                     }, Modifier.weight(1f), loading = state.saving)
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    OutlineButton("保留草稿返回", navigator::back, enabled = !state.saving)
+                    OutlineButton("放弃并清空", { confirmDiscard = true }, enabled = !state.saving && !state.pendingWrite)
                 }
             }
         } },
@@ -171,6 +184,9 @@ fun CaptureConfirmScreen(navigator: Navigator) {
             }
         }
     }
+    if (confirmDiscard) com.smartcooking.app.ui.components.ConfirmDialog("放弃这批食材草稿", "仅清空尚未入库的草稿，冰箱库存不会改变。", {
+        confirmDiscard = false; vm.discard { navigator.tab(Routes.FRIDGE) }
+    }, { confirmDiscard = false }, confirmText = "清空草稿")
 }
 
 @Composable

@@ -16,3 +16,4 @@ jobs:
           test ! -d frontend/src/localtest
           test ! -f frontend/.env.localtest
           test ! -f frontend/scripts/build-localtest.mjs
+          test ! -d android-native/app/src/main/java/com/smartcooking/app/offline

@@ -159,6 +159,10 @@ class VoiceService(private val context: Context) {
         }
     }
 
+    fun dispose() {
+        stopListening(); stopAll(); tts?.shutdown(); tts = null
+    }
+
     fun stopListening() {
         recognizer?.let { runCatching { it.cancel(); it.destroy() } }
         recognizer = null
@@ -171,7 +175,7 @@ object VoiceCommands {
         "pauseTimer" to "暂停计时", "resumeTimer" to "继续计时", "temperature" to "查询温度",
     )
     private val phrases = mapOf(
-        "next" to listOf("下一步", "下一个步骤"), "previous" to listOf("上一步", "上一个步骤"),
+        "next" to listOf("下一步", "下一个步骤", "下一步操作", "继续下一步", "请进入下一步", "请下一步"), "previous" to listOf("上一步", "上一个步骤", "返回上一步"),
         "repeat" to listOf("重复", "重复播报", "再说一遍", "重新播报"), "startTimer" to listOf("开始计时"),
         "pauseTimer" to listOf("暂停计时", "停止计时"), "resumeTimer" to listOf("继续计时", "恢复计时"),
         "temperature" to listOf("查询温度", "现在多少度", "现在的温度", "温度是多少"),
@@ -179,12 +183,14 @@ object VoiceCommands {
 
     data class Parsed(val text: String, val matches: List<String>, val confirmed: Boolean)
 
-    /** Exact matches with confidence ≥ 0.8 run directly; anything else needs a tap to confirm. */
+    /** Missing optional scores are acceptable only for exact, reversible navigation commands. */
     fun parse(text: String, confidence: Float?): Parsed {
         val normalized = text.replace(Regex("[，。！？、,.!?\\s]"), "")
+        if (listOf("不要", "别", "不需要", "不用", "取消").any { normalized.contains(it) }) return Parsed(text, emptyList(), false)
         val exact = phrases.filter { normalized in it.value }.keys.toList()
         val matches = exact.ifEmpty { phrases.filter { (_, v) -> v.any { normalized.contains(it) } }.keys.toList() }
-        val trustworthy = confidence != null && confidence in 0.8f..1f
+        val trustworthy = (confidence != null && confidence in 0.8f..1f) ||
+            (confidence == null && exact.singleOrNull() in listOf("next", "previous", "repeat"))
         return Parsed(text, matches, exact.size == 1 && trustworthy)
     }
 }

@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -380,6 +381,13 @@ class BluetoothService(private val context: Context, private val store: KeyValue
             "info" to info, "state" to _connection.value.state.id, "lastFrameAt" to _lastFrameAt.value,
             "records" to JsonArray(list), "hardwareAcceptance" to "待真机验收；日志不构成识别准确率结论",
         )
+    }
+
+    fun dispose() {
+        stopDiscovery()
+        disconnect()
+        if (receiverRegistered) { runCatching { context.unregisterReceiver(receiver) }; receiverRegistered = false }
+        scope.cancel()
     }
 
     private fun closeResources() {

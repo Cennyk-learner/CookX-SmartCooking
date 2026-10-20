@@ -11,4 +11,9 @@ class CookXApp : Application() {
         super.onCreate()
         container = AppContainer(this)
     }
+
+    fun reloadContainer() {
+        container.dispose()
+        container = AppContainer(this)
+    }
 }

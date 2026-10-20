@@ -26,6 +26,15 @@ data class Freshness(val raw: JsonObject) {
     val expired: Boolean get() = raw.bool("expired")
     val critical: Boolean get() = raw.bool("critical")
     val expiringSoon: Boolean get() = raw.bool("expiring_soon")
+    val daysRemaining: Int? get() = raw.num("days_remaining")?.toInt()
+    val expiryLabel: String get() = when (raw.str("expiry_state")) {
+        "expired" -> "已过期"
+        "expires_today" -> "今天到期"
+        "critical_1d" -> "明天到期，请优先使用"
+        "expiring_2d" -> "2 天内到期"
+        "normal" -> "还有 ${daysRemaining ?: "—"} 天到期"
+        else -> "到期信息待补充"
+    }
     val label: String? get() = raw.str("freshness_label")
     val freshScore: Double? get() = raw.num("fresh_score")
     val confidence: Double? get() = raw.num("confidence_score")
@@ -44,7 +53,7 @@ data class Freshness(val raw: JsonObject) {
     val status: FreshnessStatus
         get() = when {
             expired -> FreshnessStatus(FreshLevel.EXPIRED, "已过期", "已过期")
-            critical || expiringSoon -> FreshnessStatus(FreshLevel.SOON, "临期", "临期，请查看评估依据")
+            critical || expiringSoon -> FreshnessStatus(FreshLevel.SOON, expiryLabel, expiryLabel)
             componentScore("T") == null -> FreshnessStatus(FreshLevel.UNKNOWN, "信息不足", "保质期信息不足")
             else -> FreshnessStatus(FreshLevel.FRESH, label ?: "已评估", label ?: "已评估，请查看依据")
         }

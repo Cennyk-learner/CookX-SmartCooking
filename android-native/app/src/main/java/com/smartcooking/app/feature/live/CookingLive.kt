@@ -93,7 +93,7 @@ fun predictCurve(state: LiveState): List<LivePoint> {
  * and CookX's advice. Step controls float at the bottom; everything else lives behind "…".
  */
 @Composable
-fun CookingContent(state: LiveState, modifier: Modifier = Modifier, dishImage: Painter? = null, actions: CookingActions = CookingActions(), animate: Boolean = true) {
+fun CookingContent(state: LiveState, modifier: Modifier = Modifier, dishImage: Painter? = null, actions: CookingActions = CookingActions(), animate: Boolean = true, voiceContent: @Composable () -> Unit = {}) {
     val session = state.session
     var origin by remember { mutableStateOf(Offset.Zero) }
     var size by remember { mutableStateOf(0 to 0) }
@@ -105,6 +105,8 @@ fun CookingContent(state: LiveState, modifier: Modifier = Modifier, dishImage: P
             Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).topInset().padding(horizontal = 16.dp).padding(bottom = 96.dp)) {
                 TopBar(actions)
                 RecipeCard(session, dishImage)
+                Spacer(Modifier.height(10.dp))
+                voiceContent()
                 Spacer(Modifier.height(6.dp))
                 GaugeBlock(state, actions)
                 EtaBlock(state)

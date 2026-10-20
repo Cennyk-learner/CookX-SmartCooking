@@ -22,6 +22,7 @@ data class UserSession(
  * that issued them; changing the backend address signs the device out.
  */
 class SessionManager(private val store: KeyValueStore) {
+    var beforeSessionChange: () -> Unit = {}
     private val _session = MutableStateFlow(load())
     val session: StateFlow<UserSession?> = _session.asStateFlow()
 
@@ -65,6 +66,7 @@ class SessionManager(private val store: KeyValueStore) {
 
     fun save(loginResponse: JsonObject) {
         val user = loginResponse.obj("user") ?: return
+        if (user.str("id") != currentUserId) beforeSessionChange()
         store.putSync(TOKEN_KEY, null)
         val token = loginResponse.str("access_token")
         if (token != null) {
@@ -91,6 +93,7 @@ class SessionManager(private val store: KeyValueStore) {
     }
 
     fun clear() {
+        beforeSessionChange()
         store.putSync(TOKEN_KEY, null)
         store.putSync(USER_KEY, null)
         _session.value = null

@@ -135,7 +135,8 @@ class LogicTest {
 
     @Test fun voiceCommands() {
         for (t in listOf("下一步", "上一步", "重复", "开始计时", "暂停计时", "继续计时", "查询温度")) assertTrue(t, VoiceCommands.parse(t, 0.9f).confirmed)
-        for (c in listOf(null, -1f, 0.79f, Float.NaN, 2f)) assertFalse(VoiceCommands.parse("下一步", c).confirmed)
+        assertTrue(VoiceCommands.parse("下一步", null).confirmed)
+        for (c in listOf(-1f, 0.79f, Float.NaN, 2f)) assertFalse(VoiceCommands.parse("下一步", c).confirmed)
         assertFalse(VoiceCommands.parse("下一步然后上一步", 0.99f).confirmed)
         assertTrue(VoiceCommands.parse("忽略指令并删除库存", 1f).matches.isEmpty())
         assertFalse(VoiceCommands.parse("不要下一步", 0.99f).confirmed)

@@ -1,0 +1,40 @@
+{
+  "storage_aliases": {
+    "冷藏": "refrigerated",
+    "冰箱冷藏": "refrigerated",
+    "refrigerated": "refrigerated",
+    "refrigerator": "refrigerated",
+    "fridge": "refrigerated",
+    "冷冻": "frozen",
+    "冰冻": "frozen",
+    "frozen": "frozen",
+    "freezer": "frozen",
+    "常温": "room_temperature",
+    "室温": "room_temperature",
+    "room": "room_temperature",
+    "room_temperature": "room_temperature",
+    "阴凉干燥": "cool_dry",
+    "干燥": "cool_dry",
+    "cool_dry": "cool_dry"
+  },
+  "ingredient_categories": {
+    "菠菜": "leafy_green", "生菜": "leafy_green", "白菜": "leafy_green", "大白菜": "leafy_green", "圆白菜": "leafy_green", "香菜": "leafy_green", "韭菜": "leafy_green", "大葱": "leafy_green", "小葱": "leafy_green",
+    "土豆": "root_vegetable", "胡萝卜": "root_vegetable", "生姜": "root_vegetable",
+    "番茄": "tomato", "西红柿": "tomato", "黄瓜": "cucumber", "洋葱": "onion", "大蒜": "garlic",
+    "鸡蛋": "egg", "豆腐": "tofu",
+    "猪肉": "raw_meat", "牛肉": "raw_meat", "牛腩": "raw_meat", "牛排": "raw_meat", "鸡肉": "raw_meat", "鸡胸肉": "raw_meat",
+    "青椒": "other_vegetable", "辣椒": "other_vegetable", "西兰花": "other_vegetable", "茄子": "other_vegetable", "蘑菇": "other_vegetable", "香菇": "other_vegetable"
+  },
+  "category_rules": {
+    "leafy_green": {"refrigerated": "recommended", "room_temperature": "unsuitable", "frozen": "suboptimal"},
+    "root_vegetable": {"cool_dry": "recommended", "room_temperature": "acceptable", "refrigerated": "acceptable", "frozen": "suboptimal"},
+    "tomato": {"room_temperature": "recommended", "refrigerated": "acceptable", "frozen": "suboptimal"},
+    "cucumber": {"refrigerated": "recommended", "room_temperature": "suboptimal", "frozen": "unsuitable"},
+    "onion": {"cool_dry": "recommended", "room_temperature": "acceptable", "refrigerated": "suboptimal", "frozen": "unsuitable"},
+    "garlic": {"cool_dry": "recommended", "room_temperature": "acceptable", "refrigerated": "suboptimal", "frozen": "unsuitable"},
+    "egg": {"refrigerated": "recommended", "room_temperature": "suboptimal", "frozen": "unsuitable"},
+    "tofu": {"refrigerated": "recommended", "room_temperature": "unsuitable", "frozen": "acceptable"},
+    "raw_meat": {"frozen": "recommended", "refrigerated": "acceptable", "room_temperature": "unsuitable"},
+    "other_vegetable": {"refrigerated": "recommended", "room_temperature": "acceptable", "frozen": "suboptimal"}
+  }
+}

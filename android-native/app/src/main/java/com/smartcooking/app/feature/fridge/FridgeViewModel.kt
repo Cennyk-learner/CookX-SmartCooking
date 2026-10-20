@@ -207,6 +207,17 @@ class FridgeViewModel(private val c: AppContainer) : ViewModel() {
     var lastRecognitionError: String = ""
         private set
 
+    fun sample(onReady: () -> Unit) {
+        val uid = user ?: return
+        try {
+            c.drafts.save(uid, listOf("番茄", "鸡蛋", "西兰花").map {
+                DraftItem(InventoryForm(name = it, quantity = "2", storageType = "冷藏", shelfLife = "7"),
+                    freshnessLabel = "预置示例，储存信息需要核对", source = "sample")
+            })
+            onReady()
+        } catch (e: Exception) { lastRecognitionError = e.userMessage(); _state.update { it.copy(recognition = RecognitionStatus.ERROR) } }
+    }
+
     fun resetRecognition() {
         recognitionJob?.cancel()
         _state.update { it.copy(recognition = RecognitionStatus.IDLE, uploadPercent = 0, elapsed = 0) }

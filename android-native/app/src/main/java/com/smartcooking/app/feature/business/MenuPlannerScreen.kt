@@ -86,6 +86,7 @@ private val roleNames = mapOf("main" to "主菜", "staple" to "主食", "side" t
 private val nutrients = listOf("kcal" to "能量（kcal）", "protein_g" to "蛋白质（克）", "fat_g" to "脂肪（克）", "carb_g" to "碳水（克）")
 private val solverLabels = mapOf(
     "OPTIMAL" to "已找到最优解", "FEASIBLE" to "已找到可行解（尚未证明全部目标最优）", "INFEASIBLE" to "当前约束无解",
+    "NEEDS_ADJUSTMENT" to "请调整条件或补齐数据", "UNKNOWN" to "暂未找到可行组合",
     "TIMEOUT" to "求解超时，尚无可行方案", "NEEDS_DATA" to "缺少验证约束所需的数据", "MODEL_INVALID" to "求解模型异常，请联系维护者",
 )
 private fun mealName(id: String?) = meals.firstOrNull { it.first == id }?.second ?: id.orEmpty()
@@ -143,7 +144,7 @@ class MenuPlannerViewModel(c: AppContainer) : BusinessViewModel(c, "planning") {
         }
     }
 
-    fun edit(t: (PlanForm) -> PlanForm) = form.update(t)
+    fun edit(t: (PlanForm) -> PlanForm) { form.update(t); draft.value = null }
     fun setPrice(i: Int, v: String) = prices.update { l -> l.mapIndexed { idx, p -> if (idx == i) p.copy(third = v) else p } }
 
     fun choices(meal: String, role: String) = recipes.value.filter { r ->
@@ -154,6 +155,10 @@ class MenuPlannerViewModel(c: AppContainer) : BusinessViewModel(c, "planning") {
 
     fun preview() {
         val f = form.value
+        val invalid = f.portion.toFiniteOrNull() == null || f.maxMinutes.toIntOrNull() == null || f.maxRepeat.toIntOrNull() == null ||
+            (f.budget.isNotBlank() && f.budget.toFiniteOrNull() == null) ||
+            f.bounds.values.any { (a,b) -> a.isNotBlank() && a.toFiniteOrNull() == null || b.isNotBlank() && b.toFiniteOrNull() == null }
+        if (invalid) { command.setError("请检查份量、时长、重复次数、预算和营养目标；无效输入不会自动替换为默认值。"); return }
         draft.value = null
         val nutrition = f.bounds.filter { it.value.first.isNotBlank() || it.value.second.isNotBlank() }
             .mapValues { mapOf("min" to it.value.first.toFiniteOrNull(), "max" to it.value.second.toFiniteOrNull()) }
@@ -169,6 +174,8 @@ class MenuPlannerViewModel(c: AppContainer) : BusinessViewModel(c, "planning") {
             "utc_offset_hours" to java.util.TimeZone.getDefault().getOffset(System.currentTimeMillis()) / 3_600_000.0,
         ))
     }
+
+    fun defaultPreview() { form.value = PlanForm(people = 2, confirmed = true); preview() }
 
     fun savePrices() = send("/planning/prices", "put", jsonOf("expected_version" to priceVersion,
         "items" to prices.value.filter { it.third.isNotBlank() }.map { mapOf("name" to it.first, "unit" to it.second, "price" to it.third.toFiniteOrNull()) }))
@@ -224,6 +231,9 @@ fun MenuPlannerScreen(navigator: Navigator) {
         item {
             Column(Modifier.overlapHero(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 CommandStatus(vm, Modifier.padding(horizontal = 16.dp))
+                Section("家常七日预设", icon = Icons.Outlined.CalendarMonth, subtitle = "2 人 · 午晚餐各主菜与主食 · 单菜最多 3 次 · 120 分钟内；使用工程份量估算，不设预算和营养硬目标。") {
+                    PrimaryButton("接受预设并生成菜单", vm::defaultPreview, Modifier.fillMaxWidth(), enabled = !busy)
+                }
                 Section("选择餐次", icon = Icons.Outlined.CalendarMonth, subtitle = "点选需要安排的餐次（已选 ${f.slots.size} 个）") {
                     WeekGrid(f.slots) { key -> vm.edit { it.copy(slots = if (key in it.slots) it.slots - key else it.slots + key) } }
                     SwitchRow("每个所选餐次增加配菜", f.side, { v -> vm.edit { it.copy(side = v) } })
@@ -285,7 +295,7 @@ fun MenuPlannerScreen(navigator: Navigator) {
                         TonalButton("保存价格", vm::savePrices, Modifier.padding(top = 10.dp), enabled = !busy)
                     }
                     Expandable("营养数据与规划模板来源") {
-                        Text("USDA FoodData Central SR Legacy April 2018；未匹配的食材保持缺失，带营养硬约束时排除对应菜谱。", fontSize = 12.sp, color = CookX.TextSecondary)
+                        Text("USDA FoodData Central SR Legacy April 2018。下列证据随菜谱内置；未匹配的食材保持缺失，营养硬约束会排除数据不全的菜谱。", fontSize = 12.sp, color = CookX.TextSecondary)
                         recipes.forEach { r ->
                             val pn = r.obj("planning_nutrition")
                             ItemBlock("${r.str("name")} · ${r.obj("_planning")?.num("servings")?.clean()} 人份", Modifier.padding(top = 8.dp),
@@ -353,7 +363,7 @@ private fun PreviewSection(vm: MenuPlannerViewModel, d: JsonObject, planName: St
     val status = r.str("solver_status")
     val money = { v: Double? -> v?.let { "%.2f 元".format(it) } ?: "数据不足" }
     Section(solverLabels[status] ?: status.orEmpty(), icon = Icons.Outlined.Science,
-        trailing = { StatusChip(status.orEmpty(), if (status == "OPTIMAL" || status == "FEASIBLE") Tone.Fresh else Tone.Danger) }) {
+        trailing = { StatusChip(if (status == "FEASIBLE") "可执行" else "需调整", if (status == "OPTIMAL" || status == "FEASIBLE") Tone.Fresh else Tone.Danger) }) {
         r["issues"].asArray().orEmpty().forEach { i ->
             val o = i as? JsonObject
             Banner(o?.let { "${it.str("reason")}（${it.str("slot")} ${roleNames[it.str("role")].orEmpty()}）" } ?: i.asText().orEmpty(), BannerKind.Warning, Modifier.padding(bottom = 6.dp))

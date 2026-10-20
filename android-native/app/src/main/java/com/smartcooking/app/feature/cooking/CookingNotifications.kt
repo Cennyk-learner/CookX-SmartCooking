@@ -28,9 +28,11 @@ class CookingNotifications(private val context: Context, private val store: KeyV
     private val alarms = context.getSystemService(AlarmManager::class.java)
 
     init {
+        if (Build.VERSION.SDK_INT >= 26) {
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(NotificationChannel(TIMER_CHANNEL, context.getString(R.string.timer_channel), NotificationManager.IMPORTANCE_HIGH))
         manager.createNotificationChannel(NotificationChannel(EVENT_CHANNEL, context.getString(R.string.event_channel), NotificationManager.IMPORTANCE_DEFAULT))
+        }
     }
 
     private fun prefKey(user: String) = "cookx:reminders:v1:$user"

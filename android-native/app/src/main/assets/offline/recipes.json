@@ -1,0 +1,4973 @@
+[
+  {
+    "id": "recipe_001",
+    "name": "番茄炒鸡蛋",
+    "ingredients": [
+      {
+        "name": "番茄",
+        "amount": 2,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "鸡蛋",
+        "amount": 3,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "小葱",
+        "amount": 1,
+        "unit": "根",
+        "required": false
+      }
+    ],
+    "cooking_time": 15,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "酸甜",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "番茄切块，鸡蛋打散。"
+      },
+      {
+        "id": "step-2",
+        "text": "先炒熟鸡蛋并盛出。"
+      },
+      {
+        "id": "step-3",
+        "text": "炒软番茄，放回鸡蛋和盐翻匀。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "番茄炒鸡蛋",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "番茄",
+        "amount": 2,
+        "unit": "个"
+      },
+      {
+        "item": "鸡蛋",
+        "amount": 3,
+        "unit": "个"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "番茄",
+      "鸡蛋",
+      "食用油",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 379.004,
+        "protein_g": 21.0048,
+        "fat_g": 28.357,
+        "carb_g": 10.6494
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "番茄",
+          "amount": 2,
+          "unit": "个",
+          "grams_per_unit": 123.0,
+          "fdc_id": 170457,
+          "description": "Tomatoes, red, ripe, raw, year round average",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "86686",
+              "fdc_id": "170457",
+              "seq_num": "6",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "medium whole (2-3/5\" dia)",
+              "gram_weight": "123",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "鸡蛋",
+          "amount": 3,
+          "unit": "个",
+          "grams_per_unit": 50.0,
+          "fdc_id": 171287,
+          "description": "Egg, whole, raw, fresh",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "88374",
+              "fdc_id": "171287",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "large",
+              "gram_weight": "50",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_002",
+    "name": "酸辣土豆丝",
+    "ingredients": [
+      {
+        "name": "土豆",
+        "amount": 2,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "干辣椒",
+        "amount": 2,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "醋",
+        "amount": 10,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "青椒",
+        "amount": 1,
+        "unit": "个",
+        "required": false
+      }
+    ],
+    "cooking_time": 20,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "酸辣",
+      "中辣",
+      "纯素",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "土豆切丝后泡水。"
+      },
+      {
+        "id": "step-2",
+        "text": "辣椒炝锅，放入土豆丝大火翻炒。"
+      },
+      {
+        "id": "step-3",
+        "text": "加醋和盐炒匀。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "酸辣土豆丝",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "土豆",
+        "amount": 2,
+        "unit": "个"
+      },
+      {
+        "item": "干辣椒",
+        "amount": 2,
+        "unit": "个"
+      },
+      {
+        "item": "醋",
+        "amount": 10,
+        "unit": "毫升"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "土豆",
+      "干辣椒",
+      "醋",
+      "食用油",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 453.272,
+        "protein_g": 8.8388,
+        "fat_g": 14.0415,
+        "carb_g": 75.209973
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "土豆",
+          "amount": 2,
+          "unit": "个",
+          "grams_per_unit": 213.0,
+          "fdc_id": 170026,
+          "description": "Potatoes, flesh and skin, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170026/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "85919",
+              "fdc_id": "170026",
+              "seq_num": "3",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "Potato medium (2-1/4\" to 3-1/4\" dia)",
+              "gram_weight": "213",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "干辣椒",
+          "amount": 2,
+          "unit": "个",
+          "grams_per_unit": 0.5,
+          "fdc_id": 168570,
+          "description": "Peppers, hot chile, sun-dried",
+          "source_url": "https://fdc.nal.usda.gov/food-details/168570/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "83347",
+              "fdc_id": "168570",
+              "seq_num": "2",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "pepper",
+              "gram_weight": "0.5",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "醋",
+          "amount": 10,
+          "unit": "毫升",
+          "grams_per_unit": 0.9933333333333334,
+          "fdc_id": 172237,
+          "description": "Vinegar, distilled",
+          "source_url": "https://fdc.nal.usda.gov/food-details/172237/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "90136",
+              "fdc_id": "172237",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "14.9",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_003",
+    "name": "青椒肉丝",
+    "ingredients": [
+      {
+        "name": "猪肉",
+        "amount": 200,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "青椒",
+        "amount": 2,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "生抽",
+        "amount": 10,
+        "unit": "毫升",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "生姜",
+        "amount": 5,
+        "unit": "克",
+        "required": false
+      }
+    ],
+    "cooking_time": 25,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "咸香",
+      "微辣"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "猪肉切丝腌制，青椒切丝。"
+      },
+      {
+        "id": "step-2",
+        "text": "滑炒肉丝至变色。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入青椒和调味料炒熟。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "青椒肉丝",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "猪肉",
+        "amount": 200,
+        "unit": "克"
+      },
+      {
+        "item": "青椒",
+        "amount": 2,
+        "unit": "个"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "生抽",
+        "amount": 10,
+        "unit": "毫升"
+      }
+    ],
+    "used_ingredients": [
+      "猪肉",
+      "青椒",
+      "食用油",
+      "生抽"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 569.477333,
+        "protein_g": 42.395067,
+        "fat_g": 39.2254,
+        "carb_g": 11.569067
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "猪肉",
+          "amount": 200,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 167818,
+          "description": "Pork, fresh, loin, whole, separable lean and fat, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/167818/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "青椒",
+          "amount": 2,
+          "unit": "个",
+          "grams_per_unit": 119.0,
+          "fdc_id": 170427,
+          "description": "Peppers, sweet, green, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170427/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "86627",
+              "fdc_id": "170427",
+              "seq_num": "5",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "medium (approx 2-3/4\" long, 2-1/2\" dia)",
+              "gram_weight": "119",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "生抽",
+          "amount": 10,
+          "unit": "毫升",
+          "grams_per_unit": 1.0666666666666667,
+          "fdc_id": 174277,
+          "description": "Soy sauce made from soy and wheat (shoyu)",
+          "source_url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "94068",
+              "fdc_id": "174277",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "16",
+              "data_points": "1",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_004",
+    "name": "土豆炖牛腩",
+    "ingredients": [
+      {
+        "name": "牛腩",
+        "amount": 500,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "土豆",
+        "amount": 2,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "胡萝卜",
+        "amount": 1,
+        "unit": "根",
+        "required": true
+      },
+      {
+        "name": "生抽",
+        "amount": 20,
+        "unit": "毫升",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "洋葱",
+        "amount": 1,
+        "unit": "个",
+        "required": false
+      }
+    ],
+    "cooking_time": 90,
+    "difficulty": "中等",
+    "estimated_cost": null,
+    "method": "炖",
+    "tags": [
+      "家常菜",
+      "炖菜",
+      "咸香",
+      "不辣"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "牛腩焯水。"
+      },
+      {
+        "id": "step-2",
+        "text": "牛腩加调味料炖至软烂。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入土豆和胡萝卜炖熟。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "土豆炖牛腩",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "牛腩",
+        "amount": 500,
+        "unit": "克"
+      },
+      {
+        "item": "土豆",
+        "amount": 2,
+        "unit": "个"
+      },
+      {
+        "item": "胡萝卜",
+        "amount": 1,
+        "unit": "根"
+      },
+      {
+        "item": "生抽",
+        "amount": 20,
+        "unit": "毫升"
+      }
+    ],
+    "used_ingredients": [
+      "牛腩",
+      "土豆",
+      "胡萝卜",
+      "生抽"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 1149.336667,
+        "protein_g": 114.636833,
+        "fat_g": 37.5014,
+        "carb_g": 84.402933
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "牛腩",
+          "amount": 500,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 168607,
+          "description": "Beef, brisket, whole, separable lean only, all grades, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/168607/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "土豆",
+          "amount": 2,
+          "unit": "个",
+          "grams_per_unit": 213.0,
+          "fdc_id": 170026,
+          "description": "Potatoes, flesh and skin, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170026/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "85919",
+              "fdc_id": "170026",
+              "seq_num": "3",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "Potato medium (2-1/4\" to 3-1/4\" dia)",
+              "gram_weight": "213",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "胡萝卜",
+          "amount": 1,
+          "unit": "根",
+          "grams_per_unit": 61.0,
+          "fdc_id": 170393,
+          "description": "Carrots, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170393/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "根",
+              "id": "86559",
+              "fdc_id": "170393",
+              "seq_num": "5",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "medium",
+              "gram_weight": "61",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "生抽",
+          "amount": 20,
+          "unit": "毫升",
+          "grams_per_unit": 1.0666666666666667,
+          "fdc_id": 174277,
+          "description": "Soy sauce made from soy and wheat (shoyu)",
+          "source_url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "94068",
+              "fdc_id": "174277",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "16",
+              "data_points": "1",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_005",
+    "name": "香煎鸡胸肉",
+    "ingredients": [
+      {
+        "name": "鸡胸肉",
+        "amount": 250,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 10,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "胡椒粉",
+        "amount": 1,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "西兰花",
+        "amount": 150,
+        "unit": "克",
+        "required": false
+      }
+    ],
+    "cooking_time": 25,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "煎",
+    "tags": [
+      "快手菜",
+      "高蛋白",
+      "清淡",
+      "不辣"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "鸡胸肉拍薄并腌制。"
+      },
+      {
+        "id": "step-2",
+        "text": "小火煎至两面上色。"
+      },
+      {
+        "id": "step-3",
+        "text": "确认内部熟透后切片。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "香煎鸡胸肉",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "鸡胸肉",
+        "amount": 250,
+        "unit": "克"
+      },
+      {
+        "item": "食用油",
+        "amount": 10,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      },
+      {
+        "item": "胡椒粉",
+        "amount": 1,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "鸡胸肉",
+      "食用油",
+      "盐",
+      "胡椒粉"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 382.659333,
+        "protein_g": 56.3539,
+        "fat_g": 15.649267,
+        "carb_g": 0.6395
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "鸡胸肉",
+          "amount": 250,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 171077,
+          "description": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171077/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 10,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "胡椒粉",
+          "amount": 1,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 170931,
+          "description": "Spices, pepper, black",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170931/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_006",
+    "name": "麻婆豆腐",
+    "ingredients": [
+      {
+        "name": "豆腐",
+        "amount": 400,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "猪肉",
+        "amount": 100,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "豆瓣酱",
+        "amount": 20,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "小葱",
+        "amount": 1,
+        "unit": "根",
+        "required": false
+      }
+    ],
+    "cooking_time": 30,
+    "difficulty": "中等",
+    "estimated_cost": null,
+    "method": "烧",
+    "tags": [
+      "川菜",
+      "下饭菜",
+      "麻辣",
+      "较辣"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "豆腐切块焯水。"
+      },
+      {
+        "id": "step-2",
+        "text": "炒香肉末和豆瓣酱。"
+      },
+      {
+        "id": "step-3",
+        "text": "加豆腐烧入味并勾芡。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "麻婆豆腐",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "豆腐",
+        "amount": 400,
+        "unit": "克"
+      },
+      {
+        "item": "猪肉",
+        "amount": 100,
+        "unit": "克"
+      },
+      {
+        "item": "豆瓣酱",
+        "amount": 20,
+        "unit": "克"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      }
+    ],
+    "used_ingredients": [
+      "豆腐",
+      "猪肉",
+      "豆瓣酱",
+      "食用油"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": null,
+      "missing": [
+        "豆瓣酱 / 克"
+      ],
+      "evidence": [
+        {
+          "ingredient": "豆腐",
+          "amount": 400,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 172476,
+          "description": "Tofu, raw, regular, prepared with calcium sulfate",
+          "source_url": "https://fdc.nal.usda.gov/food-details/172476/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "猪肉",
+          "amount": 100,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 167818,
+          "description": "Pork, fresh, loin, whole, separable lean and fat, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/167818/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_007",
+    "name": "蒜蓉西兰花",
+    "ingredients": [
+      {
+        "name": "西兰花",
+        "amount": 300,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "大蒜",
+        "amount": 3,
+        "unit": "瓣",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 10,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "cooking_time": 15,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "快手菜",
+      "清淡",
+      "不辣",
+      "纯素",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "西兰花掰小朵焯水。"
+      },
+      {
+        "id": "step-2",
+        "text": "蒜末爆香。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入西兰花和盐快速翻炒。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "蒜蓉西兰花",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "西兰花",
+        "amount": 300,
+        "unit": "克"
+      },
+      {
+        "item": "大蒜",
+        "amount": 3,
+        "unit": "瓣"
+      },
+      {
+        "item": "食用油",
+        "amount": 10,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "西兰花",
+      "大蒜",
+      "食用油",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 195.559333,
+        "protein_g": 9.0324,
+        "fat_g": 10.221667,
+        "carb_g": 22.8954
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "西兰花",
+          "amount": 300,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 170379,
+          "description": "Broccoli, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170379/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "大蒜",
+          "amount": 3,
+          "unit": "瓣",
+          "grams_per_unit": 3.0,
+          "fdc_id": 169230,
+          "description": "Garlic, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169230/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "瓣",
+              "id": "84480",
+              "fdc_id": "169230",
+              "seq_num": "3",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "clove",
+              "gram_weight": "3",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 10,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_008",
+    "name": "洋葱炒鸡蛋",
+    "ingredients": [
+      {
+        "name": "洋葱",
+        "amount": 1,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "鸡蛋",
+        "amount": 3,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "cooking_time": 15,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "鲜香",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "洋葱切丝，鸡蛋打散。"
+      },
+      {
+        "id": "step-2",
+        "text": "炒熟鸡蛋后盛出。"
+      },
+      {
+        "id": "step-3",
+        "text": "炒软洋葱，放回鸡蛋调味。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "洋葱炒鸡蛋",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "洋葱",
+        "amount": 1,
+        "unit": "个"
+      },
+      {
+        "item": "鸡蛋",
+        "amount": 3,
+        "unit": "个"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "洋葱",
+      "鸡蛋",
+      "食用油",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 378.724,
+        "protein_g": 20.05,
+        "fat_g": 27.975,
+        "carb_g": 11.354
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "洋葱",
+          "amount": 1,
+          "unit": "个",
+          "grams_per_unit": 110.0,
+          "fdc_id": 170000,
+          "description": "Onions, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170000/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "85860",
+              "fdc_id": "170000",
+              "seq_num": "6",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "medium (2-1/2\" dia)",
+              "gram_weight": "110",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "鸡蛋",
+          "amount": 3,
+          "unit": "个",
+          "grams_per_unit": 50.0,
+          "fdc_id": 171287,
+          "description": "Egg, whole, raw, fresh",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "88374",
+              "fdc_id": "171287",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "large",
+              "gram_weight": "50",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_009",
+    "name": "胡萝卜炒肉片",
+    "ingredients": [
+      {
+        "name": "胡萝卜",
+        "amount": 2,
+        "unit": "根",
+        "required": true
+      },
+      {
+        "name": "猪肉",
+        "amount": 200,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "生抽",
+        "amount": 10,
+        "unit": "毫升",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "青椒",
+        "amount": 1,
+        "unit": "个",
+        "required": false
+      }
+    ],
+    "cooking_time": 25,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "咸香",
+      "不辣"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "胡萝卜切片，猪肉切片。"
+      },
+      {
+        "id": "step-2",
+        "text": "先将肉片炒至变色。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入胡萝卜炒熟并调味。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "胡萝卜炒肉片",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "胡萝卜",
+        "amount": 2,
+        "unit": "根"
+      },
+      {
+        "item": "猪肉",
+        "amount": 200,
+        "unit": "克"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "生抽",
+        "amount": 10,
+        "unit": "毫升"
+      }
+    ],
+    "used_ingredients": [
+      "胡萝卜",
+      "猪肉",
+      "食用油",
+      "生抽"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 571.897333,
+        "protein_g": 41.482867,
+        "fat_g": 39.1136,
+        "carb_g": 12.213467
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "胡萝卜",
+          "amount": 2,
+          "unit": "根",
+          "grams_per_unit": 61.0,
+          "fdc_id": 170393,
+          "description": "Carrots, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170393/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "根",
+              "id": "86559",
+              "fdc_id": "170393",
+              "seq_num": "5",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "medium",
+              "gram_weight": "61",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "猪肉",
+          "amount": 200,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 167818,
+          "description": "Pork, fresh, loin, whole, separable lean and fat, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/167818/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "生抽",
+          "amount": 10,
+          "unit": "毫升",
+          "grams_per_unit": 1.0666666666666667,
+          "fdc_id": 174277,
+          "description": "Soy sauce made from soy and wheat (shoyu)",
+          "source_url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "94068",
+              "fdc_id": "174277",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "16",
+              "data_points": "1",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_010",
+    "name": "白菜炖豆腐",
+    "ingredients": [
+      {
+        "name": "白菜",
+        "amount": 500,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "豆腐",
+        "amount": 300,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 3,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "香菇",
+        "amount": 4,
+        "unit": "个",
+        "required": false
+      }
+    ],
+    "cooking_time": 35,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炖",
+    "tags": [
+      "家常菜",
+      "清淡",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "白菜和豆腐切块。"
+      },
+      {
+        "id": "step-2",
+        "text": "白菜炒软后加水。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入豆腐炖熟并放盐。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "白菜炖豆腐",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "白菜",
+        "amount": 500,
+        "unit": "克"
+      },
+      {
+        "item": "豆腐",
+        "amount": 300,
+        "unit": "克"
+      },
+      {
+        "item": "盐",
+        "amount": 3,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "白菜",
+      "豆腐",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 308.0,
+        "protein_g": 30.24,
+        "fat_g": 15.34,
+        "carb_g": 21.76
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "白菜",
+          "amount": 500,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 169979,
+          "description": "Cabbage, chinese (pe-tsai), raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169979/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "豆腐",
+          "amount": 300,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 172476,
+          "description": "Tofu, raw, regular, prepared with calcium sulfate",
+          "source_url": "https://fdc.nal.usda.gov/food-details/172476/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "盐",
+          "amount": 3,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_011",
+    "name": "红烧茄子",
+    "ingredients": [
+      {
+        "name": "茄子",
+        "amount": 2,
+        "unit": "根",
+        "required": true
+      },
+      {
+        "name": "大蒜",
+        "amount": 3,
+        "unit": "瓣",
+        "required": true
+      },
+      {
+        "name": "生抽",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 20,
+        "unit": "毫升",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "青椒",
+        "amount": 1,
+        "unit": "个",
+        "required": false
+      }
+    ],
+    "cooking_time": 30,
+    "difficulty": "中等",
+    "estimated_cost": null,
+    "method": "烧",
+    "tags": [
+      "家常菜",
+      "下饭菜",
+      "咸香",
+      "不辣",
+      "纯素",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "茄子切条并少量撒盐。"
+      },
+      {
+        "id": "step-2",
+        "text": "煎软茄子，加入蒜末。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入生抽和少量水烧入味。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "红烧茄子",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "茄子",
+        "amount": 2,
+        "unit": "根"
+      },
+      {
+        "item": "大蒜",
+        "amount": 3,
+        "unit": "瓣"
+      },
+      {
+        "item": "生抽",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "食用油",
+        "amount": 20,
+        "unit": "毫升"
+      }
+    ],
+    "used_ingredients": [
+      "茄子",
+      "大蒜",
+      "生抽",
+      "食用油"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 456.188667,
+        "protein_g": 12.6156,
+        "fat_g": 20.242333,
+        "carb_g": 68.209
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "茄子",
+          "amount": 2,
+          "unit": "根",
+          "grams_per_unit": 548.0,
+          "fdc_id": 169228,
+          "description": "Eggplant, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169228/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "根",
+              "id": "84476",
+              "fdc_id": "169228",
+              "seq_num": "3",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "eggplant, unpeeled (approx 1-1/4 lb)",
+              "gram_weight": "548",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "大蒜",
+          "amount": 3,
+          "unit": "瓣",
+          "grams_per_unit": 3.0,
+          "fdc_id": 169230,
+          "description": "Garlic, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169230/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "瓣",
+              "id": "84480",
+              "fdc_id": "169230",
+              "seq_num": "3",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "clove",
+              "gram_weight": "3",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "生抽",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 1.0666666666666667,
+          "fdc_id": 174277,
+          "description": "Soy sauce made from soy and wheat (shoyu)",
+          "source_url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "94068",
+              "fdc_id": "174277",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "16",
+              "data_points": "1",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 20,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_012",
+    "name": "黄瓜炒鸡蛋",
+    "ingredients": [
+      {
+        "name": "黄瓜",
+        "amount": 1,
+        "unit": "根",
+        "required": true
+      },
+      {
+        "name": "鸡蛋",
+        "amount": 3,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "cooking_time": 15,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "清淡",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "黄瓜切片，鸡蛋打散。"
+      },
+      {
+        "id": "step-2",
+        "text": "鸡蛋炒熟盛出。"
+      },
+      {
+        "id": "step-3",
+        "text": "黄瓜断生后加入鸡蛋和盐。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "黄瓜炒鸡蛋",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "黄瓜",
+        "amount": 1,
+        "unit": "根"
+      },
+      {
+        "item": "鸡蛋",
+        "amount": 3,
+        "unit": "个"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "黄瓜",
+      "鸡蛋",
+      "食用油",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 379.874,
+        "protein_g": 20.7965,
+        "fat_g": 28.1961,
+        "carb_g": 12.0063
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "黄瓜",
+          "amount": 1,
+          "unit": "根",
+          "grams_per_unit": 301.0,
+          "fdc_id": 168409,
+          "description": "Cucumber, with peel, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/168409/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "根",
+              "id": "83050",
+              "fdc_id": "168409",
+              "seq_num": "2",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "cucumber (8-1/4\")",
+              "gram_weight": "301",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "鸡蛋",
+          "amount": 3,
+          "unit": "个",
+          "grams_per_unit": 50.0,
+          "fdc_id": 171287,
+          "description": "Egg, whole, raw, fresh",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "88374",
+              "fdc_id": "171287",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "large",
+              "gram_weight": "50",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_013",
+    "name": "青椒炒土豆片",
+    "ingredients": [
+      {
+        "name": "土豆",
+        "amount": 2,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "青椒",
+        "amount": 2,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "大蒜",
+        "amount": 2,
+        "unit": "瓣",
+        "required": false
+      }
+    ],
+    "cooking_time": 20,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "咸香",
+      "微辣",
+      "纯素",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "土豆和青椒切片。"
+      },
+      {
+        "id": "step-2",
+        "text": "土豆片炒至透明。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入青椒和盐炒熟。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "青椒炒土豆片",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "土豆",
+        "amount": 2,
+        "unit": "个"
+      },
+      {
+        "item": "青椒",
+        "amount": 2,
+        "unit": "个"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "土豆",
+      "青椒",
+      "食用油",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 495.844,
+        "protein_g": 10.7798,
+        "fat_g": 14.388,
+        "carb_g": 85.5506
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "土豆",
+          "amount": 2,
+          "unit": "个",
+          "grams_per_unit": 213.0,
+          "fdc_id": 170026,
+          "description": "Potatoes, flesh and skin, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170026/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "85919",
+              "fdc_id": "170026",
+              "seq_num": "3",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "Potato medium (2-1/4\" to 3-1/4\" dia)",
+              "gram_weight": "213",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "青椒",
+          "amount": 2,
+          "unit": "个",
+          "grams_per_unit": 119.0,
+          "fdc_id": 170427,
+          "description": "Peppers, sweet, green, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170427/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "86627",
+              "fdc_id": "170427",
+              "seq_num": "5",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "medium (approx 2-3/4\" long, 2-1/2\" dia)",
+              "gram_weight": "119",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_014",
+    "name": "香菇炒青菜",
+    "ingredients": [
+      {
+        "name": "香菇",
+        "amount": 6,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "青菜",
+        "amount": 300,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 10,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "大蒜",
+        "amount": 2,
+        "unit": "瓣",
+        "required": false
+      }
+    ],
+    "cooking_time": 20,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "快手菜",
+      "清淡",
+      "鲜香",
+      "不辣",
+      "纯素",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "香菇切片，青菜洗净。"
+      },
+      {
+        "id": "step-2",
+        "text": "先炒香菇。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入青菜炒熟并调味。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "香菇炒青菜",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "香菇",
+        "amount": 6,
+        "unit": "个"
+      },
+      {
+        "item": "青菜",
+        "amount": 300,
+        "unit": "克"
+      },
+      {
+        "item": "食用油",
+        "amount": 10,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "香菇",
+      "青菜",
+      "食用油",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 157.909333,
+        "protein_g": 7.0536,
+        "fat_g": 10.225267,
+        "carb_g": 14.2806
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "香菇",
+          "amount": 6,
+          "unit": "个",
+          "grams_per_unit": 19.0,
+          "fdc_id": 169242,
+          "description": "Mushrooms, shiitake, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169242/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "84500",
+              "fdc_id": "169242",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "piece whole",
+              "gram_weight": "19",
+              "data_points": "4",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "青菜",
+          "amount": 300,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 170390,
+          "description": "Cabbage, chinese (pak-choi), raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170390/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 10,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_015",
+    "name": "冬瓜排骨汤",
+    "ingredients": [
+      {
+        "name": "排骨",
+        "amount": 500,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "冬瓜",
+        "amount": 500,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "生姜",
+        "amount": 10,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 3,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "小葱",
+        "amount": 1,
+        "unit": "根",
+        "required": false
+      }
+    ],
+    "cooking_time": 70,
+    "difficulty": "中等",
+    "estimated_cost": null,
+    "method": "炖",
+    "tags": [
+      "汤",
+      "清淡",
+      "鲜香",
+      "不辣"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "排骨冷水焯水。"
+      },
+      {
+        "id": "step-2",
+        "text": "排骨加姜炖四十分钟。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入冬瓜炖软，最后放盐。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "冬瓜排骨汤",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "排骨",
+        "amount": 500,
+        "unit": "克"
+      },
+      {
+        "item": "冬瓜",
+        "amount": 500,
+        "unit": "克"
+      },
+      {
+        "item": "生姜",
+        "amount": 10,
+        "unit": "克"
+      },
+      {
+        "item": "盐",
+        "amount": 3,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "排骨",
+      "冬瓜",
+      "生姜",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 1458.0,
+        "protein_g": 79.532,
+        "fat_g": 118.075,
+        "carb_g": 16.777
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "排骨",
+          "amount": 500,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 167853,
+          "description": "Pork, fresh, spareribs, separable lean and fat, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/167853/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "冬瓜",
+          "amount": 500,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 170069,
+          "description": "Waxgourd, (chinese preserving melon), raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170069/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "生姜",
+          "amount": 10,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 169231,
+          "description": "Ginger root, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169231/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "盐",
+          "amount": 3,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_016",
+    "name": "可乐鸡翅",
+    "ingredients": [
+      {
+        "name": "鸡翅",
+        "amount": 8,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "可乐",
+        "amount": 330,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "生抽",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "生姜",
+        "amount": 10,
+        "unit": "克",
+        "required": false
+      }
+    ],
+    "cooking_time": 40,
+    "difficulty": "中等",
+    "estimated_cost": null,
+    "method": "烧",
+    "tags": [
+      "家常菜",
+      "甜咸",
+      "不辣"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "鸡翅划刀并焯水。"
+      },
+      {
+        "id": "step-2",
+        "text": "煎至两面微黄。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入可乐和生抽焖煮收汁。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "可乐鸡翅",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "鸡翅",
+        "amount": 8,
+        "unit": "个"
+      },
+      {
+        "item": "可乐",
+        "amount": 330,
+        "unit": "毫升"
+      },
+      {
+        "item": "生抽",
+        "amount": 15,
+        "unit": "毫升"
+      }
+    ],
+    "used_ingredients": [
+      "鸡翅",
+      "可乐",
+      "生抽"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": null,
+      "missing": [
+        "可乐 / 毫升"
+      ],
+      "evidence": [
+        {
+          "ingredient": "鸡翅",
+          "amount": 8,
+          "unit": "个",
+          "grams_per_unit": 107.0,
+          "fdc_id": 172390,
+          "description": "Chicken, broilers or fryers, wing, meat and skin, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/172390/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "90518",
+              "fdc_id": "172390",
+              "seq_num": "2",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "piece",
+              "gram_weight": "107",
+              "data_points": "11",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "生抽",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 1.0666666666666667,
+          "fdc_id": 174277,
+          "description": "Soy sauce made from soy and wheat (shoyu)",
+          "source_url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "94068",
+              "fdc_id": "174277",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "16",
+              "data_points": "1",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_017",
+    "name": "芹菜炒肉",
+    "ingredients": [
+      {
+        "name": "芹菜",
+        "amount": 300,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "猪肉",
+        "amount": 200,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "生抽",
+        "amount": 10,
+        "unit": "毫升",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "红椒",
+        "amount": 1,
+        "unit": "个",
+        "required": false
+      }
+    ],
+    "cooking_time": 25,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "咸香",
+      "不辣"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "芹菜切段，猪肉切片。"
+      },
+      {
+        "id": "step-2",
+        "text": "肉片炒至变色。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入芹菜炒熟并调味。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "芹菜炒肉",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "芹菜",
+        "amount": 300,
+        "unit": "克"
+      },
+      {
+        "item": "猪肉",
+        "amount": 200,
+        "unit": "克"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "生抽",
+        "amount": 10,
+        "unit": "毫升"
+      }
+    ],
+    "used_ingredients": [
+      "芹菜",
+      "猪肉",
+      "食用油",
+      "生抽"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 563.877333,
+        "protein_g": 42.418267,
+        "fat_g": 39.3308,
+        "carb_g": 9.435867
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "芹菜",
+          "amount": 300,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 169988,
+          "description": "Celery, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169988/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "猪肉",
+          "amount": 200,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 167818,
+          "description": "Pork, fresh, loin, whole, separable lean and fat, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/167818/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "生抽",
+          "amount": 10,
+          "unit": "毫升",
+          "grams_per_unit": 1.0666666666666667,
+          "fdc_id": 174277,
+          "description": "Soy sauce made from soy and wheat (shoyu)",
+          "source_url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "94068",
+              "fdc_id": "174277",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "16",
+              "data_points": "1",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_018",
+    "name": "圆白菜炒粉丝",
+    "ingredients": [
+      {
+        "name": "圆白菜",
+        "amount": 400,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "粉丝",
+        "amount": 100,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "生抽",
+        "amount": 10,
+        "unit": "毫升",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "干辣椒",
+        "amount": 2,
+        "unit": "个",
+        "required": false
+      }
+    ],
+    "cooking_time": 25,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "咸香",
+      "不辣",
+      "纯素",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "粉丝泡软，圆白菜切丝。"
+      },
+      {
+        "id": "step-2",
+        "text": "炒软圆白菜。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入粉丝和生抽炒匀。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "圆白菜炒粉丝",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "圆白菜",
+        "amount": 400,
+        "unit": "克"
+      },
+      {
+        "item": "粉丝",
+        "amount": 100,
+        "unit": "克"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "生抽",
+        "amount": 10,
+        "unit": "毫升"
+      }
+    ],
+    "used_ingredients": [
+      "圆白菜",
+      "粉丝",
+      "食用油",
+      "生抽"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 576.877333,
+        "protein_g": 6.148267,
+        "fat_g": 14.1208,
+        "carb_g": 109.815867
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "圆白菜",
+          "amount": 400,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 169975,
+          "description": "Cabbage, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169975/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "粉丝",
+          "amount": 100,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 174258,
+          "description": "Noodles, chinese, cellophane or long rice (mung beans), dehydrated",
+          "source_url": "https://fdc.nal.usda.gov/food-details/174258/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "生抽",
+          "amount": 10,
+          "unit": "毫升",
+          "grams_per_unit": 1.0666666666666667,
+          "fdc_id": 174277,
+          "description": "Soy sauce made from soy and wheat (shoyu)",
+          "source_url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "94068",
+              "fdc_id": "174277",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "16",
+              "data_points": "1",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_019",
+    "name": "韭菜炒鸡蛋",
+    "ingredients": [
+      {
+        "name": "韭菜",
+        "amount": 250,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "鸡蛋",
+        "amount": 3,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "cooking_time": 15,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "鲜香",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "韭菜切段，鸡蛋打散。"
+      },
+      {
+        "id": "step-2",
+        "text": "炒熟鸡蛋。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入韭菜快速炒熟并放盐。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "韭菜炒鸡蛋",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "韭菜",
+        "amount": 250,
+        "unit": "克"
+      },
+      {
+        "item": "鸡蛋",
+        "amount": 3,
+        "unit": "个"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "韭菜",
+      "鸡蛋",
+      "食用油",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 409.724,
+        "protein_g": 27.015,
+        "fat_g": 29.69,
+        "carb_g": 11.955
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "韭菜",
+          "amount": 250,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 169994,
+          "description": "Chives, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169994/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "鸡蛋",
+          "amount": 3,
+          "unit": "个",
+          "grams_per_unit": 50.0,
+          "fdc_id": 171287,
+          "description": "Egg, whole, raw, fresh",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "88374",
+              "fdc_id": "171287",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "large",
+              "gram_weight": "50",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_020",
+    "name": "番茄豆腐汤",
+    "ingredients": [
+      {
+        "name": "番茄",
+        "amount": 2,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "豆腐",
+        "amount": 300,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "鸡蛋",
+        "amount": 1,
+        "unit": "个",
+        "required": false
+      },
+      {
+        "name": "小葱",
+        "amount": 1,
+        "unit": "根",
+        "required": false
+      }
+    ],
+    "cooking_time": 25,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "煮",
+    "tags": [
+      "汤",
+      "清淡",
+      "酸甜",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "番茄炒软出汁。"
+      },
+      {
+        "id": "step-2",
+        "text": "加水煮开后放豆腐。"
+      },
+      {
+        "id": "step-3",
+        "text": "煮五分钟后放盐，可选淋入蛋液。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "番茄豆腐汤",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "番茄",
+        "amount": 2,
+        "unit": "个"
+      },
+      {
+        "item": "豆腐",
+        "amount": 300,
+        "unit": "克"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "番茄",
+      "豆腐",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 272.28,
+        "protein_g": 26.4048,
+        "fat_g": 14.832,
+        "carb_g": 15.1794
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "番茄",
+          "amount": 2,
+          "unit": "个",
+          "grams_per_unit": 123.0,
+          "fdc_id": 170457,
+          "description": "Tomatoes, red, ripe, raw, year round average",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "86686",
+              "fdc_id": "170457",
+              "seq_num": "6",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "medium whole (2-3/5\" dia)",
+              "gram_weight": "123",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "豆腐",
+          "amount": 300,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 172476,
+          "description": "Tofu, raw, regular, prepared with calcium sulfate",
+          "source_url": "https://fdc.nal.usda.gov/food-details/172476/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_021",
+    "name": "木耳炒鸡蛋",
+    "ingredients": [
+      {
+        "name": "木耳",
+        "amount": 100,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "鸡蛋",
+        "amount": 3,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "食用油",
+        "amount": 15,
+        "unit": "毫升",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 2,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "黄瓜",
+        "amount": 1,
+        "unit": "根",
+        "required": false
+      }
+    ],
+    "cooking_time": 20,
+    "difficulty": "简单",
+    "estimated_cost": null,
+    "method": "炒",
+    "tags": [
+      "家常菜",
+      "快手菜",
+      "清淡",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "木耳泡发焯水，鸡蛋打散。"
+      },
+      {
+        "id": "step-2",
+        "text": "鸡蛋炒熟盛出。"
+      },
+      {
+        "id": "step-3",
+        "text": "木耳炒热后放回鸡蛋调味。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "木耳炒鸡蛋",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "木耳",
+        "amount": 100,
+        "unit": "克"
+      },
+      {
+        "item": "鸡蛋",
+        "amount": 3,
+        "unit": "个"
+      },
+      {
+        "item": "食用油",
+        "amount": 15,
+        "unit": "毫升"
+      },
+      {
+        "item": "盐",
+        "amount": 2,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "木耳",
+      "鸡蛋",
+      "食用油",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": null,
+      "missing": [
+        "木耳 / 克"
+      ],
+      "evidence": [
+        {
+          "ingredient": "鸡蛋",
+          "amount": 3,
+          "unit": "个",
+          "grams_per_unit": 50.0,
+          "fdc_id": 171287,
+          "description": "Egg, whole, raw, fresh",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "88374",
+              "fdc_id": "171287",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "large",
+              "gram_weight": "50",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "食用油",
+          "amount": 15,
+          "unit": "毫升",
+          "grams_per_unit": 0.9066666666666666,
+          "fdc_id": 171411,
+          "description": "Oil, soybean, salad or cooking",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "毫升",
+              "assumption": "规划估算采用 1 tbsp = 15 mL；不用于库存自动换算",
+              "id": "88661",
+              "fdc_id": "171411",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "tbsp",
+              "gram_weight": "13.6",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 2,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "recipe_022",
+    "name": "萝卜炖牛肉",
+    "ingredients": [
+      {
+        "name": "牛肉",
+        "amount": 500,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "白萝卜",
+        "amount": 500,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "生姜",
+        "amount": 10,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 3,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [
+      {
+        "name": "香菜",
+        "amount": 10,
+        "unit": "克",
+        "required": false
+      }
+    ],
+    "cooking_time": 90,
+    "difficulty": "中等",
+    "estimated_cost": null,
+    "method": "炖",
+    "tags": [
+      "炖菜",
+      "清淡",
+      "鲜香",
+      "不辣"
+    ],
+    "nutrition": null,
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "牛肉切块焯水。"
+      },
+      {
+        "id": "step-2",
+        "text": "牛肉加姜炖至基本软烂。"
+      },
+      {
+        "id": "step-3",
+        "text": "加入白萝卜炖熟并调味。"
+      }
+    ],
+    "_planning": {
+      "servings": 2,
+      "roles": [
+        "main",
+        "side"
+      ],
+      "meals": [
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程规划模板：原菜谱按 2 人份估算，需用户确认；并非来源原有实测份量"
+    },
+    "dish_name": "萝卜炖牛肉",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "牛肉",
+        "amount": 500,
+        "unit": "克"
+      },
+      {
+        "item": "白萝卜",
+        "amount": 500,
+        "unit": "克"
+      },
+      {
+        "item": "生姜",
+        "amount": 10,
+        "unit": "克"
+      },
+      {
+        "item": "盐",
+        "amount": 3,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "牛肉",
+      "白萝卜",
+      "生姜",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 883.0,
+        "protein_g": 106.782,
+        "fat_g": 37.425,
+        "carb_g": 25.277
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "牛肉",
+          "amount": 500,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 168607,
+          "description": "Beef, brisket, whole, separable lean only, all grades, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/168607/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "白萝卜",
+          "amount": 500,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 168451,
+          "description": "Radishes, oriental, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/168451/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "生姜",
+          "amount": 10,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 169231,
+          "description": "Ginger root, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169231/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "盐",
+          "amount": 3,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "plan-rice",
+    "name": "米饭",
+    "ingredients": [
+      {
+        "name": "大米",
+        "amount": 75,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "称量大米并淘洗。"
+      },
+      {
+        "id": "step-2",
+        "text": "按米种和设备要求加水煮熟。"
+      }
+    ],
+    "cooking_time": 30,
+    "difficulty": "简单",
+    "method": "煮",
+    "tags": [
+      "清淡",
+      "不辣",
+      "素食",
+      "纯素"
+    ],
+    "nutrition": null,
+    "estimated_cost": null,
+    "_planning": {
+      "servings": 1,
+      "roles": [
+        "staple"
+      ],
+      "meals": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程模板一人份，按所列原料称量估算；不是营养处方"
+    },
+    "dish_name": "米饭",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "大米",
+        "amount": 75,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "大米"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 273.75,
+        "protein_g": 5.3475,
+        "fat_g": 0.495,
+        "carb_g": 59.9625
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "大米",
+          "amount": 75,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 169756,
+          "description": "Rice, white, long-grain, regular, raw, unenriched",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169756/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "plan-noodles",
+    "name": "清水面条",
+    "ingredients": [
+      {
+        "name": "面条",
+        "amount": 75,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "称量面条。"
+      },
+      {
+        "id": "step-2",
+        "text": "按包装要求煮熟后沥水。"
+      }
+    ],
+    "cooking_time": 15,
+    "difficulty": "简单",
+    "method": "煮",
+    "tags": [
+      "清淡",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "estimated_cost": null,
+    "_planning": {
+      "servings": 1,
+      "roles": [
+        "staple"
+      ],
+      "meals": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程模板一人份，按所列原料称量估算；不是营养处方"
+    },
+    "dish_name": "清水面条",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "面条",
+        "amount": 75,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "面条"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 288.0,
+        "protein_g": 10.62,
+        "fat_g": 3.33,
+        "carb_g": 53.4525
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "面条",
+          "amount": 75,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 169731,
+          "description": "Noodles, egg, dry, enriched",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169731/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "plan-oats",
+    "name": "燕麦粥",
+    "ingredients": [
+      {
+        "name": "燕麦",
+        "amount": 50,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "称量燕麦。"
+      },
+      {
+        "id": "step-2",
+        "text": "按产品要求加水煮熟，按需要调整稀稠。"
+      }
+    ],
+    "cooking_time": 15,
+    "difficulty": "简单",
+    "method": "煮",
+    "tags": [
+      "清淡",
+      "不辣",
+      "素食",
+      "纯素"
+    ],
+    "nutrition": null,
+    "estimated_cost": null,
+    "_planning": {
+      "servings": 1,
+      "roles": [
+        "staple"
+      ],
+      "meals": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程模板一人份，按所列原料称量估算；不是营养处方"
+    },
+    "dish_name": "燕麦粥",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "燕麦",
+        "amount": 50,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "燕麦"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 194.5,
+        "protein_g": 8.445,
+        "fat_g": 3.45,
+        "carb_g": 33.135
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "燕麦",
+          "amount": 50,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 169705,
+          "description": "Oats (Includes foods for USDA's Food Distribution Program)",
+          "source_url": "https://fdc.nal.usda.gov/food-details/169705/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "plan-potato",
+    "name": "蒸土豆",
+    "ingredients": [
+      {
+        "name": "土豆",
+        "amount": 200,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "称量可食部分，洗净切块。"
+      },
+      {
+        "id": "step-2",
+        "text": "蒸至内部熟透，核查后食用。"
+      }
+    ],
+    "cooking_time": 25,
+    "difficulty": "简单",
+    "method": "蒸",
+    "tags": [
+      "清淡",
+      "不辣",
+      "素食",
+      "纯素"
+    ],
+    "nutrition": null,
+    "estimated_cost": null,
+    "_planning": {
+      "servings": 1,
+      "roles": [
+        "staple"
+      ],
+      "meals": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程模板一人份，按所列原料称量估算；不是营养处方"
+    },
+    "dish_name": "蒸土豆",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "土豆",
+        "amount": 200,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "土豆"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 154.0,
+        "protein_g": 4.1,
+        "fat_g": 0.18,
+        "carb_g": 34.98
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "土豆",
+          "amount": 200,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 170026,
+          "description": "Potatoes, flesh and skin, raw",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170026/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "85919",
+              "fdc_id": "170026",
+              "seq_num": "3",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "Potato medium (2-1/4\" to 3-1/4\" dia)",
+              "gram_weight": "213",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "plan-breakfast-egg",
+    "name": "早餐煮鸡蛋",
+    "ingredients": [
+      {
+        "name": "鸡蛋",
+        "amount": 1,
+        "unit": "个",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "检查鸡蛋并清洗外壳。"
+      },
+      {
+        "id": "step-2",
+        "text": "加水煮至蛋白蛋黄凝固，核查后食用。"
+      }
+    ],
+    "cooking_time": 12,
+    "difficulty": "简单",
+    "method": "煮",
+    "tags": [
+      "清淡",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "estimated_cost": null,
+    "_planning": {
+      "servings": 1,
+      "roles": [
+        "main"
+      ],
+      "meals": [
+        "breakfast"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程模板一人份，按所列原料称量估算；不是营养处方"
+    },
+    "dish_name": "早餐煮鸡蛋",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "鸡蛋",
+        "amount": 1,
+        "unit": "个"
+      }
+    ],
+    "used_ingredients": [
+      "鸡蛋"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 71.5,
+        "protein_g": 6.28,
+        "fat_g": 4.755,
+        "carb_g": 0.36
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "鸡蛋",
+          "amount": 1,
+          "unit": "个",
+          "grams_per_unit": 50.0,
+          "fdc_id": 171287,
+          "description": "Egg, whole, raw, fresh",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "88374",
+              "fdc_id": "171287",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "large",
+              "gram_weight": "50",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "plan-breakfast-tofu",
+    "name": "早餐豆腐汤",
+    "ingredients": [
+      {
+        "name": "豆腐",
+        "amount": 150,
+        "unit": "克",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 1,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "豆腐切块，加水煮开。"
+      },
+      {
+        "id": "step-2",
+        "text": "继续煮熟，少量调味。"
+      }
+    ],
+    "cooking_time": 15,
+    "difficulty": "简单",
+    "method": "煮",
+    "tags": [
+      "清淡",
+      "不辣",
+      "素食",
+      "纯素"
+    ],
+    "nutrition": null,
+    "estimated_cost": null,
+    "_planning": {
+      "servings": 1,
+      "roles": [
+        "main"
+      ],
+      "meals": [
+        "breakfast"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程模板一人份，按所列原料称量估算；不是营养处方"
+    },
+    "dish_name": "早餐豆腐汤",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "豆腐",
+        "amount": 150,
+        "unit": "克"
+      },
+      {
+        "item": "盐",
+        "amount": 1,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "豆腐",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 114.0,
+        "protein_g": 12.12,
+        "fat_g": 7.17,
+        "carb_g": 2.805
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "豆腐",
+          "amount": 150,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 172476,
+          "description": "Tofu, raw, regular, prepared with calcium sulfate",
+          "source_url": "https://fdc.nal.usda.gov/food-details/172476/nutrients",
+          "portion_evidence": []
+        },
+        {
+          "ingredient": "盐",
+          "amount": 1,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "plan-breakfast-tomato",
+    "name": "早餐番茄蛋汤",
+    "ingredients": [
+      {
+        "name": "番茄",
+        "amount": 1,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "鸡蛋",
+        "amount": 1,
+        "unit": "个",
+        "required": true
+      },
+      {
+        "name": "盐",
+        "amount": 1,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "番茄切块煮软。"
+      },
+      {
+        "id": "step-2",
+        "text": "淋入蛋液并煮熟，少量调味。"
+      }
+    ],
+    "cooking_time": 15,
+    "difficulty": "简单",
+    "method": "煮",
+    "tags": [
+      "清淡",
+      "不辣",
+      "素食"
+    ],
+    "nutrition": null,
+    "estimated_cost": null,
+    "_planning": {
+      "servings": 1,
+      "roles": [
+        "main"
+      ],
+      "meals": [
+        "breakfast"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程模板一人份，按所列原料称量估算；不是营养处方"
+    },
+    "dish_name": "早餐番茄蛋汤",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "番茄",
+        "amount": 1,
+        "unit": "个"
+      },
+      {
+        "item": "鸡蛋",
+        "amount": 1,
+        "unit": "个"
+      },
+      {
+        "item": "盐",
+        "amount": 1,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "番茄",
+      "鸡蛋",
+      "盐"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": {
+        "kcal": 93.64,
+        "protein_g": 7.3624,
+        "fat_g": 5.001,
+        "carb_g": 5.1447
+      },
+      "missing": [],
+      "evidence": [
+        {
+          "ingredient": "番茄",
+          "amount": 1,
+          "unit": "个",
+          "grams_per_unit": 123.0,
+          "fdc_id": 170457,
+          "description": "Tomatoes, red, ripe, raw, year round average",
+          "source_url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "86686",
+              "fdc_id": "170457",
+              "seq_num": "6",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "medium whole (2-3/5\" dia)",
+              "gram_weight": "123",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "鸡蛋",
+          "amount": 1,
+          "unit": "个",
+          "grams_per_unit": 50.0,
+          "fdc_id": 171287,
+          "description": "Egg, whole, raw, fresh",
+          "source_url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+          "portion_evidence": [
+            {
+              "unit": "个",
+              "id": "88374",
+              "fdc_id": "171287",
+              "seq_num": "1",
+              "amount": "1",
+              "measure_unit_id": "9999",
+              "portion_description": "",
+              "modifier": "large",
+              "gram_weight": "50",
+              "data_points": "",
+              "footnote": "",
+              "min_year_acquired": ""
+            }
+          ]
+        },
+        {
+          "ingredient": "盐",
+          "amount": 1,
+          "unit": "克",
+          "grams_per_unit": 1,
+          "fdc_id": 173468,
+          "description": "Salt, table",
+          "source_url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+          "portion_evidence": []
+        }
+      ],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  },
+  {
+    "id": "plan-millet",
+    "name": "小米粥",
+    "ingredients": [
+      {
+        "name": "小米",
+        "amount": 50,
+        "unit": "克",
+        "required": true
+      }
+    ],
+    "optional_ingredients": [],
+    "steps": [
+      {
+        "id": "step-1",
+        "text": "称量小米，淘洗后加入适量水。"
+      },
+      {
+        "id": "step-2",
+        "text": "煮开后转小火，煮至米粒软烂，按需要调整稀稠。"
+      }
+    ],
+    "cooking_time": 30,
+    "difficulty": "简单",
+    "method": "煮",
+    "tags": [
+      "清淡",
+      "不辣",
+      "素食",
+      "纯素"
+    ],
+    "nutrition": null,
+    "estimated_cost": null,
+    "_planning": {
+      "servings": 1,
+      "roles": [
+        "staple"
+      ],
+      "meals": [
+        "breakfast",
+        "lunch",
+        "dinner"
+      ],
+      "version": "planning-v1",
+      "servings_basis": "工程模板一人份，按所列原料称量估算；不是营养处方"
+    },
+    "dish_name": "小米粥",
+    "schemaVersion": 1,
+    "ingredients_list": [
+      {
+        "item": "小米",
+        "amount": 50,
+        "unit": "克"
+      }
+    ],
+    "used_ingredients": [
+      "小米"
+    ],
+    "missing": [],
+    "planning_nutrition": {
+      "values": null,
+      "missing": [
+        "小米 / 克"
+      ],
+      "evidence": [],
+      "source_version": "USDA FoodData Central SR Legacy April 2018",
+      "source_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+      "note": "食材对应通用样品，熟制损耗与品牌差异未校正；份量换算仅是用户确认后的营养估算，不改变库存单位。豆瓣酱、可乐与泡发木耳未找到可直接对应记录，保持缺失。"
+    },
+    "content_source": "built_in"
+  }
+]

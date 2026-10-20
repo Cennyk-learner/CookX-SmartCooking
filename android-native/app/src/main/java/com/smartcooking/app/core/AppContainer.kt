@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.cancel
 import kotlinx.serialization.json.JsonObject
 
 /** Hand-rolled dependency container; one instance per process. */
@@ -33,7 +34,8 @@ class AppContainer(val context: Context) {
     val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     val store = KeyValueStore(context)
     val sessions = SessionManager(store)
-    val api = ApiClient(sessions)
+    val local = com.smartcooking.app.offline.LocalRuntime(context, store, sessions)
+    val api = ApiClient(sessions, local)
     val business = BusinessApi(api, sessions)
     val inventory = InventoryRepository(api, store)
     val events = AppEvents()
@@ -57,13 +59,33 @@ class AppContainer(val context: Context) {
         PendingCommand(scope, business, store, sessions, onSuccess)
 
     private var foreground = true
+    private var lifecycleObserver: DefaultLifecycleObserver? = null
+
+    fun dispose() {
+        notifications.cancelAll()
+        voice.dispose()
+        bluetooth.dispose()
+        live.dispose()
+        lifecycleObserver?.let { ProcessLifecycleOwner.get().lifecycle.removeObserver(it) }
+        appScope.cancel()
+    }
 
     init {
+        sessions.beforeSessionChange = { events.clearAll() }
+        local.cookingContext = {
+            val session = sessions.currentUserId?.let { engines[it]?.state?.value }
+            jsonOf("dish_name" to session?.recipeModel?.dishName, "step_index" to session?.stepIndex,
+                "step_text" to session?.let { it.recipeModel.steps.getOrNull(it.stepIndex)?.text },
+                "connected" to bluetooth.connection.value.connected, "temperature" to bluetooth.latest.value?.temperature,
+                "temperature_quality" to temperature.assessment.value.quality,
+                "source" to if (temperature.replaying.value) "simulation" else "hardware")
+        }
         // Restoration after restart requires confirmation, so no stale alarm may fire.
         notifications.cancelAll()
         live.start(appScope)
         appScope.launch {
             sessions.session.map { it?.userId }.distinctUntilChanged().collect { user ->
+                events.clearAll()
                 engines.values.forEach { it.ready = false }
                 notifications.cancelAll()
                 temperature.bindUser(user)
@@ -78,12 +100,14 @@ class AppContainer(val context: Context) {
         appScope.launch {
             while (isActive) { delay(1000); bluetooth.expireStale() }
         }
+        appScope.launch { while (isActive) { delay(60_000); if (foreground) api.changed.tryEmit(Unit) } }
         appScope.launch {
-            ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            val observer = object : DefaultLifecycleObserver {
                 override fun onStart(owner: LifecycleOwner) {
                     foreground = true
                     bluetooth.reconcile()
                     temperature.invalidate("恢复前台，等待新的连续测量")
+                    api.changed.tryEmit(Unit)
                 }
                 override fun onStop(owner: LifecycleOwner) {
                     foreground = false
@@ -91,14 +115,31 @@ class AppContainer(val context: Context) {
                     temperature.invalidate("应用在后台，不能保证连续采集")
                     runCatching { voice.stopAll(); voice.stopListening() }
                 }
-            })
+            }
+            lifecycleObserver = observer
+            ProcessLifecycleOwner.get().lifecycle.addObserver(observer)
         }
     }
 }
 
 /** Cross-screen hand-offs that the web client passed through query strings and sessionStorage. */
 class AppEvents {
+    fun clearAll() {
+        pendingDish.value = null
+        startRecognition.value = false
+        editProfile.value = false
+        recipeDraft.value = null
+        immersive.value = false
+        openCooking.value = false
+        launchRoute.value = null
+        openNotices.value = false
+        chefPrompt.value = null
+        focusInventory.value = null
+        leftoverName.value = null
+    }
     /** A dish name the AI kitchen should ask for (from the fridge's "咨询教程"). */
+    val focusInventory = MutableStateFlow<String?>(null)
+    val leftoverName = MutableStateFlow<String?>(null)
     val pendingDish = MutableStateFlow<String?>(null)
     /** Set by the home screen to open the camera as soon as the fridge tab appears. */
     val startRecognition = MutableStateFlow(false)

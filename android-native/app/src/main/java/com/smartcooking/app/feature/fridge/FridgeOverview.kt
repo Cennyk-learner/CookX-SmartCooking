@@ -86,6 +86,8 @@ private fun daysText(e: ExpiringUi) = when {
     e.expired -> "已过期"
     e.daysLeft == null -> "临期"
     e.daysLeft <= 0 -> "今天到期"
+    e.daysLeft == 1 -> "明天到期，请优先使用"
+    e.daysLeft == 2 -> "2 天内到期"
     else -> "还有 ${e.daysLeft} 天过期"
 }
 

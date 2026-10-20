@@ -179,7 +179,7 @@ fun CookXNavHost(nav: NavHostController, startDestination: String) {
         composable(Routes.MENUS) { MenuPlannerScreen(navigator) }
         composable(Routes.LEARNING) { LearningScreen(navigator) }
         composable(Routes.PREFERENCES) { PreferencesScreen(navigator) }
-        composable(Routes.ACCOUNT) { AccountSecurityScreen(navigator) }
+        composable(Routes.ACCOUNT) { com.smartcooking.app.feature.profile.ExperienceScreen(navigator) }
         composable(Routes.HISTORY) { CookingHistoryScreen(navigator) }
         composable(Routes.ABOUT) { AboutScreen(navigator) }
     }

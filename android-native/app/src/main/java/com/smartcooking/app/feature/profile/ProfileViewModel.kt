@@ -9,6 +9,7 @@ import com.smartcooking.app.core.asArray
 import com.smartcooking.app.core.asBool
 import com.smartcooking.app.core.asObject
 import com.smartcooking.app.core.obj
+import com.smartcooking.app.core.num
 import com.smartcooking.app.core.str
 import com.smartcooking.app.core.userMessage
 import com.smartcooking.app.data.safeHistory
@@ -19,7 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
 
-data class Notice(val id: String, val type: String, val title: String, val content: String, val time: String, val read: Boolean)
+data class Notice(val id: String, val type: String, val title: String, val content: String, val time: String, val read: Boolean, val entityType: String? = null, val entityId: String? = null)
 
 data class ProfileState(
     val recipeCount: Int? = null,
@@ -27,8 +28,10 @@ data class ProfileState(
     val error: String? = null,
     val updating: Boolean = false,
     val uploading: Boolean = false,
+    val hasMoreNotices: Boolean = false,
+    val unreadCount: Int? = null,
 ) {
-    val unread: Int get() = notices?.count { !it.read } ?: 0
+    val unread: Int get() = unreadCount ?: notices?.count { !it.read } ?: 0
 }
 
 class ProfileViewModel(private val c: AppContainer) : ViewModel() {
@@ -36,13 +39,14 @@ class ProfileViewModel(private val c: AppContainer) : ViewModel() {
     val state = _state.asStateFlow()
     private val user get() = c.sessions.currentUserId
 
-    init { refresh() }
+    init { refresh(); viewModelScope.launch { c.api.changed.collect { refresh() } } }
 
     fun refresh() {
         val id = user ?: return
         viewModelScope.launch {
             try {
                 val res = c.api.get("/user/$id").asObject()
+                if (c.sessions.currentUserId != id) return@launch
                 if (res?.str("status") == "success") res.obj("user")?.let(c.sessions::updateUser)
                 else if (res?.str("message") == "用户不存在") { logout {} ; return@launch }
             } catch (e: CancellationException) { throw e } catch (e: Exception) {
@@ -52,18 +56,27 @@ class ProfileViewModel(private val c: AppContainer) : ViewModel() {
         viewModelScope.launch { loadNotices() }
         viewModelScope.launch {
             runCatching { safeHistory(c.api.get("/chat-history", mapOf("user_id" to id))).count { it.recipe != null } }
-                .onSuccess { n -> _state.update { it.copy(recipeCount = n) } }
+                .onSuccess { n -> if (c.sessions.currentUserId == id) _state.update { it.copy(recipeCount = n) } }
         }
     }
 
-    suspend fun loadNotices() {
+    fun moreNotices() = viewModelScope.launch { loadNotices(append = true) }
+
+    suspend fun loadNotices(append: Boolean = false) {
         val id = user ?: return
+        val offset = if (append) _state.value.notices.orEmpty().size else 0
+        val limit = if (append) 50 else _state.value.notices.orEmpty().size.coerceIn(50, 200)
         runCatching {
-            c.api.get("/notifications", mapOf("user_id" to id)).asArray().orEmpty().mapNotNull { it.asObject() }.map {
-                Notice(it.str("id").orEmpty(), it.str("type") ?: "system", it.str("title").orEmpty(), it.str("content").orEmpty(), it.str("time").orEmpty(),
-                    it["isRead"].asBool() == true || it["is_read"].asBool() == true)
+            c.api.get("/notifications", mapOf("user_id" to id, "offset" to offset, "limit" to limit)).asArray().orEmpty().mapNotNull { it.asObject() }.map {
+                Notice(it.str("id").orEmpty(), it.str("type") ?: "system", it.str("title").orEmpty(), it.str("content").orEmpty(), Time.display(it.str("created_at") ?: it.str("time")),
+                    it["is_read"].asBool() == true, it.str("entity_type"), it.str("entity_id"))
             }
-        }.onSuccess { list -> _state.update { it.copy(notices = list) } }
+        }.onSuccess { list ->
+            if (c.sessions.currentUserId == id) {
+                val summary = runCatching { c.api.get("/notifications/summary", mapOf("user_id" to id)).asObject() }.getOrNull()
+                if (c.sessions.currentUserId == id) _state.update { it.copy(notices = if(append) (it.notices.orEmpty()+list).distinctBy { n -> n.id } else list, hasMoreNotices = list.size == limit, unreadCount = summary?.num("unread")?.toInt()) }
+            }
+        }
     }
 
     fun markRead(id: String, onResult: (String) -> Unit) {
@@ -72,11 +85,17 @@ class ProfileViewModel(private val c: AppContainer) : ViewModel() {
             try {
                 val res = c.api.post("/notifications/read", query = mapOf("user_id" to uid, "msg_id" to id)).asObject()
                 if (res?.str("status") == "success") {
-                    _state.update { s -> s.copy(notices = s.notices?.map { if (it.id == id) it.copy(read = true) else it }) }
+                    _state.update { s -> s.copy(notices = s.notices?.map { if (id.isEmpty() || it.id == id) it.copy(read = true) else it }) }
                     onResult("已标记已读")
                 } else onResult("操作失败")
             } catch (e: CancellationException) { throw e } catch (e: Exception) { onResult("操作失败") }
         }
+    }
+
+    fun archive(id: String) = viewModelScope.launch {
+        val uid = user ?: return@launch
+        runCatching { c.api.post("/notifications/archive", query = mapOf("user_id" to uid, "msg_id" to id)); loadNotices() }
+            .onFailure { e -> _state.update { it.copy(error = e.userMessage()) } }
     }
 
     /** Uploads a new avatar; the returned private media path is saved with the profile. */

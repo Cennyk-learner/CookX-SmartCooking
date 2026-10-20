@@ -118,43 +118,54 @@ class CompletionViewModel(private val c: AppContainer, private val sessionId: St
         if (s.busy || s.locked) return
         viewModelScope.launch {
             ui.update { it.copy(busy = true, message = null) }
-            onCompleted()
             try {
                 c.consumption.submit(user, sessionId, s.rows.filter { it.selected }.map { ConsumeSelection(it.item, it.amount) })
                 engine.markConsumption("confirmed")
+                onCompleted()
                 ui.update { it.copy(message = "库存扣减已回读确认。") }
             } catch (e: CancellationException) { throw e } catch (e: Exception) {
-                ui.update { it.copy(message = "${e.userMessage()}；烹饪已记录完成。") }
+                ui.update { it.copy(message = "${e.userMessage()}；库存尚未确认，请使用原凭证重试。") }
             } finally { c.inventory.notifyChanged(user); readPending(); ui.update { it.copy(busy = false) } }
         }
     }
 
-    fun retry() = viewModelScope.launch {
+    fun retry(onCompleted: () -> Unit) = viewModelScope.launch {
         ui.update { it.copy(busy = true) }
-        try { c.consumption.retry(user); engine.markConsumption("confirmed"); ui.update { it.copy(message = "原凭证已确认，库存已重新读取。") } }
+        try { c.consumption.retry(user); if (c.consumption.pending(user)?.str("sessionId") == sessionId) { engine.markConsumption("confirmed"); onCompleted() }; ui.update { it.copy(message = "原凭证已确认，库存已重新读取。") } }
         catch (e: CancellationException) { throw e } catch (e: Exception) { ui.update { it.copy(message = e.userMessage()) } }
         finally { readPending(); ui.update { it.copy(busy = false) } }
     }
 
-    fun reconcile() = viewModelScope.launch {
+    fun reconcile(onCompleted: () -> Unit) = viewModelScope.launch {
         ui.update { it.copy(busy = true) }
         try {
             c.consumption.reconcile(user)
-            if (c.consumption.pending(user)?.str("sessionId") == sessionId) engine.markConsumption("confirmed")
+            if (c.consumption.pending(user)?.str("sessionId") == sessionId) { engine.markConsumption("confirmed"); onCompleted() }
             ui.update { it.copy(message = "服务端原凭证已确认，当前库存已重新读取；其他设备后续修改不会触发再次扣减。") }
         } catch (e: CancellationException) { throw e } catch (e: Exception) { ui.update { it.copy(message = e.userMessage()) } }
         finally { readPending(); ui.update { it.copy(busy = false) } }
+    }
+
+    fun leftovers() {
+        val session = engine.state.value ?: return
+        c.events.leftoverName.value = session.recipeModel.dishName
+        c.events.launchRoute.value = com.smartcooking.app.ui.nav.Routes.LEFTOVERS
     }
 
     fun submitFamily(onCompleted: () -> Unit) {
         val chosen = ui.value.familyRows.filter { it.selected }
         val invalid = chosen.isEmpty() || chosen.any { r -> val v = r.used.toFiniteOrNull(); v == null || v <= 0 || v > (r.raw.num("quantity") ?: 0.0) }
         if (invalid) { ui.update { it.copy(message = "请核对实际使用量") }; return }
-        onCompleted()
         viewModelScope.launch {
-            familyCommand?.send("/households/$family/consumption", "post", jsonOf("session_id" to sessionId,
+            val saved = familyCommand?.send("/households/$family/consumption", "post", jsonOf("session_id" to sessionId,
                 "items" to chosen.map { mapOf("item_id" to it.raw.str("id"), "expected_version" to it.raw.num("version"), "quantity" to it.used.toDouble()) }))
+            if (saved == true) { engine.markConsumption("confirmed"); onCompleted() }
         }
+    }
+    fun retryFamily(onCompleted: () -> Unit) = viewModelScope.launch {
+        val command = familyCommand ?: return@launch
+        val originalSession = command.pending.value?.body?.str("session_id")
+        if (command.retry() && originalSession == sessionId) { engine.markConsumption("confirmed"); onCompleted() }
     }
 }
 
@@ -172,6 +183,7 @@ fun CompletionSheet(sessionId: String, completed: Boolean, onComplete: () -> Uni
         else PersonalBody(vm, s, onComplete)
         Spacer(Modifier.height(10.dp))
         OutlineButton(if (completed) "关闭核对" else "仅记录完成，不扣库存", { if (!completed) onComplete(); onClose() }, Modifier.fillMaxWidth(), enabled = !s.busy, color = CookX.TextSecondary)
+        if (completed) TonalButton("有剩余熟食，添加记录", { onClose(); vm.leftovers() }, Modifier.fillMaxWidth().padding(top = 8.dp))
         if (!completed) OutlineButton("继续烹饪", onContinue, Modifier.fillMaxWidth().padding(top = 8.dp), enabled = !s.busy)
     }
 }
@@ -179,8 +191,8 @@ fun CompletionSheet(sessionId: String, completed: Boolean, onComplete: () -> Uni
 @Composable
 private fun PersonalBody(vm: CompletionViewModel, s: CompletionUi, onComplete: () -> Unit) {
     if (s.uncertain) Banner("上次扣减结果未确认。请先核对，不会重复扣减。", BannerKind.Pending, title = "扣减待确认") {
-        TonalButton("核对扣减结果（不重发）", { vm.reconcile() }, loading = s.busy, tone = Tone.Warm)
-        OutlineButton("使用原凭证重试", { vm.retry() }, enabled = !s.busy)
+        TonalButton("核对扣减结果（不重发）", { vm.reconcile(onComplete) }, loading = s.busy, tone = Tone.Warm)
+        OutlineButton("使用原凭证重试", { vm.retry(onComplete) }, enabled = !s.busy)
     }
     if (s.rows.isEmpty()) Text("库存为空，可以仅记录完成。", style = MaterialTheme.typography.bodySmall, color = CookX.TextSecondary)
     s.rows.forEachIndexed { i, r ->
@@ -211,7 +223,7 @@ private fun FamilyBody(vm: CompletionViewModel, s: CompletionUi, onComplete: () 
     val error by cmd.error.collectAsStateWithLifecycle()
     if (error.isNotBlank()) Banner(error, BannerKind.Error, Modifier.padding(bottom = 8.dp))
     if (s.receipt) { Banner("家庭库存扣减已回读确认，本会话不会重复扣减。", BannerKind.Success); return }
-    if (pending != null) PendingBanner(busy, { vm.viewModelScope.launch { cmd.retry() } })
+    if (pending != null) PendingBanner(busy, { vm.retryFamily(onComplete) })
     s.familyRows.forEachIndexed { i, r ->
         Row(Modifier.padding(top = 8.dp).fillMaxWidth().clip(CookXShapes.Tile).background(CookX.Surface).border(1.dp, CookX.Border, CookXShapes.Tile).padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
             Checkbox(r.selected, { vm.toggleFamily(i) }, enabled = !busy && pending == null, colors = CheckboxDefaults.colors(checkedColor = CookX.Primary))

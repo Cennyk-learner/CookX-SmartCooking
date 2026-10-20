@@ -19,6 +19,7 @@ data class DraftItem(
     val freshnessDetail: JsonObject? = null,
     val freshnessLabel: String? = null,
     val imageUrl: String? = null,
+    val source: String = "online",
 )
 
 @Serializable

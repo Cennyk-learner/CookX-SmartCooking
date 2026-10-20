@@ -7,24 +7,23 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-// Release signing is optional; without a keystore the release build is signed with the debug key
-// so an invited tester can still install it. Never commit keystores or passwords.
+// Unsigned release builds are allowed for CI; distributed APKs require the team's release key.
 val signingProps = Properties().apply {
     val file = rootProject.file("keystore.properties")
     if (file.exists()) file.inputStream().use { load(it) }
 }
-val backendOrigin = (project.findProperty("cookx.backendOrigin") as String?) ?: "http://192.168.43.49:8000"
+val backendOrigin = "https://cookx.local"
 
 android {
     namespace = "com.smartcooking.app"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.smartcooking.app"
+        applicationId = "com.smartcooking.app.showcase"
         minSdk = 24
         targetSdk = 36
-        versionCode = 10
-        versionName = "2.1.1"
+        versionCode = 20
+        versionName = "2.2.0"
         buildConfigField("String", "DEFAULT_BACKEND_ORIGIN", "\"$backendOrigin\"")
         // Phones only: the x86 ONNX Runtime libraries would add ~43 MB for emulators nobody tests on.
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
@@ -51,11 +50,12 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -93,6 +93,7 @@ kotlin {
 }
 
 dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.exifinterface)

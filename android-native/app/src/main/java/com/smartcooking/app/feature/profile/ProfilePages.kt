@@ -338,7 +338,7 @@ fun AboutScreen(navigator: Navigator) {
                 Spacer(Modifier.height(14.dp))
                 listOf(
                     "当前版本" to "v${BuildConfig.VERSION_NAME}（原生 Android）",
-                    "隐私说明" to "用户数据仅用于 CookX 当前功能。请妥善保管账号信息和服务密钥。",
+                    "数据说明" to "厨房与社区业务保存在本机，初始内容为预置示例。主动使用在线 AI 时，烹饪需求、可用食材与步骤或所选照片会发送到阿里云百炼；密钥仅加密保存在本机。",
                     "技术支持" to "当前项目尚未配置独立反馈渠道。",
                 ).forEach { (k, v) ->
                     Row(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {

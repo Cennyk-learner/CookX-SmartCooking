@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CookX</string>
+    <string name="app_name">CookX 体验版</string>
     <string name="timer_channel">烹饪计时</string>
     <string name="event_channel">烹饪提醒</string>
 </resources>

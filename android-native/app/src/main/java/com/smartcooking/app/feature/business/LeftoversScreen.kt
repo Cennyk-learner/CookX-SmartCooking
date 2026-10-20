@@ -119,6 +119,11 @@ class LeftoversViewModel(c: AppContainer) : BusinessViewModel(c, "leftovers") {
 @Composable
 fun LeftoversScreen(navigator: Navigator) {
     val vm = cookxViewModel { LeftoversViewModel(it) }
+    val events = com.smartcooking.app.core.LocalAppContainer.current.events
+    val pendingName by events.leftoverName.collectAsStateWithLifecycle()
+    androidx.compose.runtime.LaunchedEffect(pendingName) {
+        pendingName?.let { vm.form.value = LeftoverForm(name = it); events.leftoverName.value = null }
+    }
     val items by vm.items.collectAsStateWithLifecycle()
     val ideas by vm.ideas.collectAsStateWithLifecycle()
     val form by vm.form.collectAsStateWithLifecycle()

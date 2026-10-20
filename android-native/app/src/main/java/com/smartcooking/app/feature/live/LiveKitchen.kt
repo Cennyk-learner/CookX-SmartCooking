@@ -36,16 +36,25 @@ class LiveKitchen(private val c: AppContainer) {
     private var mutedUntil = 0L
     private var lastLevel: AlertLevel? = null
     private var lastNotified = 0L
+    private var lifecycleObserver: DefaultLifecycleObserver? = null
+
+    fun dispose() {
+        lifecycleObserver?.let { ProcessLifecycleOwner.get().lifecycle.removeObserver(it) }
+        lifecycleObserver = null
+        LiveNotifications.sync(c.context, LiveState(), true)
+    }
 
     fun start(scope: CoroutineScope) {
         scope.launch { while (isActive) { refresh(); delay(500) } }
         scope.launch { c.bluetooth.latest.collect { refresh() } }
         scope.launch { c.temperature.history.collect { refresh() } }
         scope.launch {
-            ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
+            val observer = object : DefaultLifecycleObserver {
                 override fun onStart(owner: LifecycleOwner) { foreground.value = true; refresh(force = true) }
                 override fun onStop(owner: LifecycleOwner) { foreground.value = false; refresh(force = true) }
-            })
+            }
+            lifecycleObserver = observer
+            ProcessLifecycleOwner.get().lifecycle.addObserver(observer)
         }
     }
 
