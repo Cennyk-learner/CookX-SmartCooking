@@ -27,6 +27,9 @@ fun ExperienceScreen(navigator: Navigator) {
     val scope = rememberCoroutineScope()
     var code by remember { mutableStateOf("") }
     var configured by remember { mutableStateOf(c.local.gateway.configured) }
+    var usingBuiltIn by remember { mutableStateOf(c.local.gateway.usingBuiltIn) }
+    var editing by remember { mutableStateOf(!configured) }
+    var baseUrl by remember { mutableStateOf(c.local.gateway.compatibleBaseUrl) }
     var status by remember { mutableStateOf<String?>(null) }
     var busy by remember { mutableStateOf(false) }
     var reset by remember { mutableStateOf(false) }
@@ -36,31 +39,40 @@ fun ExperienceScreen(navigator: Navigator) {
                 Text("在线 AI 与食材识别", style = MaterialTheme.typography.titleLarge)
                 Text("库存、菜谱收藏与烹饪记录保存在本机。连接服务后可使用真实 AI 生成和图片识别。", color = CookX.TextSecondary)
                 Spacer(Modifier.height(16.dp))
-                Text(if (configured) "API Key 已加密保存在此手机" else "使用阿里云百炼北京地域 API Key", color = CookX.TextSecondary)
+                Text(when { usingBuiltIn -> "已内置在线服务，安装后即可使用"; configured -> "服务配置已加密保存在此手机"; else -> "在线服务未启用" }, color = CookX.TextSecondary)
                 Text("仅主动使用在线功能时发送烹饪需求、可用食材与当前步骤，或所选照片；服务按百炼账号用量计费。", style = MaterialTheme.typography.bodySmall, color = CookX.TextSecondary)
+                LinkButton(if (editing) "收起服务配置" else "更换服务配置", { if (!busy) editing = !editing })
+                if (editing) {
                 LinkButton("打开官方 API Key 获取教程", {
                     runCatching { context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://help.aliyun.com/zh/model-studio/get-api-key"))) }
                         .onFailure { status = "请在浏览器打开阿里云百炼，选择北京地域并创建 API Key" }
                 })
                 CookXTextField(code, { code = it }, if (configured) "更换 API Key（留空保留）" else "百炼 API Key", password = true)
+                CookXTextField(baseUrl, { baseUrl = it }, "兼容接口地址（与 Key 同一业务空间）")
+                Text("更换服务时一起填写 Key 和对应的 /compatible-mode/v1 地址。", style = MaterialTheme.typography.bodySmall, color = CookX.TextSecondary)
+                }
                 Spacer(Modifier.height(12.dp))
-                PrimaryButton("保存并检测连接", {
+                PrimaryButton(if (editing) "保存并检测连接" else "检测连接", {
                     if (!busy) scope.launch {
                         busy = true
                         status = runCatching {
                             withContext(Dispatchers.IO) {
-                                if (code.isNotBlank()) c.local.gateway.configure(code)
+                                if (editing && code.isNotBlank()) c.local.gateway.configure(code, baseUrl)
+                                else if (editing && baseUrl.trim().trimEnd('/') != c.local.gateway.compatibleBaseUrl) error("更换接口地址时请同时填写对应的 API Key")
                                 c.local.gateway.health()
                                 "AI 服务已连接。图片识别可在冰箱页拍照验证。"
                             }
                         }.getOrElse { "连接未成功：${it.userMessage()}。本地功能仍可使用。" }
                         configured = c.local.gateway.configured
+                        usingBuiltIn = c.local.gateway.usingBuiltIn
+                        baseUrl = c.local.gateway.compatibleBaseUrl
                         code = ""
                         busy = false
                     }
                 }, Modifier.fillMaxWidth(), loading = busy)
                 status?.let { Text(it, color = CookX.TextSecondary, modifier = Modifier.padding(top = 12.dp)) }
-                if (configured) OutlineButton("移除此手机的 API Key", { runCatching { c.local.gateway.clear(); configured = false; status = "已移除，内置菜谱与本地业务仍可使用" }.onFailure { status = it.userMessage() } }, Modifier.fillMaxWidth().padding(top = 8.dp), enabled = !busy)
+                if (configured) OutlineButton("停用在线服务", { runCatching { c.local.gateway.clear(); configured = false; usingBuiltIn = false; status = "已停用在线服务，本地功能仍可使用" }.onFailure { status = it.userMessage() } }, Modifier.fillMaxWidth().padding(top = 8.dp), enabled = !busy)
+                if (c.local.gateway.hasBuiltIn && !usingBuiltIn) OutlineButton("恢复内置服务", { runCatching { c.local.gateway.restoreBuiltIn(); configured = true; usingBuiltIn = true; editing = false; code = ""; baseUrl = c.local.gateway.compatibleBaseUrl; status = "已恢复内置服务，可检测连接" }.onFailure { status = it.userMessage() } }, Modifier.fillMaxWidth().padding(top = 8.dp), enabled = !busy)
             }
         }
         item {

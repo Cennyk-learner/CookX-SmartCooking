@@ -1,4 +1,10 @@
 import java.util.Properties
+import java.security.MessageDigest
+import java.security.SecureRandom
+import java.util.Base64
+import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.spec.GCMParameterSpec
 
 plugins {
     alias(libs.plugins.android.application)
@@ -13,6 +19,37 @@ val signingProps = Properties().apply {
     if (file.exists()) file.inputStream().use { load(it) }
 }
 val backendOrigin = "https://cookx.local"
+// Optional device/demo defaults. This ignored file is read only for release builds.
+val demoProps = Properties().apply {
+    val file = rootProject.file("demo-private.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
+}
+fun javaString(value: String) = "\"" + value.replace("\\", "\\\\").replace("\"", "\\\"").replace("\r", "\\r").replace("\n", "\\n") + "\""
+val demoBaseUrl = demoProps.getProperty("compatibleBaseUrl", "https://dashscope.aliyuncs.com/compatible-mode/v1").trim().trimEnd('/')
+// Keep raw credentials out of generated Java and DEX strings. The APK must still carry its
+// decryption material: this prevents plaintext searches, not extraction by reverse engineering.
+val demoBundle = Properties().apply {
+    val rawKey = demoProps.getProperty("apiKey", "").trim()
+    if (rawKey.isNotEmpty()) {
+        val fingerprint = Base64.getEncoder().encodeToString(MessageDigest.getInstance("SHA-256")
+            .digest(("v1\n" + rawKey + "\n" + demoBaseUrl).toByteArray(Charsets.UTF_8)))
+        val cache = rootProject.file(".gradle/cookx-demo-bundle.properties")
+        if (cache.exists()) cache.inputStream().use { load(it) }
+        if (getProperty("fingerprint") != fingerprint || getProperty("payload").isNullOrBlank() || getProperty("secret").isNullOrBlank()) {
+            val secret = KeyGenerator.getInstance("AES").apply { init(256) }.generateKey()
+            val nonce = ByteArray(12).also { SecureRandom().nextBytes(it) }
+            val cipher = Cipher.getInstance("AES/GCM/NoPadding").apply {
+                init(Cipher.ENCRYPT_MODE, secret, GCMParameterSpec(128, nonce))
+                updateAAD(demoBaseUrl.toByteArray(Charsets.UTF_8))
+            }
+            setProperty("payload", Base64.getEncoder().encodeToString(nonce + cipher.doFinal(rawKey.toByteArray(Charsets.UTF_8))))
+            setProperty("secret", Base64.getEncoder().encodeToString(secret.encoded))
+            setProperty("fingerprint", fingerprint)
+            cache.parentFile.mkdirs()
+            cache.outputStream().use { store(it, "Private generated bundle; do not distribute or commit") }
+        }
+    }
+}
 
 android {
     namespace = "com.smartcooking.app"
@@ -22,9 +59,12 @@ android {
         applicationId = "com.smartcooking.app.showcase"
         minSdk = 24
         targetSdk = 36
-        versionCode = 20
-        versionName = "2.2.0"
+        versionCode = 21
+        versionName = "2.2.1"
         buildConfigField("String", "DEFAULT_BACKEND_ORIGIN", "\"$backendOrigin\"")
+        buildConfigField("String", "DEMO_ACCESS_PAYLOAD", "\"\"")
+        buildConfigField("String", "DEMO_ACCESS_SECRET", "\"\"")
+        buildConfigField("String", "DEMO_COMPATIBLE_BASE_URL", "\"https://dashscope.aliyuncs.com/compatible-mode/v1\"")
         // Phones only: the x86 ONNX Runtime libraries would add ~43 MB for emulators nobody tests on.
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -47,6 +87,9 @@ android {
 
     buildTypes {
         release {
+            buildConfigField("String", "DEMO_ACCESS_PAYLOAD", javaString(demoBundle.getProperty("payload", "")))
+            buildConfigField("String", "DEMO_ACCESS_SECRET", javaString(demoBundle.getProperty("secret", "")))
+            buildConfigField("String", "DEMO_COMPATIBLE_BASE_URL", javaString(demoBaseUrl))
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

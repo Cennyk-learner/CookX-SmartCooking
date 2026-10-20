@@ -1,6 +1,6 @@
 # CookX Android 体验版本
 
-Kotlin + Jetpack Compose 原生客户端。包名 `com.smartcooking.app.showcase`，版本 2.2.0（20）。固定本地厨房会话，业务数据持久化到应用私有存储；模型请求从手机直连百炼。
+Kotlin + Jetpack Compose 原生客户端。包名 `com.smartcooking.app.showcase`，版本 2.2.1（21）。固定本地厨房会话，业务数据持久化到应用私有存储；模型请求从手机直连百炼。
 
 ## 构建
 
@@ -24,11 +24,21 @@ K:\android-native\gradlew.bat -p K:\android-native :app:testDebugUnitTest
 
 没有签名材料的 CI 构建 debug APK，仅供工程检查。正式交付以验证过发布签名的 APK 为准。
 
+## 可选的内置在线服务
+
+在 `android-native/demo-private.properties` 中设置 `apiKey` 和 `compatibleBaseUrl`，例如北京地域业务空间的 `https://ws-example.cn-beijing.maas.aliyuncs.com/compatible-mode/v1`。该文件已被 Git 忽略，不提交真实 Key。只有 release 构建读取这些默认值；debug 与 CI 不携带内置 Key。
+
+未手动配置的手机默认使用内置服务。手动覆盖配置用 Android Keystore 加密保存，Key 与接口地址成对替换；旧版本保存的 Key 保持原北京共享地址。停用在线服务后不会偷偷回退到内置 Key，可明确选择恢复。
+
+发布构建使用随机 AES-256-GCM 密钥与 nonce 加密内置 Key，接口地址作为附加认证数据；密文缓存保存在已忽略的 `.gradle/cookx-demo-bundle.properties`，原始 Key 不进入生成的 Java 或 DEX 字符串。APK 为了自行联网仍携带解密材料，这能防止明文字符串检索，不是防逆向的密钥保险箱。源码、截图、日志和文档都不保存真实 Key。
+
+文本和图片使用配置的兼容接口；Qwen TTS 使用官方北京共享语音接口，同地域业务空间 Key 可用。参考[官方接入点说明](https://help.aliyun.com/en/model-studio/base-url)与[语音接口](https://help.aliyun.com/zh/model-studio/qwen-tts-api)。
+
 ## 结构
 
 - `offline/LocalEngine`：事务内本地业务与幂等回执，写盘失败回滚。
 - `offline/LocalRuntime`：拦截本地业务请求，只接受内部 `cookx.local` 地址。
-- `offline/DemoGateway`：Keystore 加密 Key；独立 HTTPS 客户端请求文本、图片和语音服务。
+- `offline/DemoGateway`、`DemoAccess`：内置默认服务、Keystore 加密覆盖配置、匹配接口路由和明确停用；独立 HTTPS 客户端请求模型。
 - `offline/LocalPlanning`：限时组合搜索，保留预算、营养、重复次数、忌口与锁定位置硬约束。
 - `offline/LocalInventory`：手动/识别/家庭/采购共用批次合并规则及动态临期通知。
 - `device/`、`temperature/`、`feature/live/`：原有 JDY-31 SPP 协议、读数质量和温度趋势；真实硬件与仿真来源分开。
@@ -48,6 +58,8 @@ python scripts/export_demo_assets.py
 
 `logic/` 检查库存、会话计时、蓝牙解析、语音和实时厨房规则；`offline/` 检查本地业务、事务、通知、菜单约束、AI 输出校验和页面交互；`UploadImageTest` 检查受限尺寸图片解码。
 
-Robolectric/Roborazzi 渲染结果在 `app/screenshots/`，属于 JVM 页面验证，不是现场手机或硬件证据。真实模型调用需用户配置 Key 后在手机测试。
+Robolectric/Roborazzi 渲染结果在 `app/screenshots/`，属于 JVM 页面验证，不是现场手机或硬件证据。
+
+真实模型回归只在明确设置 `COOKX_LIVE_VERIFY=1` 后执行 `DemoGatewayLiveTest`，它读取本地私有配置、调用应用自身的菜谱/识别/语音代码，会产生服务请求。普通测试与 CI 跳过此项。修改该环境变量后需通过 `--rerun-tasks` 避免沿用 Gradle 测试缓存；现场手机权限、拍照与实际播放仍需单独核对。
 
 完整操作见[使用说明](../docs/ANDROID_DEMO_GUIDE.md)。

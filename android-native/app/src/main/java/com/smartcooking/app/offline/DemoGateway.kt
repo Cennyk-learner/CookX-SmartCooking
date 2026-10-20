@@ -3,6 +3,7 @@ package com.smartcooking.app.offline
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import com.smartcooking.app.BuildConfig
 import com.smartcooking.app.core.*
 import com.smartcooking.app.data.Recipe
 import kotlinx.serialization.json.*
@@ -18,11 +19,15 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
-/** Direct Qwen access. Credentials are encrypted with Android Keystore, never bundled. */
-class DemoGateway(private val store: KeyValueStore) {
-    private val credentialKey = "cookx:demo:qwen-key:v1"
+/** Direct Qwen access; saved overrides use Keystore, optional release defaults come from private build inputs. */
+class DemoGateway(private val store: KeyValueStore, builtIn: DemoAccess? = bundledAccess()) {
+    private val accessState = DemoAccessState(store, builtIn)
     private val keyAlias = "cookx-qwen-device-key"
-    val configured: Boolean get() = store.get(credentialKey)?.isNotBlank() == true
+    val configured: Boolean get() = accessState.configured
+    val hasBuiltIn: Boolean get() = accessState.hasBuiltIn
+    val usingBuiltIn: Boolean get() = accessState.usingBuiltIn
+    val compatibleBaseUrl: String get() = runCatching { accessState.resolve(::decrypt).compatibleBaseUrl }
+        .getOrDefault(BuildConfig.DEMO_COMPATIBLE_BASE_URL)
     private val http = OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS).callTimeout(35, TimeUnit.SECONDS)
         .followRedirects(false).followSslRedirects(false).build()
@@ -34,17 +39,17 @@ class DemoGateway(private val store: KeyValueStore) {
                 .setBlockModes(KeyProperties.BLOCK_MODE_GCM).setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE).build())
         }.generateKey()
     }
-    fun configure(apiKey: String) {
-        val key = apiKey.trim()
-        require(key.length in 16..512 && key.none { it.isWhitespace() }) { "请填写有效的百炼 API Key" }
+    fun configure(apiKey: String, baseUrl: String = compatibleBaseUrl) {
+        accessState.save(DemoAccess(apiKey.trim(), baseUrl), ::encrypt)
+    }
+    private fun encrypt(value: String): String {
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(Cipher.ENCRYPT_MODE, encryptionKey())
-        val encoded = Base64.encodeToString(cipher.iv, Base64.NO_WRAP) + "." + Base64.encodeToString(cipher.doFinal(key.toByteArray()), Base64.NO_WRAP)
-        check(store.putSync(credentialKey, encoded)) { "密钥保存失败" }
+        return Base64.encodeToString(cipher.iv, Base64.NO_WRAP) + "." + Base64.encodeToString(cipher.doFinal(value.toByteArray()), Base64.NO_WRAP)
     }
-    fun clear() { check(store.removeSync(credentialKey)) { "密钥清除失败" } }
-    private fun credential(): String {
-        val encrypted = store.get(credentialKey) ?: throw ApiException("尚未配置百炼 API Key")
+    fun clear() = accessState.disable()
+    fun restoreBuiltIn() = accessState.restoreBuiltIn()
+    private fun decrypt(encrypted: String): String {
         return try {
             val parts = encrypted.split('.')
             val cipher = Cipher.getInstance("AES/GCM/NoPadding")
@@ -53,10 +58,11 @@ class DemoGateway(private val store: KeyValueStore) {
         } catch (_: Exception) { throw ApiException("本机密钥无法读取，请重新填写 API Key") }
     }
     private fun completion(model: String, messages: List<JsonObject>, maxTokens: Int = 4000): String {
+        val access = accessState.resolve(::decrypt)
         val body = jsonOf("model" to model, "messages" to messages, "max_tokens" to maxTokens, "enable_thinking" to false)
             .toString().toRequestBody("application/json".toMediaType())
-        val request = Request.Builder().url("https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions")
-            .header("Authorization", "Bearer ${credential()}").post(body).build()
+        val request = Request.Builder().url("${access.compatibleBaseUrl}/chat/completions")
+            .header("Authorization", "Bearer ${access.apiKey}").post(body).build()
         http.newCall(request).execute().use { response ->
             if (!response.isSuccessful) throw ApiException(when (response.code) {
                 401, 403 -> "API Key 无效或未开通模型权限，请检查北京地域的百炼配置"
@@ -75,9 +81,12 @@ class DemoGateway(private val store: KeyValueStore) {
     }
     fun tts(text: String): ByteArray {
         require(text.isNotBlank() && text.length <= 600) { "本步骤超过在线播报字数限制，请使用系统语音" }
+        val access = accessState.resolve(::decrypt)
         val input = jsonOf("model" to "qwen3-tts-flash", "input" to jsonOf("text" to text, "voice" to "Cherry", "language_type" to "Chinese"))
+        // Qwen TTS's documented Beijing endpoint accepts same-region workspace keys.
+        // Some workspace gateways reject this native route while chat/vision remain available.
         val request = Request.Builder().url("https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation")
-            .header("Authorization", "Bearer ${credential()}").post(input.toString().toRequestBody("application/json".toMediaType())).build()
+            .header("Authorization", "Bearer ${access.apiKey}").post(input.toString().toRequestBody("application/json".toMediaType())).build()
         val url = http.newCall(request).execute().use { response ->
             if (!response.isSuccessful) throw ApiException("在线播报暂不可用，请检查模型权限和额度", response.code)
             AppJson.parseToJsonElement(response.body.string()).asObject()?.obj("output")?.obj("audio")?.str("url")
@@ -130,6 +139,8 @@ class DemoGateway(private val store: KeyValueStore) {
         return jsonOf("status" to "success", "detected" to detected, "source" to "online")
     }
     companion object {
+        private fun bundledAccess(): DemoAccess? = BundledDemoAccess.decode(
+            BuildConfig.DEMO_ACCESS_PAYLOAD, BuildConfig.DEMO_ACCESS_SECRET, BuildConfig.DEMO_COMPATIBLE_BASE_URL)
         fun parseObject(raw: String): JsonObject {
             val start = raw.indexOf('{'); val end = raw.lastIndexOf('}')
             if (start < 0 || end <= start || raw.length > 100_000) throw ApiException("AI 返回格式不完整")

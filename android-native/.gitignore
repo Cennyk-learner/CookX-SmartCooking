@@ -8,5 +8,6 @@ captures/
 app/build/
 screenshots/
 keystore.properties
+demo-private.properties
 keystore/
 *.jks
