@@ -338,7 +338,7 @@ fun AboutScreen(navigator: Navigator) {
                 Spacer(Modifier.height(14.dp))
                 listOf(
                     "当前版本" to "v${BuildConfig.VERSION_NAME}（原生 Android）",
-                    "数据说明" to "厨房与社区业务保存在本机，初始内容为预置示例。主动使用在线 AI 时，烹饪需求、可用食材与步骤或所选照片会发送到阿里云百炼；密钥仅加密保存在本机。",
+                    "数据说明" to "厨房与社区业务保存在本机，初始内容为预置示例。AI 菜谱将需求、可用食材与最近菜谱发送至 Kimi；食材照片、指令录音或播报文字发送至阿里云百炼。两项服务使用独立加密配置。",
                     "技术支持" to "当前项目尚未配置独立反馈渠道。",
                 ).forEach { (k, v) ->
                     Row(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {

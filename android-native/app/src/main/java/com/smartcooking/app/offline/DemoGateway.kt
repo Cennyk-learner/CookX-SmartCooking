@@ -19,13 +19,15 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
-/** Direct Qwen access; saved overrides use Keystore, optional release defaults come from private build inputs. */
-class DemoGateway(private val store: KeyValueStore, builtIn: DemoAccess? = bundledAccess()) {
+/** Separate recipe and vision/audio providers; release defaults come from encrypted private build inputs. */
+class DemoGateway(private val store: KeyValueStore, builtIn: DemoAccess? = bundledAccess(),
+                  private val kimi: KimiRecipeGateway = KimiRecipeGateway()) {
     private val accessState = DemoAccessState(store, builtIn)
     private val keyAlias = "cookx-qwen-device-key"
     val configured: Boolean get() = accessState.configured
     val hasBuiltIn: Boolean get() = accessState.hasBuiltIn
     val usingBuiltIn: Boolean get() = accessState.usingBuiltIn
+    val recipeConfigured: Boolean get() = store.get(DemoAccessState.DISABLED) != "1" && kimi.configured
     val compatibleBaseUrl: String get() = runCatching { accessState.resolve(::decrypt).compatibleBaseUrl }
         .getOrDefault(BuildConfig.DEMO_COMPATIBLE_BASE_URL)
     private val http = OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS)
@@ -77,7 +79,7 @@ class DemoGateway(private val store: KeyValueStore, builtIn: DemoAccess? = bundl
     }
     fun health(): JsonObject {
         completion("qwen-plus", listOf(jsonOf("role" to "user", "content" to "请只回复 OK")), 8)
-        return jsonOf("recipe" to true, "vision_tested" to false, "tts_tested" to false)
+        return jsonOf("qwen_connected" to true, "recipe_tested" to false, "vision_tested" to false, "tts_tested" to false)
     }
     /** Short command audio is sent directly to the configured Qwen workspace; no PC service or audio URL is required. */
     fun transcribe(audio: ByteArray, mimeType: String = "audio/wav"): String {
@@ -133,13 +135,8 @@ class DemoGateway(private val store: KeyValueStore, builtIn: DemoAccess? = bundl
         }
     }
     fun recipe(prompt: String, inventory: List<JsonObject>, context: JsonObject): JsonObject {
-        require(prompt.length in 1..4000) { "烹饪需求请控制在 4000 字以内" }
-        val system = "你是 CookX 厨房助手。用中文返回一个完整 JSON 菜谱，不要 Markdown。包含 dish_name、ingredients_list（每项 item、amount、unit）、steps（每项 text、time_estimate 秒数）、used_ingredients 和 missing 字符串数组。缺少的食材必须如实列出。不能自动修改库存、计时或给出食品安全结论。未提供的营养数据不要编造。"
-        val content = jsonOf("需求" to prompt, "可用库存" to inventory.map { it.without("id", "owner", "_revision") }, "当前烹饪" to context)
-        val raw = completion("qwen-plus", listOf(jsonOf("role" to "system", "content" to system), jsonOf("role" to "user", "content" to content.toString())))
-        val recipe = parseObject(raw)
-        validateRecipe(recipe)
-        return jsonOf("recipe" to recipe, "source" to "online")
+        if (store.get(DemoAccessState.DISABLED) == "1") throw ApiException("在线服务已停用")
+        return kimi.recipe(prompt, inventory, context)
     }
     fun recognize(body: RequestBody): JsonObject {
         val part = (body as? MultipartBody)?.parts?.firstOrNull()?.body ?: throw ApiException("请选择有效图片")

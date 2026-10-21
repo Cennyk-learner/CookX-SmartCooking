@@ -40,7 +40,7 @@ class DemoGatewayLiveTest {
             println("LIVE_ASR_OK expected=$expected transcript=$recognized (synthetic speech, not a phone microphone test)")
         }
     }
-    @Test fun realRecipeVisionAndSpeechUsingPrivateConfig() {
+    @Test fun realVisionAndSpeechUsingPrivateConfig() {
         assumeTrue("Set COOKX_LIVE_VERIFY=1 explicitly to call the provider", System.getenv("COOKX_LIVE_VERIFY") == "1")
         val props = Properties().apply { File("../demo-private.properties").inputStream().use { load(it) } }
         val bundle = Properties().apply { File("../.gradle/cookx-demo-bundle.properties").inputStream().use { load(it) } }
@@ -49,13 +49,6 @@ class DemoGatewayLiveTest {
         val gateway = DemoGateway(KeyValueStore(RuntimeEnvironment.getApplication(), "live-" + UUID.randomUUID()),
             access)
         assertTrue(gateway.configured); assertTrue(gateway.usingBuiltIn)
-        val recipe = gateway.recipe("用番茄和鸡蛋做一道家常菜，给出完整做法", listOf(
-            jsonOf("name" to "番茄", "quantity" to 2, "unit" to "个"),
-            jsonOf("name" to "鸡蛋", "quantity" to 3, "unit" to "个")), EmptyObject)
-        assertEquals("online", recipe.str("source"))
-        DemoGateway.validateRecipe(recipe.obj("recipe")!!)
-        println("LIVE_RECIPE_OK steps=" + recipe.obj("recipe")!!.objects("steps").size)
-
         val bitmap = BitmapFactory.decodeFile("src/main/res/drawable-nodpi/ing_tomato.webp")
         val bytes = ByteArrayOutputStream().use { output -> bitmap.compress(Bitmap.CompressFormat.JPEG, 90, output); output.toByteArray() }
         bitmap.recycle()

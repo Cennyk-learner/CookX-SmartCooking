@@ -36,11 +36,20 @@ fun ExperienceScreen(navigator: Navigator) {
     SubpageScaffold("体验管理", navigator::back, subtitle = "手机直接联网，无需电脑后端。") {
         item {
             CookXCard(Modifier.padding(horizontal = 16.dp)) {
-                Text("在线 AI 与食材识别", style = MaterialTheme.typography.titleLarge)
-                Text("库存、菜谱收藏与烹饪记录保存在本机。连接服务后可使用真实 AI 生成和图片识别。", color = CookX.TextSecondary)
+                Text("AI 菜谱 · Kimi K2.6", style = MaterialTheme.typography.titleLarge)
+                Text(if (c.local.gateway.recipeConfigured) "已内置菜谱服务，前往 AI 菜谱输入需求即可使用。"
+                    else "菜谱服务未启用，仍可查看内置菜谱。", color = CookX.TextSecondary)
+                Text("根据可用库存与最近菜谱生成完整步骤，支持继续调整口味和份量。仅提交需求时调用，关闭思考模式并限制输出；按 Kimi 账号用量计费。", style = MaterialTheme.typography.bodySmall, color = CookX.TextSecondary)
+                LinkButton("打开 AI 菜谱 →", { navigator.tab(Routes.CHEF) })
+            }
+        }
+        item {
+            CookXCard(Modifier.padding(horizontal = 16.dp)) {
+                Text("图片识别与语音 · Qwen", style = MaterialTheme.typography.titleLarge)
+                Text("识别食材、语音指令和在线播报使用百炼服务。库存、菜谱收藏与烹饪记录保存在本机。", color = CookX.TextSecondary)
                 Spacer(Modifier.height(16.dp))
                 Text(when { usingBuiltIn -> "已内置在线服务，安装后即可使用"; configured -> "服务配置已加密保存在此手机"; else -> "在线服务未启用" }, color = CookX.TextSecondary)
-                Text("仅主动使用在线功能时发送烹饪需求、可用食材与当前步骤，或所选照片；服务按百炼账号用量计费。", style = MaterialTheme.typography.bodySmall, color = CookX.TextSecondary)
+                Text("仅主动使用时发送所选照片、指令录音或播报文字；按百炼账号用量计费。这里更换的配置只用于 Qwen，不影响 Kimi 菜谱密钥。", style = MaterialTheme.typography.bodySmall, color = CookX.TextSecondary)
                 LinkButton(if (editing) "收起服务配置" else "更换服务配置", { if (!busy) editing = !editing })
                 if (editing) {
                 LinkButton("打开官方 API Key 获取教程", {
@@ -60,7 +69,7 @@ fun ExperienceScreen(navigator: Navigator) {
                                 if (editing && code.isNotBlank()) c.local.gateway.configure(code, baseUrl)
                                 else if (editing && baseUrl.trim().trimEnd('/') != c.local.gateway.compatibleBaseUrl) error("更换接口地址时请同时填写对应的 API Key")
                                 c.local.gateway.health()
-                                "AI 服务已连接。图片识别可在冰箱页拍照验证。"
+                                "Qwen 已连接。图片识别可在冰箱页拍照验证；此检测不调用 Kimi。"
                             }
                         }.getOrElse { "连接未成功：${it.userMessage()}。本地功能仍可使用。" }
                         configured = c.local.gateway.configured

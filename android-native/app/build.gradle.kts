@@ -28,19 +28,18 @@ fun javaString(value: String) = "\"" + value.replace("\\", "\\\\").replace("\"",
 val demoBaseUrl = demoProps.getProperty("compatibleBaseUrl", "https://dashscope.aliyuncs.com/compatible-mode/v1").trim().trimEnd('/')
 // Keep raw credentials out of generated Java and DEX strings. The APK must still carry its
 // decryption material: this prevents plaintext searches, not extraction by reverse engineering.
-val demoBundle = Properties().apply {
-    val rawKey = demoProps.getProperty("apiKey", "").trim()
+fun encryptedBundle(rawKey: String, baseUrl: String, cacheName: String) = Properties().apply {
     if (rawKey.isNotEmpty()) {
         val fingerprint = Base64.getEncoder().encodeToString(MessageDigest.getInstance("SHA-256")
-            .digest(("v1\n" + rawKey + "\n" + demoBaseUrl).toByteArray(Charsets.UTF_8)))
-        val cache = rootProject.file(".gradle/cookx-demo-bundle.properties")
+            .digest(("v1\n" + rawKey + "\n" + baseUrl).toByteArray(Charsets.UTF_8)))
+        val cache = rootProject.file(".gradle/$cacheName")
         if (cache.exists()) cache.inputStream().use { load(it) }
         if (getProperty("fingerprint") != fingerprint || getProperty("payload").isNullOrBlank() || getProperty("secret").isNullOrBlank()) {
             val secret = KeyGenerator.getInstance("AES").apply { init(256) }.generateKey()
             val nonce = ByteArray(12).also { SecureRandom().nextBytes(it) }
             val cipher = Cipher.getInstance("AES/GCM/NoPadding").apply {
                 init(Cipher.ENCRYPT_MODE, secret, GCMParameterSpec(128, nonce))
-                updateAAD(demoBaseUrl.toByteArray(Charsets.UTF_8))
+                updateAAD(baseUrl.toByteArray(Charsets.UTF_8))
             }
             setProperty("payload", Base64.getEncoder().encodeToString(nonce + cipher.doFinal(rawKey.toByteArray(Charsets.UTF_8))))
             setProperty("secret", Base64.getEncoder().encodeToString(secret.encoded))
@@ -50,6 +49,8 @@ val demoBundle = Properties().apply {
         }
     }
 }
+val demoBundle = encryptedBundle(demoProps.getProperty("apiKey", "").trim(), demoBaseUrl, "cookx-demo-bundle.properties")
+val kimiBundle = encryptedBundle(demoProps.getProperty("kimiApiKey", "").trim(), "https://api.moonshot.cn/v1", "cookx-kimi-bundle.properties")
 
 android {
     namespace = "com.smartcooking.app"
@@ -59,12 +60,14 @@ android {
         applicationId = "com.smartcooking.app.showcase"
         minSdk = 24
         targetSdk = 36
-        versionCode = 23
-        versionName = "2.2.3"
+        versionCode = 24
+        versionName = "2.2.4"
         buildConfigField("String", "DEFAULT_BACKEND_ORIGIN", "\"$backendOrigin\"")
         buildConfigField("String", "DEMO_ACCESS_PAYLOAD", "\"\"")
         buildConfigField("String", "DEMO_ACCESS_SECRET", "\"\"")
         buildConfigField("String", "DEMO_COMPATIBLE_BASE_URL", "\"https://dashscope.aliyuncs.com/compatible-mode/v1\"")
+        buildConfigField("String", "KIMI_ACCESS_PAYLOAD", "\"\"")
+        buildConfigField("String", "KIMI_ACCESS_SECRET", "\"\"")
         // Phones only: the x86 ONNX Runtime libraries would add ~43 MB for emulators nobody tests on.
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -90,6 +93,8 @@ android {
             buildConfigField("String", "DEMO_ACCESS_PAYLOAD", javaString(demoBundle.getProperty("payload", "")))
             buildConfigField("String", "DEMO_ACCESS_SECRET", javaString(demoBundle.getProperty("secret", "")))
             buildConfigField("String", "DEMO_COMPATIBLE_BASE_URL", javaString(demoBaseUrl))
+            buildConfigField("String", "KIMI_ACCESS_PAYLOAD", javaString(kimiBundle.getProperty("payload", "")))
+            buildConfigField("String", "KIMI_ACCESS_SECRET", javaString(kimiBundle.getProperty("secret", "")))
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

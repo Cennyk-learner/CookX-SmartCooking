@@ -1,6 +1,6 @@
 # CookX Android 体验版本
 
-Kotlin + Jetpack Compose 原生客户端。包名 `com.smartcooking.app.showcase`，版本 2.2.1（21）。固定本地厨房会话，业务数据持久化到应用私有存储；模型请求从手机直连百炼。
+Kotlin + Jetpack Compose 原生客户端。包名 `com.smartcooking.app.showcase`，版本 2.2.4（24）。固定本地厨房会话，业务数据持久化到应用私有存储；菜谱从手机直连 Kimi K2.6，图片与语音直连百炼。
 
 ## 构建
 
@@ -28,11 +28,13 @@ K:\android-native\gradlew.bat -p K:\android-native :app:testDebugUnitTest
 
 在 `android-native/demo-private.properties` 中设置 `apiKey` 和 `compatibleBaseUrl`，例如北京地域业务空间的 `https://ws-example.cn-beijing.maas.aliyuncs.com/compatible-mode/v1`。该文件已被 Git 忽略，不提交真实 Key。只有 release 构建读取这些默认值；debug 与 CI 不携带内置 Key。
 
+同一私有文件的 `kimiApiKey` 用于菜谱。固定请求官方 `https://api.moonshot.cn/v1/chat/completions`，模型 `kimi-k2.6`，`thinking.type=disabled`，`response_format.type=json_object`，`max_tokens=2000`；不自动重试生成请求。Qwen 和 Kimi 的凭证、加密密文及接口互相独立。Kimi 的加密缓存为 `.gradle/cookx-kimi-bundle.properties`，同样不提交。更换内置 Kimi Key 后重新构建签名 APK；手机中的 Qwen 配置入口仅替换 Qwen 服务。
+
 未手动配置的手机默认使用内置服务。手动覆盖配置用 Android Keystore 加密保存，Key 与接口地址成对替换；旧版本保存的 Key 保持原北京共享地址。停用在线服务后不会偷偷回退到内置 Key，可明确选择恢复。
 
 发布构建使用随机 AES-256-GCM 密钥与 nonce 加密内置 Key，接口地址作为附加认证数据；密文缓存保存在已忽略的 `.gradle/cookx-demo-bundle.properties`，原始 Key 不进入生成的 Java 或 DEX 字符串。APK 为了自行联网仍携带解密材料，这能防止明文字符串检索，不是防逆向的密钥保险箱。源码、截图、日志和文档都不保存真实 Key。
 
-文本和图片使用配置的兼容接口；Qwen TTS 使用官方北京共享语音接口，同地域业务空间 Key 可用。参考[官方接入点说明](https://help.aliyun.com/en/model-studio/base-url)与[语音接口](https://help.aliyun.com/zh/model-studio/qwen-tts-api)。
+Kimi 菜谱使用独立接口，并校验 JSON 菜名、食材和步骤后才写入历史；失败会注明原因并打开内置菜谱。图片和指令语音使用百炼配置的兼容接口；Qwen TTS 使用官方北京共享语音接口。参考 [Kimi K2.6](https://platform.kimi.com/docs/guide/kimi-k2-6-quickstart)、[JSON Mode](https://platform.kimi.com/docs/guide/use-json-mode-feature-of-kimi-api)、[百炼接入点](https://help.aliyun.com/en/model-studio/base-url)与[语音接口](https://help.aliyun.com/zh/model-studio/qwen-tts-api)。
 
 ## 结构
 
@@ -60,6 +62,6 @@ python scripts/export_demo_assets.py
 
 Robolectric/Roborazzi 渲染结果在 `app/screenshots/`，属于 JVM 页面验证，不是现场手机或硬件证据。
 
-真实模型回归只在明确设置 `COOKX_LIVE_VERIFY=1` 后执行 `DemoGatewayLiveTest`，它读取本地私有配置、调用应用自身的菜谱/识别/语音代码，会产生服务请求。普通测试与 CI 跳过此项。修改该环境变量后需通过 `--rerun-tasks` 避免沿用 Gradle 测试缓存；现场手机权限、拍照与实际播放仍需单独核对。
+真实 Qwen 回归只在明确设置 `COOKX_LIVE_VERIFY=1` 后执行 `DemoGatewayLiveTest`。Kimi 仅在 `COOKX_KIMI_LIVE_VERIFY=1` 时执行 `KimiRecipeLiveTest`，经应用完整请求流程生成一次简短菜谱，记录请求次数和 token 用量，验证加密配置与历史保存。普通测试与 CI 跳过这三项；不为测试自动花费模型额度。现场手机权限、拍照与实际播放仍需单独核对。
 
 完整操作见[使用说明](../docs/ANDROID_DEMO_GUIDE.md)。

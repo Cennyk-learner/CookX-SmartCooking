@@ -13,7 +13,14 @@ class LocalEngine(val recipes: List<JsonObject>, saved: String?, private val per
                   val clock: () -> Long = System::currentTimeMillis, val storageRules: JsonObject = EmptyObject) {
     internal var db: JsonObject = saved?.let { AppJson.parseToJsonElement(it).asObject() }
         ?: seed()
-    init { persist(db.toString()) }
+    init {
+        // Older interceptors forwarded write keys into this read-only auth check. Repair only
+        // those impossible write receipts; completed mutations and all user data remain intact.
+        val receipts = rows("commands")
+        val repaired = receipts.filterNot { it.str("fingerprint") == "GET:/auth/session:{}" }
+        if (repaired.size != receipts.size) set("commands", repaired)
+        persist(db.toString())
+    }
     internal fun now() = Instant.ofEpochMilli(clock()).toString()
     internal fun persistMedia() { persist(db.toString()) }
     internal fun id() = UUID.randomUUID().toString()
@@ -36,7 +43,13 @@ class LocalEngine(val recipes: List<JsonObject>, saved: String?, private val per
     @Synchronized fun usableStock(user: String): List<JsonObject> = stock(user).filter {
         (it.num("quantity") ?: 0.0) > 0 && !fresh(it).bool("expired") && "storage_unsuitable" !in fresh(it).strings("risk_flags")
     }
-    @Synchronized fun assist(user: String, prompt: String, online: JsonObject?, save: Boolean): LocalReply {
+    @Synchronized fun recentRecipe(user: String): JsonObject? {
+        val r = rows("chat").lastOrNull { it.str("owner") == user && it.obj("recipe") != null }?.obj("recipe") ?: return null
+        return jsonOf("dish_name" to (r.str("dish_name") ?: r.str("name")), "ingredients_list" to r.objects("ingredients_list").take(20),
+            "steps" to r.objects("steps").take(8).map { jsonOf("text" to it.str("text")?.take(200)) })
+    }
+    @Synchronized fun assist(user: String, prompt: String, online: JsonObject?, save: Boolean,
+                             provider: String? = null, unavailableReason: String? = null): LocalReply {
         val before = db
         return try {
             val available = usableStock(user).mapNotNull { it.str("name") }.toSet()
@@ -44,14 +57,14 @@ class LocalEngine(val recipes: List<JsonObject>, saved: String?, private val per
                 ?: recipes.maxBy { r -> r.objects("ingredients").count { it.str("name") in available } }
             com.smartcooking.app.data.Recipe.normalize(recipe)
             val source = if (online == null) "built_in" else "online"
-            val notice = if (online == null) "在线服务暂不可用，已打开内置菜谱：${recipe.str("dish_name") ?: recipe.str("name")}。这不是本次 AI 生成结果。"
-                else "为你准备好了：${recipe.str("dish_name") ?: recipe.str("name")}"
+            val notice = if (online == null) "${unavailableReason ?: "在线服务暂不可用"}，已打开内置菜谱：${recipe.str("dish_name") ?: recipe.str("name")}。这不是本次 AI 生成结果。"
+                else "${provider?.let { "$it 已生成" } ?: "为你准备好了"}：${recipe.str("dish_name") ?: recipe.str("name")}"
             if (save) {
                 add("chat", jsonOf("id" to id(), "owner" to user, "role" to "user", "content" to prompt, "time" to now(), "timestamp" to now()))
-                add("chat", jsonOf("id" to id(), "owner" to user, "role" to "assistant", "content" to notice, "recipe" to recipe, "source" to source, "time" to now(), "timestamp" to now()))
+                add("chat", jsonOf("id" to id(), "owner" to user, "role" to "assistant", "content" to notice, "recipe" to recipe, "source" to source, "provider" to provider.takeIf { online != null }, "time" to now(), "timestamp" to now()))
                 persist(db.toString())
             }
-            LocalReply(200, ok("recipe" to recipe, "source" to source, "notice" to notice))
+            LocalReply(200, ok("recipe" to recipe, "source" to source, "provider" to provider.takeIf { online != null }, "notice" to notice))
         } catch (_: Exception) { db = before; LocalReply(500, jsonOf("detail" to "菜谱未保存，请重试")) }
     }
     internal fun session(user: JsonObject): JsonObject {
@@ -81,7 +94,9 @@ class LocalEngine(val recipes: List<JsonObject>, saved: String?, private val per
             val user=t.str("user")!!
             query["user_id"]?.let { if(it!=user) fail(403,"不能访问其他账号数据") }
             b.str("user_id")?.let { if(it!=user) fail(403,"不能访问其他账号数据") }
-            val key = b.str("idempotency_key") ?: headers.entries.firstOrNull { it.key.equals("Idempotency-Key",true) }?.value
+            val key = if (method in setOf("POST", "PUT", "PATCH", "DELETE")) {
+                b.str("idempotency_key") ?: headers.entries.firstOrNull { it.key.equals("Idempotency-Key",true) }?.value
+            } else null
             val fingerprint="$method:$p:$body"
             val receiptKey="$user:$key"
             if(key!=null) rows("commands").firstOrNull { it.str("id")==receiptKey }?.let {

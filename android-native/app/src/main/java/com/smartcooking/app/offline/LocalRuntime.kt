@@ -13,8 +13,8 @@ import java.io.File
 import java.util.UUID
 
 /** Local business writes are authoritative. Only explicit inference requests call Qwen directly from the phone. */
-class LocalRuntime(private val context: Context, private val store:KeyValueStore, private val sessions:SessionManager):Interceptor {
-    val gateway = DemoGateway(store)
+class LocalRuntime(private val context: Context, private val store:KeyValueStore, private val sessions:SessionManager,
+                   val gateway: DemoGateway = DemoGateway(store)):Interceptor {
     var cookingContext: () -> JsonObject = { EmptyObject }
     val engine=LocalEngine(AppJson.parseToJsonElement(context.assets.open("offline/recipes.json").bufferedReader().use{it.readText()}).asArray()!!.mapNotNull{it.asObject()},store.get("cookx:local-database:v1"),{value->check(store.putSync("cookx:local-database:v1",value)){"本机存储失败"}}, storageRules=AppJson.parseToJsonElement(context.assets.open("offline/storage-rules.json").bufferedReader().use{it.readText()}).asObject()!!)
     init {
@@ -34,8 +34,9 @@ class LocalRuntime(private val context: Context, private val store:KeyValueStore
         fun reply(code:Int,bytes:ByteArray,mime:String="application/json")=Response.Builder().request(r).protocol(Protocol.HTTP_1_1).code(code).message(if(code<400)"OK" else "Error").body(bytes.toResponseBody(mime.toMediaType())).build()
         fun json(code:Int,value:JsonElement)=reply(code,value.toString().toByteArray())
         val headers=r.headers.names().associateWith{r.header(it).orEmpty()}
-        val auth=engine.request("GET","/api/auth/session",headers=headers)
         if (r.url.host != "cookx.local") return json(403, jsonOf("detail" to "本地数据不能发送到外部地址"))
+        // Auth preflight is a separate read. A mutation's receipt/revision belongs only to that mutation.
+        val auth=engine.request("GET","/api/auth/session",headers=headers.filterKeys { it.equals("Authorization", true) })
         if (p == "/api/analyze-fridge") {
             if (auth.code != 200) return json(auth.code, auth.body)
             return try {
@@ -51,12 +52,18 @@ class LocalRuntime(private val context: Context, private val store:KeyValueStore
             val user = sessions.currentUserId ?: return json(401, jsonOf("detail" to "本地会话无效"))
             val prompt = r.url.queryParameter("user_prompt").orEmpty()
             val online = runCatching {
-                gateway.recipe(prompt, engine.usableStock(user), cookingContext()).obj("recipe")?.also {
+                gateway.recipe(prompt, engine.usableStock(user), cookingContext().with("最近菜谱" to engine.recentRecipe(user))).obj("recipe")?.also {
                     com.smartcooking.app.data.Recipe.normalize(it)
                 }
-            }.getOrNull()
+            }
             if (chain.call().isCanceled() || sessions.currentUserId != user) throw java.io.IOException("请求已取消")
-            val result = engine.assist(user, prompt, online, r.url.queryParameter("save_history") != "false")
+            val failure = online.exceptionOrNull()?.let { when(it) {
+                is ApiException -> it.message
+                is java.io.IOException -> "Kimi 连接中断或超时，请检查手机网络"
+                else -> "菜谱格式校验未通过"
+            } }
+            val result = engine.assist(user, prompt, online.getOrNull(), r.url.queryParameter("save_history") != "false",
+                provider = KimiRecipeGateway.LABEL, unavailableReason = failure)
             return json(result.code, result.body)
         }
         if(r.method == "GET" && (p.startsWith("/api/v3/community/media/") || p.startsWith("/api/v3/profile/media/"))) {
