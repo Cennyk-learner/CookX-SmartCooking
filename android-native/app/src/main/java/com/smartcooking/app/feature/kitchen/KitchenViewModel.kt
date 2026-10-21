@@ -40,6 +40,8 @@ data class ChatState(
 data class VoiceUi(
     val message: String = "",
     val listening: Boolean = false,
+    val capturing: Boolean = false,
+    val inputLevel: Float = 0f,
     val commandText: String = "",
     val commandStatus: String = "点击麦克风后说一句指令，例如「下一步」。",
     val pendingCommands: List<String> = emptyList(),
@@ -70,6 +72,7 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
 
     private var recipeJob: Job? = null
     private var listenJob: Job? = null
+    @Volatile private var listenGeneration = 0L
     private var cloudStepJob: Job? = null
     private var ticker: Job? = null
 
@@ -277,15 +280,20 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
     fun listen() {
         if (voiceUi.value.listening) return
         silence()
+        val generation = ++listenGeneration
         listenJob = viewModelScope.launch {
-            voiceUi.update { it.copy(listening = true, pendingCommands = emptyList()) }
+            voiceUi.update { it.copy(listening = true, capturing = false, inputLevel = 0f,
+                commandText = "", commandStatus = "正在启动麦克风，请稍候…", pendingCommands = emptyList()) }
             try {
                 val sessionId = engine.state.value?.id
                 val stepIndex = engine.state.value?.stepIndex
                 val transcribe: (suspend (ByteArray) -> String)? = if (c.local.gateway.configured) { audio ->
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { c.local.gateway.transcribe(audio) }
                 } else null
-                val result = voice.listenOnce(transcribe) { status -> voiceUi.update { it.copy(commandStatus = status) } }
+                val result = voice.listenOnce(transcribe,
+                    onCapture = { active, level -> voiceUi.update { if (generation == listenGeneration) it.copy(capturing = active, inputLevel = level) else it } },
+                    onStatus = { status -> voiceUi.update { if (generation == listenGeneration) it.copy(commandStatus = status) else it } })
+                if (generation != listenGeneration) return@launch
                 // Do not apply a late recognition result to a step the user already changed manually.
                 if (engine.state.value?.id != sessionId || engine.state.value?.stepIndex != stepIndex) {
                     voiceUi.update { it.copy(commandStatus = "步骤已变化，请针对当前步骤重新说指令") }
@@ -295,14 +303,33 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
                 voiceUi.update { it.copy(commandText = result.text) }
                 interpret(result.text, result.confidence)
             } catch (e: kotlinx.coroutines.TimeoutCancellationException) {
-                voiceUi.update { it.copy(commandStatus = "未收到识别结果，请再试一次") }
-            } catch (e: CancellationException) { throw e } catch (e: Exception) {
-                voiceUi.update { it.copy(commandStatus = e.userMessage()) }
-            } finally { voiceUi.update { it.copy(listening = false) } }
+                if (generation == listenGeneration) voiceUi.update { it.copy(commandStatus = "未收到识别结果，请再试一次") }
+            } catch (e: CancellationException) {
+                if (generation == listenGeneration) voiceUi.update { it.copy(commandStatus = "录音已停止，请点击麦克风重试") }
+                throw e
+            } catch (e: Exception) {
+                if (generation == listenGeneration) voiceUi.update { it.copy(commandStatus = e.userMessage()) }
+            } finally {
+                if (generation == listenGeneration) {
+                    listenJob = null
+                    voiceUi.update { it.copy(listening = false, capturing = false, inputLevel = 0f) }
+                }
+            }
         }
     }
 
-    fun cancelListening() { listenJob?.cancel(); voice.stopListening(); voiceUi.update { it.copy(listening = false) } }
+    fun cancelListening() {
+        ++listenGeneration
+        listenJob?.cancel(); listenJob = null
+        voice.stopListening()
+        voiceUi.update { it.copy(listening = false, capturing = false, inputLevel = 0f,
+            commandStatus = if (it.listening) "已取消本次语音" else it.commandStatus) }
+    }
+    fun finishListening() {
+        if (!voiceUi.value.capturing) return
+        voice.finishListening()
+        voiceUi.update { it.copy(capturing = false, inputLevel = 0f, commandStatus = "正在处理录音…") }
+    }
     fun setCommandText(text: String) = voiceUi.update { it.copy(commandText = text) }
 
     fun interpret(text: String, confidence: Float?) {

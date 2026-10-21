@@ -3,6 +3,7 @@ package com.smartcooking.app.feature.cooking
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
@@ -12,6 +13,12 @@ import android.speech.tts.UtteranceProgressListener
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.job
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +35,10 @@ enum class Playback { IDLE, LOADING, PLAYING, PAUSED }
 data class VoiceResult(val text: String, val confidence: Float?)
 
 /** System speech (TTS + recognizer) and the optional cloud TTS player; port of CookingVoicePlugin. */
-class VoiceService(private val context: Context) {
+class VoiceService(private val context: Context,
+    private val captureAudio: suspend (Int, CommandAudio.Control, () -> Unit, (Float) -> Unit) -> ByteArray =
+        { source, control, ready, level -> CommandAudio.record(context, source, control, ready, level) },
+) {
     private var tts: TextToSpeech? = null
     private var chineseReady = false
     private var utteranceSeq = 0
@@ -41,6 +51,12 @@ class VoiceService(private val context: Context) {
 
     private var player: MediaPlayer? = null
     private var recognizer: SpeechRecognizer? = null
+    private class Listening(val job: Job, val control: CommandAudio.Control = CommandAudio.Control()) {
+        var system = false
+    }
+    private var listening: Listening? = null
+    private val microphone = Mutex()
+    private var preferredSource = MediaRecorder.AudioSource.VOICE_RECOGNITION
 
     init {
         tts = TextToSpeech(context) { status ->
@@ -119,43 +135,95 @@ class VoiceService(private val context: Context) {
         releasePlayer()
     }
 
-    /** Cloud ASR works without a vendor RecognitionService; system speech remains an offline fallback. */
-    suspend fun listenOnce(transcribe: (suspend (ByteArray) -> String)? = null, onStatus: (String) -> Unit = {}): VoiceResult {
-        if (transcribe != null) {
-            stopListening(); stopAll()
-            onStatus("正在听，说完后稍停即可；再次点击可取消")
-            val audio = CommandAudio.record(context)
-            onStatus("正在识别指令…")
-            try {
-                return VoiceResult(transcribe(audio), null)
-            } catch (e: CancellationException) { throw e } catch (e: Exception) {
-                if (!recognitionAvailable) throw IllegalStateException("在线识别不可用：${e.message ?: "请检查网络"}；可输入指令或使用步骤按钮")
-                onStatus("在线识别暂不可用，已切换系统识别，请再说一次")
+    /** All exits cancel the same session; only one recorder may own the microphone. */
+    suspend fun listenOnce(transcribe: (suspend (ByteArray) -> String)? = null,
+                           onCapture: (Boolean, Float) -> Unit = { _, _ -> },
+                           onStatus: (String) -> Unit = {}): VoiceResult {
+        stopListening(); stopAll()
+        val session = Listening(currentCoroutineContext().job)
+        listening = session
+        fun status(text: String) { if (listening === session && session.job.isActive) onStatus(text) }
+        fun capture(active: Boolean, level: Float = 0f) {
+            if (listening === session && session.job.isActive && (!active || !session.control.finished.get())) onCapture(active, level)
+        }
+        try {
+            if (transcribe != null) {
+                var audio: ByteArray? = null
+                val sources = listOf(preferredSource, if (preferredSource == MediaRecorder.AudioSource.MIC)
+                    MediaRecorder.AudioSource.VOICE_RECOGNITION else MediaRecorder.AudioSource.MIC)
+                for ((attempt, source) in sources.withIndex()) {
+                    capture(false)
+                    status(if (attempt == 0) "正在启动麦克风，请稍候…" else "未取得有效录音，正在切换兼容模式…")
+                    try {
+                        audio = microphone.withLock {
+                            currentCoroutineContext().ensureActive()
+                            captureAudio(source, session.control,
+                                { capture(true); status(if (attempt == 0) "录音已就绪，请说一句；说完稍停或点「说完了」" else "兼容录音已就绪，请再说一次；说完点「说完了」") },
+                                { level -> capture(true, level) })
+                        }
+                        currentCoroutineContext().ensureActive()
+                        preferredSource = source
+                        break
+                    } catch (e: CommandAudio.CaptureException) {
+                        if (!e.canRetry || session.control.finished.get()) throw e
+                        if (attempt == sources.lastIndex) {
+                            if (e.problem == CommandAudio.Problem.NO_SIGNAL || !recognitionAvailable) throw e
+                        }
+                    }
+                }
+                capture(false)
+                if (audio != null) {
+                    status("正在识别指令…")
+                    try {
+                        val text = transcribe(audio)
+                        currentCoroutineContext().ensureActive()
+                        return VoiceResult(text, null)
+                    } catch (e: CancellationException) { throw e } catch (e: Exception) {
+                        if (!recognitionAvailable) throw IllegalStateException("在线识别不可用：${e.message ?: "请检查网络"}；可输入指令或使用步骤按钮")
+                    }
+                }
+                status("正在启动系统识别，请等就绪后再说一次…")
+            } else status("正在启动系统识别，请稍候…")
+            session.control.finished.set(false)
+            session.system = true
+            return listenSystemOnce({ capture(true); status("系统录音已就绪，请说一句指令") },
+                { level -> capture(true, level) }, { capture(false); status("正在识别指令…") })
+        } finally {
+            if (listening === session) {
+                onCapture(false, 0f)
+                listening = null
+                releaseRecognizer()
             }
-        } else onStatus("正在听，请说一句指令…")
-        return listenSystemOnce()
+        }
+    }
+
+    fun finishListening() {
+        val session = listening ?: return
+        session.control.finished.set(true)
+        if (session.system) recognizer?.stopListening()
     }
 
     /** Listens for one zh-CN phrase (20 s timeout). Requires RECORD_AUDIO. */
-    private suspend fun listenSystemOnce(): VoiceResult = withContext(Dispatchers.Main) {
-        stopListening(); stopAll()
+    private suspend fun listenSystemOnce(onReady: () -> Unit, onLevel: (Float) -> Unit, onEnd: () -> Unit): VoiceResult = withContext(Dispatchers.Main) {
+        releaseRecognizer(); stopAll()
         if (!recognitionAvailable) throw IllegalStateException("系统识别服务不可用，请使用文字或按钮")
         withTimeout(20_000) {
             suspendCancellableCoroutine { cont: CancellableContinuation<VoiceResult> ->
                 val r = SpeechRecognizer.createSpeechRecognizer(context)
                 recognizer = r
+                var recordingReady = false
                 cont.invokeOnCancellation { runCatching { r.cancel(); r.destroy() }; if (recognizer === r) recognizer = null }
                 r.setRecognitionListener(object : RecognitionListener {
-                    override fun onReadyForSpeech(params: Bundle?) {}
+                    override fun onReadyForSpeech(params: Bundle?) { if (recognizer === r) { recordingReady = true; onReady() } }
                     override fun onBeginningOfSpeech() {}
-                    override fun onRmsChanged(rmsdB: Float) {}
+                    override fun onRmsChanged(rmsdB: Float) { if (recognizer === r && recordingReady) onLevel(((rmsdB + 2) / 12).coerceIn(0f, 1f)) }
                     override fun onBufferReceived(buffer: ByteArray?) {}
-                    override fun onEndOfSpeech() {}
+                    override fun onEndOfSpeech() { if (recognizer === r) { recordingReady = false; onEnd() } }
                     override fun onPartialResults(partialResults: Bundle?) {}
                     override fun onEvent(eventType: Int, params: Bundle?) {}
                     override fun onError(error: Int) {
                         if (recognizer !== r) return
-                        stopListening()
+                        releaseRecognizer()
                         if (cont.isActive) cont.resumeWithException(IllegalStateException("系统语音识别失败（$error），请重试或输入指令"))
                     }
                     override fun onResults(results: Bundle) {
@@ -163,7 +231,7 @@ class VoiceService(private val context: Context) {
                         val texts = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                         val scores = results.getFloatArray(SpeechRecognizer.CONFIDENCE_SCORES)
                         // Release this recognizer before resuming: a resumed command may begin another operation.
-                        stopListening()
+                        releaseRecognizer()
                         if (cont.isActive) {
                             if (texts.isNullOrEmpty()) cont.resumeWithException(IllegalStateException("未识别到指令"))
                             else cont.resume(VoiceResult(texts[0], scores?.firstOrNull()?.takeIf { it in 0f..1f }))
@@ -185,6 +253,13 @@ class VoiceService(private val context: Context) {
     }
 
     fun stopListening() {
+        val session = listening
+        listening = null
+        session?.job?.cancel()
+        releaseRecognizer()
+    }
+
+    private fun releaseRecognizer() {
         val previous = recognizer
         recognizer = null
         previous?.let { runCatching { it.cancel(); it.destroy() } }

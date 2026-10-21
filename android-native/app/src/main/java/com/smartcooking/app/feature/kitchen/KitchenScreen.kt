@@ -184,7 +184,7 @@ fun KitchenScreen(navigator: Navigator) {
             voiceContent = {
                 VoiceCommandCard(mainVoice,
                     onListen = { mainMic.launch(android.Manifest.permission.RECORD_AUDIO) },
-                    onCancel = vm::cancelListening, onText = vm::setCommandText,
+                    onCancel = vm::cancelListening, onFinish = vm::finishListening, onText = vm::setCommandText,
                     onRun = { vm.interpret(mainVoice.commandText, 1f) }, onExecute = vm::execute,
                     onDismiss = { vm.voiceUi.value = mainVoice.copy(pendingCommands = emptyList()) })
             },
@@ -309,7 +309,7 @@ private fun CookingToolsSheet(vm: KitchenViewModel, session: CookingState, onDev
             CurrentStepCard(session, remaining, playback, progress, voiceUi.message, vm::toggleVoice, vm::runStep, vm::runCloudStep, vm::previous, vm::next, vm::pauseTimer, vm::resumeTimer, vm::setManualTimer)
             VoiceCommandCard(voiceUi,
                 onListen = { if (androidx.core.content.ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == android.content.pm.PackageManager.PERMISSION_GRANTED) vm.listen() else mic.launch(Manifest.permission.RECORD_AUDIO) },
-                onCancel = vm::cancelListening, onText = vm::setCommandText, onRun = { vm.interpret(voiceUi.commandText, 1f) }, onExecute = vm::execute,
+                onCancel = vm::cancelListening, onFinish = vm::finishListening, onText = vm::setCommandText, onRun = { vm.interpret(voiceUi.commandText, 1f) }, onExecute = vm::execute,
                 onDismiss = { vm.voiceUi.value = voiceUi.copy(pendingCommands = emptyList()) })
             StepsTrack(session, overall)
             RemindersCard(session, remindersOn, notificationMessage, checkError,
