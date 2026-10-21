@@ -59,8 +59,8 @@ android {
         applicationId = "com.smartcooking.app.showcase"
         minSdk = 24
         targetSdk = 36
-        versionCode = 21
-        versionName = "2.2.1"
+        versionCode = 22
+        versionName = "2.2.2"
         buildConfigField("String", "DEFAULT_BACKEND_ORIGIN", "\"$backendOrigin\"")
         buildConfigField("String", "DEMO_ACCESS_PAYLOAD", "\"\"")
         buildConfigField("String", "DEMO_ACCESS_SECRET", "\"\"")

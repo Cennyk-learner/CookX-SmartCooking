@@ -18,6 +18,22 @@ import com.github.takahirom.roborazzi.captureRoboImage
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class OfflineUiTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
+    @Test fun recommendationsRenderNumericScoresAndEvidence() {
+        compose.waitUntil(20000){compose.onAllNodesWithText("冰箱").fetchSemanticsNodes().isNotEmpty()}
+        compose.onAllNodesWithText("冰箱").onLast().performClick()
+        compose.waitUntil(10000){compose.onAllNodesWithText("我的冰箱").fetchSemanticsNodes().isNotEmpty()}
+        compose.onNode(hasScrollAction()).performScrollToNode(hasText("用这些食材能做什么"))
+        compose.onNodeWithText("用这些食材能做什么").performClick()
+        compose.waitUntil(10000){compose.onAllNodesWithText("获取智能推荐").fetchSemanticsNodes().isNotEmpty()}
+        compose.onNodeWithText("获取智能推荐").performClick()
+        compose.waitUntil(15000){compose.onAllNodesWithText("综合推荐分").fetchSemanticsNodes().isNotEmpty()}
+        compose.onAllNodesWithText("--").assertCountEquals(0)
+        val number = SemanticsMatcher("numeric score") { node -> node.config.getOrElse(androidx.compose.ui.semantics.SemanticsProperties.Text) { emptyList() }.any { Regex("\\d{1,3}\\.\\d{2}").matches(it.text) } }
+        org.junit.Assert.assertTrue(compose.onAllNodes(number).fetchSemanticsNodes().isNotEmpty())
+        compose.onRoot().captureRoboImage("screenshots/07-recommendation-scores.png")
+        compose.onAllNodesWithText("评分依据").onFirst().performScrollTo().performClick()
+        compose.onAllNodesWithText("未参与评分：",substring=true).onFirst().assertExists()
+    }
     @Test fun mainCookingVoiceCommandsMoveStepAndRejectNegation() {
         compose.waitUntil(20000){compose.onAllNodesWithText("冰箱").fetchSemanticsNodes().isNotEmpty()}
         compose.mainClock.autoAdvance=false

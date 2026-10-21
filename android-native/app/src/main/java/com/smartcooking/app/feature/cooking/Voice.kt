@@ -10,6 +10,7 @@ import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -118,8 +119,25 @@ class VoiceService(private val context: Context) {
         releasePlayer()
     }
 
+    /** Cloud ASR works without a vendor RecognitionService; system speech remains an offline fallback. */
+    suspend fun listenOnce(transcribe: (suspend (ByteArray) -> String)? = null, onStatus: (String) -> Unit = {}): VoiceResult {
+        if (transcribe != null) {
+            stopListening(); stopAll()
+            onStatus("正在听，说完后稍停即可；再次点击可取消")
+            val audio = CommandAudio.record(context)
+            onStatus("正在识别指令…")
+            try {
+                return VoiceResult(transcribe(audio), null)
+            } catch (e: CancellationException) { throw e } catch (e: Exception) {
+                if (!recognitionAvailable) throw IllegalStateException("在线识别不可用：${e.message ?: "请检查网络"}；可输入指令或使用步骤按钮")
+                onStatus("在线识别暂不可用，已切换系统识别，请再说一次")
+            }
+        } else onStatus("正在听，请说一句指令…")
+        return listenSystemOnce()
+    }
+
     /** Listens for one zh-CN phrase (20 s timeout). Requires RECORD_AUDIO. */
-    suspend fun listenOnce(): VoiceResult = withContext(Dispatchers.Main) {
+    private suspend fun listenSystemOnce(): VoiceResult = withContext(Dispatchers.Main) {
         stopListening(); stopAll()
         if (!recognitionAvailable) throw IllegalStateException("系统识别服务不可用，请使用文字或按钮")
         withTimeout(20_000) {
@@ -136,17 +154,20 @@ class VoiceService(private val context: Context) {
                     override fun onPartialResults(partialResults: Bundle?) {}
                     override fun onEvent(eventType: Int, params: Bundle?) {}
                     override fun onError(error: Int) {
-                        if (cont.isActive) cont.resumeWithException(IllegalStateException("系统语音识别失败（$error），请重试或输入指令"))
+                        if (recognizer !== r) return
                         stopListening()
+                        if (cont.isActive) cont.resumeWithException(IllegalStateException("系统语音识别失败（$error），请重试或输入指令"))
                     }
                     override fun onResults(results: Bundle) {
+                        if (recognizer !== r) return
                         val texts = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                         val scores = results.getFloatArray(SpeechRecognizer.CONFIDENCE_SCORES)
+                        // Release this recognizer before resuming: a resumed command may begin another operation.
+                        stopListening()
                         if (cont.isActive) {
                             if (texts.isNullOrEmpty()) cont.resumeWithException(IllegalStateException("未识别到指令"))
                             else cont.resume(VoiceResult(texts[0], scores?.firstOrNull()?.takeIf { it in 0f..1f }))
                         }
-                        stopListening()
                     }
                 })
                 val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
@@ -164,8 +185,9 @@ class VoiceService(private val context: Context) {
     }
 
     fun stopListening() {
-        recognizer?.let { runCatching { it.cancel(); it.destroy() } }
+        val previous = recognizer
         recognizer = null
+        previous?.let { runCatching { it.cancel(); it.destroy() } }
     }
 }
 
@@ -185,9 +207,11 @@ object VoiceCommands {
 
     /** Missing optional scores are acceptable only for exact, reversible navigation commands. */
     fun parse(text: String, confidence: Float?): Parsed {
-        val normalized = text.replace(Regex("[，。！？、,.!?\\s]"), "")
+        val normalized = text.replace(Regex("[\\p{P}\\p{Z}\\s]"), "")
         if (listOf("不要", "别", "不需要", "不用", "取消").any { normalized.contains(it) }) return Parsed(text, emptyList(), false)
-        val exact = phrases.filter { normalized in it.value }.keys.toList()
+        val commandText = normalized.replace(Regex("^(?:小厨|鲜厨|CookX)?(?:请帮我|帮我|麻烦|请)?(?:切换到|切到|进入|回到|返回|进行)?"), "")
+            .replace(Regex("(?:吧|呀|啊|一下|谢谢)$"), "")
+        val exact = phrases.filter { normalized in it.value || commandText in it.value }.keys.toList()
         val matches = exact.ifEmpty { phrases.filter { (_, v) -> v.any { normalized.contains(it) } }.keys.toList() }
         val trustworthy = (confidence != null && confidence in 0.8f..1f) ||
             (confidence == null && exact.singleOrNull() in listOf("next", "previous", "repeat"))

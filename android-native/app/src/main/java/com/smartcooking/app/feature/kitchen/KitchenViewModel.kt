@@ -70,6 +70,7 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
 
     private var recipeJob: Job? = null
     private var listenJob: Job? = null
+    private var cloudStepJob: Job? = null
     private var ticker: Job? = null
 
     init {
@@ -239,14 +240,18 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
 
     /** Speaks the current step with the system voice; timing continues if speech fails. */
     fun runStep() {
-        voice.stopListening()
+        cancelListening()
+        cloudStepJob?.cancel()
         voiceUi.update { it.copy(message = "") }
         try { voice.speak(stepText()) } catch (e: Exception) { voiceUi.update { it.copy(message = e.userMessage()) } }
     }
 
     /** Explicit fallback: server TTS, downloaded with authorisation. */
     fun runCloudStep() {
-        viewModelScope.launch {
+        cancelListening()
+        cloudStepJob?.cancel()
+        voice.stopAll()
+        cloudStepJob = viewModelScope.launch {
             try {
                 val text = stepText()
                 val audio = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { c.local.gateway.tts(text) }
@@ -265,7 +270,7 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
         }
     }
 
-    fun silence() { voice.stopAll(); voice.stopListening(); listenJob?.cancel(); voiceUi.update { it.copy(listening = false) } }
+    fun silence() { cloudStepJob?.cancel(); voice.stopAll(); cancelListening() }
 
     // ------------------------------------------------------------------ voice commands
 
@@ -275,7 +280,18 @@ class KitchenViewModel(private val c: AppContainer) : ViewModel() {
         listenJob = viewModelScope.launch {
             voiceUi.update { it.copy(listening = true, pendingCommands = emptyList()) }
             try {
-                val result = voice.listenOnce()
+                val sessionId = engine.state.value?.id
+                val stepIndex = engine.state.value?.stepIndex
+                val transcribe: (suspend (ByteArray) -> String)? = if (c.local.gateway.configured) { audio ->
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { c.local.gateway.transcribe(audio) }
+                } else null
+                val result = voice.listenOnce(transcribe) { status -> voiceUi.update { it.copy(commandStatus = status) } }
+                // Do not apply a late recognition result to a step the user already changed manually.
+                if (engine.state.value?.id != sessionId || engine.state.value?.stepIndex != stepIndex) {
+                    voiceUi.update { it.copy(commandStatus = "步骤已变化，请针对当前步骤重新说指令") }
+                    return@launch
+                }
+                listenJob = null // Navigation cancels listening; the completed result must not cancel its own execution.
                 voiceUi.update { it.copy(commandText = result.text) }
                 interpret(result.text, result.confidence)
             } catch (e: kotlinx.coroutines.TimeoutCancellationException) {

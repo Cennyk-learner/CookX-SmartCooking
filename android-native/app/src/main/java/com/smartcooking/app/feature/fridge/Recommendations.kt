@@ -290,7 +290,7 @@ fun RecommendationsContent(
                 state.personalization?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = CookX.TextSecondary, modifier = Modifier.padding(top = 8.dp)) }
                 LinkButton("管理偏好学习与反馈 →", onLearning, color = CookX.Primary)
                 state.items.forEach { RecommendationCard(it, onCook) }
-                Text("综合推荐分及有效权重均采用服务端结果（${state.algorithm}）；缺少数据的分项不由客户端补算。", fontSize = 10.5.sp, color = CookX.TextTertiary, modifier = Modifier.padding(top = 8.dp))
+                Text("综合推荐分满分 100，按当前库存、临期情况与已设置目标在本机计算；缺少数据的分项不计入总分，其余权重自动归一。", fontSize = 10.5.sp, color = CookX.TextTertiary, modifier = Modifier.padding(top = 8.dp))
             }
         }
         if (state.message.isNotBlank() && state.view in listOf(RecView.INITIAL, RecView.SUCCESS)) {
@@ -372,6 +372,7 @@ private fun RecommendationCard(item: JsonObject, onCook: (String) -> Unit) {
                 Text("$weights · 缺失惩罚 ${pct(item.num("missing_penalty_weight"))}", fontSize = 11.sp, color = CookX.TextSecondary)
                 item.strings("unavailable_components").takeIf { it.isNotEmpty() }?.let { Text("未参与评分：${it.joinToString("、")}", fontSize = 11.sp, color = CookX.TextSecondary) }
                 val notes = buildList {
+                    addAll(item.strings("data_quality_notes"))
                     add("预算：${item.str("cost_status") ?: "数据不足"}；整道菜估价 ${item.str("estimated_cost") ?: "未知"} ${item.str("currency") ?: "CNY"}")
                     addAll(item.strings("cost_data_notes"))
                     add("难度：${item.str("difficulty_status") ?: "数据不足"}；菜谱难度 ${item.str("recipe_difficulty") ?: "未知"}")

@@ -24,6 +24,22 @@ import java.util.UUID
 @Config(sdk = [35])
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class DemoGatewayLiveTest {
+    @Test fun realShortSpeechTranscriptionAndNavigationCommands() {
+        assumeTrue("Set COOKX_LIVE_VERIFY=1 explicitly to call the provider", System.getenv("COOKX_LIVE_VERIFY") == "1")
+        val props = Properties().apply { File("../demo-private.properties").inputStream().use { load(it) } }
+        val gateway = DemoGateway(KeyValueStore(RuntimeEnvironment.getApplication(), "asr-" + UUID.randomUUID()),
+            DemoAccess(props.getProperty("apiKey"), props.getProperty("compatibleBaseUrl")))
+        for ((spoken, expected) in listOf("下一步" to "next", "返回上一步" to "previous", "不要下一步" to null)) {
+            val audio = gateway.tts(spoken)
+            val mime = if (audio.take(4).toByteArray().toString(Charsets.US_ASCII) == "RIFF") "audio/wav" else "audio/mpeg"
+            val recognized = gateway.transcribe(audio,mime)
+            val parsed = com.smartcooking.app.feature.cooking.VoiceCommands.parse(recognized,null)
+            if (expected == null) assertFalse(recognized,parsed.confirmed) else {
+                assertTrue(recognized,parsed.confirmed); assertEquals(expected,parsed.matches.single())
+            }
+            println("LIVE_ASR_OK expected=$expected transcript=$recognized (synthetic speech, not a phone microphone test)")
+        }
+    }
     @Test fun realRecipeVisionAndSpeechUsingPrivateConfig() {
         assumeTrue("Set COOKX_LIVE_VERIFY=1 explicitly to call the provider", System.getenv("COOKX_LIVE_VERIFY") == "1")
         val props = Properties().apply { File("../demo-private.properties").inputStream().use { load(it) } }

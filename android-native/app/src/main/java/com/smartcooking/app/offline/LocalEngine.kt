@@ -171,13 +171,5 @@ class LocalEngine(val recipes: List<JsonObject>, saved: String?, private val per
         val row=jsonOf("id" to id(),"owner" to u,"version" to 1,"recipe" to recipe,"source" to jsonOf("type" to kind,"id" to sourceId,"version" to b.str("expected_source_version")),"created_at" to now())
         add(table,row);return ok(table to row)
     }
-    private fun recommendations(u:String,b:JsonObject):JsonObject {
-        val avoid=b.strings("avoid_ingredients")+b.obj("preferences")?.strings("avoid_ingredients").orEmpty()+b.obj("preferences")?.strings("disliked_ingredients").orEmpty()
-        val unsafe=stock(u).filter{fresh(it).bool("expired")||"storage_unsuitable" in fresh(it).strings("risk_flags")}.mapNotNull{it.str("name")}.toSet()
-        val available=usableStock(u).filter{it.str("name") !in unsafe}.mapNotNull{it.str("name")}.toSet()
-        val model=rows("models").lastOrNull{it.str("id")==u&&it.bool("accepted")}?.takeIf{rows("learning").any{r->r.str("id")==u&&r.bool("enabled")}}
-        val candidates=recipes.filter{r->r.objects("ingredients").none{it.str("name") in avoid || it.str("name") in unsafe}}.sortedByDescending{r->if(model!=null)prediction(model,r)else r.objects("ingredients").count{it.str("name") in available}.toDouble()}
-        return ok("recommendations" to candidates.take((b.num("top_k")?:8.0).toInt()).mapIndexed { index,r-> val names=r.objects("ingredients").mapNotNull{it.str("name")}
-            jsonOf("recipe_id" to r.str("id"),"recipe_name" to r.str("name"),"rank" to index+1,"cooking_time" to r.num("cooking_time"),"recipe_difficulty" to r.str("difficulty"),"total_score" to null,"matched_ingredients" to names.filter{it in available},"missing_required_ingredients" to names.filter{it !in available},"component_scores" to EmptyObject,"reasons" to listOf("依据已记录食材匹配，开工前请核对实际用量")) },"eligible_recipe_count" to candidates.size,"filtered_recipe_count" to recipes.size-candidates.size)
-    }
+    private fun recommendations(u:String,b:JsonObject):JsonObject = localRecommendations(u,b)
 }

@@ -235,6 +235,7 @@ fun StepsTrack(session: CookingState, overall: Int) {
 fun VoiceCommandCard(ui: VoiceUi, onListen: () -> Unit, onCancel: () -> Unit, onText: (String) -> Unit, onRun: () -> Unit, onExecute: (String) -> Unit, onDismiss: () -> Unit) {
     CookXCard(Modifier.fillMaxWidth()) {
         SectionHeader("语音指令", subtitle = "下一步 · 上一步 · 重复播报 · 开始/暂停/继续计时 · 查询温度", icon = Icons.Outlined.Mic)
+        Text("点击后说一句，说完稍停即可；联网识别，离线时尝试系统语音。", style = MaterialTheme.typography.bodySmall, color = CookX.TextSecondary)
         Spacer(Modifier.height(12.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             val pulse = rememberInfiniteTransition(label = "mic").animateFloat(1f, 1.15f, infiniteRepeatable(tween(600), RepeatMode.Reverse), label = "pulse")
@@ -247,7 +248,7 @@ fun VoiceCommandCard(ui: VoiceUi, onListen: () -> Unit, onCancel: () -> Unit, on
                     modifier = Modifier.size(if (ui.listening) (24 * pulse.value).dp else 24.dp))
             }
             Spacer(Modifier.width(12.dp))
-            Text(if (ui.listening) "正在听，请说一句…" else ui.commandStatus, style = MaterialTheme.typography.bodyMedium, color = CookX.TextBody, modifier = Modifier.weight(1f))
+            Text(ui.commandStatus, style = MaterialTheme.typography.bodyMedium, color = CookX.TextBody, modifier = Modifier.weight(1f))
         }
         Spacer(Modifier.height(10.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {

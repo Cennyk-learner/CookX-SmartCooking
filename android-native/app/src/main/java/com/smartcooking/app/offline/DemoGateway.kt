@@ -79,6 +79,29 @@ class DemoGateway(private val store: KeyValueStore, builtIn: DemoAccess? = bundl
         completion("qwen-plus", listOf(jsonOf("role" to "user", "content" to "请只回复 OK")), 8)
         return jsonOf("recipe" to true, "vision_tested" to false, "tts_tested" to false)
     }
+    /** Short command audio is sent directly to the configured Qwen workspace; no PC service or audio URL is required. */
+    fun transcribe(audio: ByteArray, mimeType: String = "audio/wav"): String {
+        require(audio.size in 45..300_000) { "录音为空或过长，请重试" }
+        require(mimeType in setOf("audio/wav", "audio/mpeg")) { "不支持的录音格式" }
+        val access = accessState.resolve(::decrypt)
+        val payload = jsonOf("model" to "qwen3-asr-flash", "stream" to false,
+            "messages" to listOf(jsonOf("role" to "user", "content" to listOf(jsonOf("type" to "input_audio",
+                "input_audio" to jsonOf("data" to "data:$mimeType;base64,${Base64.encodeToString(audio, Base64.NO_WRAP)}"))))),
+            "asr_options" to jsonOf("language" to "zh", "enable_itn" to false))
+        val request = Request.Builder().url("${access.compatibleBaseUrl}/chat/completions")
+            .header("Authorization", "Bearer ${access.apiKey}").post(payload.toString().toRequestBody("application/json".toMediaType())).build()
+        return http.newBuilder().callTimeout(15, TimeUnit.SECONDS).readTimeout(12, TimeUnit.SECONDS).build().newCall(request).execute().use { response ->
+            if (!response.isSuccessful) throw ApiException(when(response.code) {
+                401, 403 -> "语音模型权限不可用，请检查百炼配置"
+                429 -> "语音服务繁忙，请稍后重试"
+                else -> "语音服务暂不可用（${response.code}）"
+            }, response.code)
+            val body = response.body.string()
+            require(body.length <= 50_000) { "语音识别结果异常" }
+            AppJson.parseToJsonElement(body).asObject()?.objects("choices")?.firstOrNull()?.obj("message")?.str("content")
+                ?.trim()?.takeIf { it.isNotEmpty() && it.length <= 200 } ?: throw ApiException("未识别到指令，请重试")
+        }
+    }
     fun tts(text: String): ByteArray {
         require(text.isNotBlank() && text.length <= 600) { "本步骤超过在线播报字数限制，请使用系统语音" }
         val access = accessState.resolve(::decrypt)
